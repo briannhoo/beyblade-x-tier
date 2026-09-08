@@ -18,15 +18,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Roboto+Mono:wght@400;500&display=swap">
 <style>
 :root{
-  --ground:#14161a; --panel:#1c2026; --panel-2:#232830; --rail:#2b313a;
+  --ground:#14161a; --panel:#1c2026; --panel-2:#232830; --rail:#2b313a; --well:#0f1114;
   --ink:#e8eaed; --ink-2:#b6bcc6; --muted:#818995;
   --accent:#ff4d2e; --accent-dim:#5c2116;
-  --atk:#c9503c; --def:#4a90d9; --sta:#46a06a; --bal:#c08a3e;
+  --atk:#c9503c; --def:#4a90d9; --sta:#46a06a; --bal:#c08a3e; --spc:#8f7ad0;
   --ok:#46a06a; --warn:#c08a3e;
   --disp:"Chakra Petch","PingFang HK","Microsoft JhengHei",sans-serif;
   --body:system-ui,-apple-system,"PingFang HK","Noto Sans HK","Microsoft JhengHei",sans-serif;
   --mono:"Roboto Mono",ui-monospace,monospace;
-  --pad:clamp(12px,3.5vw,20px);
+  --pad:clamp(10px,3vw,20px);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);
@@ -75,7 +75,7 @@ h1 span{display:block;font-family:var(--body);font-size:10.5px;font-weight:400;
 .chipf[data-t=def].on{color:var(--def)}
 .chipf[data-t=sta].on{color:var(--sta)}
 .chipf[data-t=bal].on{color:var(--bal)}
-.chipf[data-t=all].on,.chipf[data-t=own].on{color:var(--accent)}
+.chipf[data-t=all].on,.chipf[data-t=own].on,.chipf[data-t=wbo].on{color:var(--accent)}
 .search{display:flex;align-items:center;gap:8px;background:var(--panel);
   border:1px solid var(--rail);border-radius:7px;padding:0 10px}
 .search input{flex:1;background:none;border:none;padding:9px 0;font-size:14px;min-width:0}
@@ -83,47 +83,50 @@ h1 span{display:block;font-family:var(--body);font-size:10.5px;font-weight:400;
 .search input:focus{outline:none}
 .search button{color:var(--muted);font-size:15px;padding:4px}
 
-main{display:flex;flex-direction:column;gap:10px;padding:0 0 40px;
+main{display:flex;flex-direction:column;gap:9px;padding:0 0 40px;
   padding-left:max(var(--pad),env(safe-area-inset-left,0px));
   padding-right:max(var(--pad),env(safe-area-inset-right,0px))}
 .tier{display:flex;background:var(--panel);border:1px solid var(--rail);
-  border-radius:8px;overflow:hidden;min-height:66px}
-.railcol{flex:none;width:54px;display:flex;flex-direction:column;align-items:center;
+  border-radius:8px;overflow:hidden;min-height:60px}
+.railcol{flex:none;width:48px;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:2px;padding:8px 0;position:relative;
   background:var(--panel-2);border-right:1px solid var(--rail)}
 .railcol::after{content:"";position:absolute;top:0;bottom:0;left:0;width:4px;
   background:repeating-linear-gradient(180deg,var(--tc) 0 5px,transparent 5px 9px)}
-.railcol .t{font-family:var(--disp);font-size:24px;font-weight:700;line-height:1;color:var(--tc)}
+.railcol .t{font-family:var(--disp);font-size:21px;font-weight:700;line-height:1;color:var(--tc)}
+.railcol .t.sm{font-size:11px;font-family:var(--body);writing-mode:vertical-rl;
+  letter-spacing:.2em;color:var(--muted)}
 .railcol .n{font-family:var(--mono);font-size:10px;color:var(--muted)}
-.tier[data-k=S]{--tc:#ff4d2e}
-.tier[data-k=A]{--tc:#e08a4a}
-.tier[data-k=B]{--tc:#c9b04a}
-.tier[data-k=C]{--tc:#6f8fa8}
-.tier[data-k=D]{--tc:#5a6270}
-.tier[data-k="_"]{--tc:#3b424d}
-.tier[data-k="_"] .railcol .t{font-size:12px;font-family:var(--body);
-  writing-mode:vertical-rl;letter-spacing:.2em;color:var(--muted)}
-.bay{flex:1;display:flex;flex-wrap:wrap;gap:6px;padding:9px;align-content:flex-start;min-width:0}
-.bay .empty{color:var(--muted);font-size:12px;align-self:center;padding:4px 2px}
+.bay{flex:1;display:grid;gap:6px;padding:8px;min-width:0;align-content:flex-start;
+  grid-template-columns:repeat(auto-fill,minmax(86px,1fr))}
+.bay .empty{color:var(--muted);font-size:12px;padding:6px 2px;grid-column:1/-1}
 
-.part{display:flex;flex-direction:column;gap:1px;text-align:left;background:var(--ground);
-  border:1px solid var(--rail);border-left:3px solid var(--pc);border-radius:5px;
-  padding:6px 9px 6px 8px;min-width:0;max-width:100%;transition:border-color .12s,transform .12s}
+.part{background:var(--ground);border:1px solid var(--rail);border-top:2px solid var(--pc);
+  border-radius:5px;padding:5px;display:flex;flex-direction:column;gap:3px;
+  min-width:0;text-align:left;transition:border-color .12s,transform .12s}
 .part:hover{border-color:var(--pc);transform:translateY(-1px)}
 .part[data-t=atk]{--pc:#c9503c}
 .part[data-t=def]{--pc:#4a90d9}
 .part[data-t=sta]{--pc:#46a06a}
 .part[data-t=bal]{--pc:#c08a3e}
+.part[data-t=spc]{--pc:#8f7ad0}
 .part[data-t=x]{--pc:#5a6270}
-.part .nm{font-size:13.5px;font-weight:500;line-height:1.25;display:flex;
-  align-items:center;gap:5px;white-space:nowrap}
-.part .en{font-size:10.5px;color:var(--muted);font-family:var(--mono);line-height:1.3;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
-.part .cd{font-family:var(--mono);font-size:10px;color:var(--muted)}
-.own{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
-.qm{font-size:9.5px;color:var(--warn);border:1px solid var(--warn);border-radius:3px;
-  padding:0 3px;line-height:1.4;font-family:var(--mono)}
-.note-dot{color:var(--accent);font-size:10px}
+.thumb{aspect-ratio:1;background:var(--well);border-radius:3px;overflow:hidden;
+  position:relative;display:grid;place-items:center}
+.thumb img{width:100%;height:100%;object-fit:contain;display:block}
+.thumb .ph{font-size:9px;color:var(--muted);text-align:center;padding:4px;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.flags{position:absolute;top:3px;right:3px;display:flex;gap:3px;align-items:center}
+.own{width:7px;height:7px;border-radius:50%;background:var(--ok);
+  box-shadow:0 0 0 1.5px var(--well)}
+.wbo{font-family:var(--mono);font-size:8px;line-height:1.4;padding:0 3px;border-radius:2px;
+  background:var(--accent);color:#14161a;font-weight:500}
+.note-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 1.5px var(--well)}
+.part .nm{font-size:11px;line-height:1.25;font-weight:500;min-height:27px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.part .cd{font-family:var(--mono);font-size:9px;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .scrim{position:fixed;top:0;right:0;bottom:0;left:0;z-index:40;background:rgba(10,11,13,.72);
   opacity:0;pointer-events:none;transition:opacity .18s}
@@ -138,15 +141,22 @@ main{display:flex;flex-direction:column;gap:10px;padding:0 0 40px;
 .sheet h2{font-family:var(--disp);font-size:17px;margin:0 0 2px;font-weight:600;
   display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .sheet .sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-bottom:14px}
+.sheethead{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.sheethead .thumb{width:84px;flex:none;border:1px solid var(--rail)}
+.sheethead .meta{min-width:0;flex:1}
+.sheethead h2{margin-bottom:4px}
 .fld{margin-bottom:14px}
 .fld>label{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--muted);margin-bottom:6px}
-.tierpick{display:flex;gap:5px}
-.tierpick button{flex:1;padding:11px 0;border:1px solid var(--rail);border-radius:6px;
-  font-family:var(--disp);font-weight:600;font-size:15px;color:var(--ink-2);background:var(--ground)}
-.tierpick button.on{background:var(--panel-2);border-color:var(--ink-2);color:var(--ink)}
-.tierpick button[data-k=S].on{background:var(--accent);border-color:var(--accent);color:#14161a}
-.tierpick button[data-k="_"]{font-family:var(--body);font-size:12px}
+.tierpick{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.tierpick button{padding:9px 0;border:1px solid var(--rail);border-radius:5px;
+  font-family:var(--disp);font-weight:600;font-size:13px;color:var(--ink-2);background:var(--ground)}
+.tierpick button.on{background:var(--tc,var(--panel-2));border-color:var(--tc,var(--ink-2));
+  color:#14161a}
+.typepick{display:flex;gap:5px}
+.typepick button{flex:1;padding:9px 0;border:1px solid var(--rail);border-radius:5px;
+  font-size:13px;color:var(--ink-2);background:var(--ground)}
+.typepick button.on{border-color:var(--ink-2);color:var(--ink);background:var(--panel-2)}
 textarea,.txt{width:100%;background:var(--ground);border:1px solid var(--rail);
   border-radius:6px;padding:9px;font-size:14px}
 textarea{resize:vertical;min-height:62px}
@@ -204,194 +214,471 @@ textarea:focus,.txt:focus{outline:none;border-color:var(--accent)}
 
 <script>
 /* ============================================================
-   種子資料。tier 有值 = 有出處（見 src 欄）；null = 未分類，等自己排。
-   src: wbo = 大賽數據站彙整；jp = 日本社群共識。q:1 = 中英對照待確認。
+   零件資料：等級、名稱、型號、屬性、相片，全部抄自台灣天梯情報站
+   https://stan-yao.github.io/beyblade_x_tier/ （2026-09-08 擷取）
+   格式：等級|類別|型號|名稱|屬性|圖片路徑（前綴 https://i.ibb.co/）
    ============================================================ */
-var F = ["zh","en","code","type","tier","src","q"];
-function mk(cat, rows){
-  return rows.map(function(r,i){
-    var o = {id: cat + "-" + i, cat: cat};
-    F.forEach(function(k,j){ o[k] = r[j] === undefined ? null : r[j]; });
-    return o;
-  });
-}
+var RAW = `
+X|bl|BXH-09|魔導神杖 金屬塗層:燦金|sta|rG3TQMKC/blade-BXH-09-BXH-09-BL-EVE-936138-01.webp
+X|bl|UX-03|魔導神杖|sta|7J5TLQtf/image.png
+X|bl|UX-04-02|魔導神杖 特別版|sta|pBmSqg8J/transparent-Photoroom.webp
+X|ra||1-50|x|LDcqNgs6/RC-PRD-072447-00.webp
+X|ra||3-60|x|Hf6SBgmD/RC-PRD-910381-00.webp
+X|ra||7-60|x|mVxhG1RP/RC-PRD-096092-03.webp
+X|ra||9-60|x|JRKGkFMb/RC-PRD-982128-00.webp
+X|bi||B|x|d09xtc04/BT-PRD-910497-00.webp
+X|bi||E|x|gbd3zYWz/BT-PRD-914617-01.webp
+X|bi||FB|x|gLb9pz2p/BT-PRD-098775-03.webp
+X|bi||H|x|5W3hBwnr/BT-PRD-914570-05.webp
+X|bi||K|x|JWbHX56V/BT-PRD-939627-04.webp
+X|bi||L|x|TD7DLkR9/BT-PRD-939535-00.webp
+X|bi||LR|x|84jtp7V7/BT-PRD-939559-00.webp
+X|bi||R|x|4wJKmZFp/BT-PRD-305718-02.webp
+X|as||輔助H|x|RkFJN99P/AB-PRD-098775-01.webp
+X|as||輔助W|x|XZx4mKd3/image.webp
+S+|bl|CX-07|天馬爆擊|atk|2YYvnG14/image.png
+S+|bl|UX-15-01|鮫鯊狂鱗|atk|Q71NLfM5/image.png
+S+|bl|UX-17|隕星龍騎士(左)|atk|RG46Mfwt/image.png
+S+|bl|UX-19|子彈獅鷲|bal|k6kDdB7s/lel-TDs-N0-Pl-JZRlo-SCNb-TXem0-PZg-ZEQj-OWlp8hb-Gm.png
+S|bl|BX-23|鳳凰飛翼|atk|7JDWgWBH/transparent-Photoroom.png
+S|bl|BX-34|蒼穹龍騎士(左)|atk|6ct6nZpS/transparent-Photoroom.png
+S|bl|BX-35-01|玄冥戰甲(綠)|def|Qj1cyBMX/transparent-Photoroom.webp
+S|bl|BX-35-04|魔導神杖(綠)|sta|cXrDPTwk/transparent-Photoroom.webp
+S|bl|BX-48-01|蒼穹龍騎士(黑)|atk|YBjQS6rG/image.webp
+S|bl|BX-48-05|蒼龍爆刃(紅)|atk|xKLpFzqg/image.webp
+S|bl|BXC-03|蒼龍爆刃 金屬塗層:火紅|atk|Nd4L9v8m/blade-BXC-03-BXC-03-BL-PRD-941460-00.webp
+S|bl|BXC-20|時鐘幻象 金屬塗層:黑色 命運的倒帶士版本|sta|h1ZX948p/blade-BXC-20-BXC-20-BL-PRD-067900-00.webp
+S|bl|BXG-09|蒼穹龍騎士 金屬塗層:闇黑|atk|d4FthgqL/blade-BXG-09-BXG-09-BL-PRD-941576-00.webp
+S|bl|BXG-18|蒼龍爆刃 金屬塗層:藍 FC巴塞隆納版|atk|JW5Xn7hB/blade-BXG-18-BXG-18-BL-PRD-952312-00.webp
+S|bl|BXG-24|空力天馬(紅)|atk|spvDC7LM/image.webp
+S|bl|BXG-25-02|蒼龍爆刃 金屬塗層:珍珠白|atk|bM2r6S9x/blade-BXG-25-02-BXG-25-02-BL-PRD-953982-02.webp
+S|bl|BXG-31-01|蒼龍爆刃 金屬塗層:青|atk|pB9Jp4yW/blade-BXG-31-01-BXG-31-01-BL-PRD-957799-01.webp
+S|bl|BXG-31-02|蒼龍爆刃 金屬塗層:闇黑|atk|v64xQhtN/blade-BXG-31-02-BXG-31-02-BL-PRD-957799-02.webp
+S|bl|BXG-31-03|蒼龍爆刃 金屬塗層:紫|atk|Gf96PtNz/blade-BXG-31-03-BXG-31-03-BL-PRD-957799-03.webp
+S|bl|BXG-45|天馬爆擊(紅)|atk|8pxRT50/image.webp
+S|bl|BXG-53|蒼穹龍騎士 金屬塗層:白色 日本職業足球聯盟版|atk|GfzfRrV9/blade-BXG-53-BXG-53-BL-PRD-098843-00.webp
+S|bl|BXG-63|榮耀武神 金屬塗層:藍|atk|qMLWL04C/image-Photoroom.webp
+S|bl|BXH-10|空力天馬(藍)|atk|60kwzYTv/image.png
+S|bl|CX-08-04|蒼龍爆刃|atk|nMz6ZrLW/transparent-Photoroom.webp
+S|bl|CX-08-06|蒼穹龍騎士|atk|r2mfSqsC/transparent-Photoroom.webp
+S|bl|UX-01|蒼龍爆刃|atk|TpGXMLg/transparent-Photoroom.webp
+S|bl|UX-04-01|蒼龍爆刃 特別版|atk|5Wmg1W0R/transparent-Photoroom.webp
+S|bl|UX-08|霜輝銀狼|sta|5h4jB6t2/transparent-Photoroom.png
+S|bl|UX-16-01|時鐘幻象|sta|Y4XyYgDM/image.png
+S|bl|UX-16-02|時鐘幻象|sta|8nZkJzyJ/image.webp
+S|bl|UX-16-03|時鐘幻象|sta|twKFrPHZ/image.webp
+S|bl|UX-20|榮耀武神|atk|rfQD5Ms8/transparent-Photoroom.webp
+S|bl|UX-21-01|惡魔幽冥|bal|PvHSxGy8/blade-UX-21-01-UX-21-01-BL-PRD-085546-01.webp
+S|bl|UX-21-02|霜輝銀狼 金屬塗層:紫|sta|cSWfBRCn/blade-UX-21-02-UX-21-02-BL-PRD-085546-02.webp
+S|ra||1-60|x|S4v6vKYq/RC-PRD-305725-01.webp
+S|ra||1-70|x|6cWS1KbX/RC-PRD-085683-02.webp
+S|ra||4-50|x|SXwG59JW/RC-PRD-096122-00.webp
+S|ra||5-60|x|S7B7ktcr/RC-PRD-913030-00.webp
+S|ra||6-60|x|gZyzx0Rf/RC-PRD-939597-00.webp
+S|ra||9-70|x|hzHMRL7/RC-PRD-956969-01.webp
+S|bi||J|x|spsTd1d3/BT-PRD-997627-00.webp
+S|bi||LO|x|B2r1q1B9/BT-PRD-930907-00.webp
+S|bi||T|x|VYyhmJQ5/BT-PRD-910398-00.webp
+S|bi||UF|x|CKSBthC9/BT-PRD-982432-01.webp
+S|bi||UN|x|0SHZ0Sn/BT-PRD-097266-00.webp
+S|bi||W|x|21VVVP2D/BT-EVE-958772-03.webp
+A+|bl|A賞飛龍|A賞飛龍|spc|ZRm5NZVn/A.png
+A+|bl|BX-31-01|暴龍霸擊(紅)|atk|VWbjCT9g/transparent-Photoroom.webp
+A+|bl|BX-31-02|暴龍霸擊|atk|ZRd4KqZx/transparent-Photoroom.webp
+A+|bl|BX-35-05|鳳凰飛翼(藍)|atk|wFg5f430/transparent-Photoroom.webp
+A+|bl|BX-49|蒼龍突擊|atk|qMShhHNf/image.png
+A+|bl|BX-50-01|天堂之環|def|Q7kVGQVT/transparent-Photoroom.webp
+A+|bl|BX-50-02|天堂之環|def|9mrFcyRK/transparent-Photoroom.webp
+A+|bl|BXC-05|鳳凰飛翼|atk|HTkQZnkr/blade-BXC-05-BXC-05-BL-PRD-953654-00.webp
+A+|bl|BXG-35|鳳凰飛翼 金屬塗層:闇黑 キタニタツヤ 版|atk|ymHCLXMH/blade-BXG-35-BXG-35-BL-PRD-982128-00.webp
+A+|bl|BXG-61|天蠍長矛 金屬塗層:品紅|bal|nNy4w0Bs/blade-BXG-61-BXG-61-BL-PRD-080558-00.webp
+A+|bl|BXH-25-01|蒼龍突擊 金屬塗層:燦金|atk|hRy7Hj1L/blade-BXH-25-01-BXH-25-01-BL-EVE-077428-01.webp
+A+|bl|BXH-25-02|蒼龍突擊 金屬塗層:白銀|atk|wNs41BxM/blade-BXH-25-02-BXH-25-02-BL-EVE-077428-02.webp
+A+|bl|BXH-25-03|蒼龍突擊 金屬塗層:黃銅|atk|gn5Dnd9/blade-BXH-25-03-BXH-25-03-BL-EVE-077428-03.webp
+A+|bl|CX-11-02|魔像奇岩(綠)|def|ymb9GDmk/transparent-Photoroom.webp
+A+|bl|CX-17-05|暴龍霸擊 (粉)|atk|5hv6ZL3X/transparent-Photoroom.webp
+A+|bl|UX-10-02|暴龍霸擊(紅)|atk|vvdRtQjt/image.png
+A+|bl|UX-13|魔像奇岩|def|qYBTzRfC/transparent-Photoroom.webp
+A+|bl|UX-18-01|古屍詛咒|def|Kpn6t4YC/transparent-Photoroom.png
+A+|bl|UX-18-02|古屍詛咒 綠|def|fzM0FBdr/transparent-Photoroom.webp
+A|bl|BX-36-01|巨鯨怒濤(綠)|bal|KjXvtrfB/transparent-Photoroom.webp
+A|bl|BX-36-02|巨鯨怒濤|bal|Vc6Cvknx/transparent-Photoroom.webp
+A|bl|BX-36-03|巨鯨怒濤|bal|s9vwbqfV/transparent-Photoroom.webp
+A|bl|BX-45|武士魂斬|bal|R4MGyGcR/transparent-Photoroom.webp
+A|bl|BXC-12|武士星劍 金屬塗層:橘|atk|dwp61Qft/blade-BXC-12-BXC-12-BL-PRD-993773-00.webp
+A|bl|BXC-19|龍王閃擊BK 金屬塗層:黃|atk|0jcHqvdL/blade-BXC-19-BXC-19-BL-PRD-072447-00.webp
+A|bl|BXG-42|騎士圓甲 金屬塗層:夜藍|def|8LkFZhss/blade-BXG-42-BXG-42-BL-PRD-919124-00.webp
+A|bl|BXG-54|武士星劍(世足)|atk|VWL6Mgb4/image.webp
+A|bl|BXG-56|巨鯨怒濤 金屬塗層:藍|bal|m5Rqzdmf/blade-BXG-56-BXG-56-BL-PRD-085690-00.webp
+A|bl|CX-05-06|巨鯨怒濤(黃)|bal|nMrTq33q/transparent-Photoroom.webp
+A|bl|CX-11-01|帝王威能|bal|3mVtnZzG/transparent-Photoroom.webp
+A|bl|CX-12|鳳凰閃焰|def|fz3j4jDn/transparent-Photoroom.webp
+A|bl|CX-13|龍王閃擊|atk|Zp6LDhkW/transparent-Photoroom.png
+A|bl|CX-16|龍王閃擊 異色版|atk|nNtz2f9c/image.webp
+A|bl|CX-17-01|獨角極變(藍)|bal|qXHVjW7/image.png
+A|bl|CX-17-02|獨角極變(粉)|bal|pBgytwPX/image.webp
+A|bl|CX-17-03|武士星劍(紅)|atk|gZPwM59b/image.png
+A|bl|CX-18-01|腕龍鞭擊(紫)|sta|FL68g3Tx/image.png
+A|bl|CX-18-02|腕龍鞭擊(黃)|sta|TDcc1wV9/image.webp
+A|bl|CX-18-03|腕龍鞭擊(黑)|sta|MkV6kPtv/image.webp
+A|bl|UX-14|天蠍長矛|bal|4gsBXw39/transparent-Photoroom.png
+A|ra||0-60|x|CNQcsDf/RC-PRD-097242-00.webp
+A|ra||4-60|x|q3R69FMy/RC-PRD-305732-01.webp
+A|ra||7-55|x|3y5xGdgc/RC-PRD-097167-01.webp
+A|ra||7-70|x|53nmJcY/RC-PRD-997610-02.webp
+A|ra||8-70|x|6J4xmV7k/RC-PRD-097266-00.webp
+A|bi||F|x|zdJJwwW/BT-PRD-910381-00.webp
+A|bi||FF|x|GQddSgB5/BT-PRD-096122-00.webp
+A|bi||GU|x|yBFktZKg/BT-PRD-096146-01.webp
+A|bi||LF|x|CZjVzD3/BT-PRD-912965-05.webp
+A|bi||NR|x|k64nLpVS/image.png
+A|bi||O|x|bMP9BGLB/BT-PRD-912972-01.webp
+A|bi||OP|x|9kyDzPDT/image.png
+A|bi||P|x|8g692mj8/BT-PRD-980841-02.webp
+A|bi||U|x|99kvXbQ5/BT-PRD-914556-00.webp
+A|as||輔助F|x|8g8Q0pTM/AB-PRD-097242-00.webp
+A|as||輔助G|x|gb7nxyBH/AB-PRD-100003-00.webp
+A|as||輔助J|x|RkHcPyKV/AB-PRD-993889-00.webp
+B+|bl|BX-50-03|衝擊龍神|atk|99KgQ1kc/transparent-Photoroom.webp
+B+|bl|BXC-15|大蛇簇擁|atk|1G6fBycB/blade-BXC-15-BXC-15-BL-PRD-997023-00.webp
+B+|bl|BXH-14|戰神伏特|atk|nNHfFppj/image.webp
+B+|bl|CX-14|騎士堡壘|def|XZ3vbxx6/transparent-Photoroom.webp
+B+|bl|UX-09|武士星劍|atk|20Ds5SzG/transparent-Photoroom.webp
+B+|bl|UX-10-01|騎士圓甲|def|R43HWCgG/image.png
+B+|bl|UX-11|衝擊龍神|atk|0Sr5t6k/transparent-Photoroom.webp
+B|bl|BX-21-01|惡魔鎖鏈|bal|Kx9BqDHY/transparent-Photoroom.webp
+B|bl|BX-38|赫燃天鳳|bal|k2Q7BJ0T/transparent-Photoroom.webp
+B|bl|BXG-08|惡魔鎖鏈 黑|bal|8n4TSfbV/image.webp
+B|bl|BXG-51|蒼龍勇氣 金屬塗層:闇黑|atk|chg1GXwf/blade-BXG-51-BXG-51-BL-PRD-080572-00.webp
+B|bl|BXH-16-01|蒼龍勇氣S 金屬塗層:燦金|atk|h1cMnhPp/blade-BXH-16-01-BXH-16-01-BL-EVE-982524-01.webp
+B|bl|BXH-16-02|蒼龍勇氣S 金屬塗層:白銀|atk|1tc7TJPW/blade-BXH-16-02-BXH-16-02-BL-EVE-982524-02.webp
+B|bl|BXH-16-03|蒼龍勇氣S 金屬塗層:黃銅|atk|1Yts8B2t/blade-BXH-16-03-BXH-16-03-BL-EVE-982524-03.webp
+B|bl|BXH-22|邪神狂怒FE 金屬塗層:燦金|sta|9HnnYbF7/blade-BXH-22-BXH-22-BL-EVE-088899-00.webp
+B|bl|BXH-23|龍神勇氣|sta|PGCFjwgj/transparent-Photoroom.webp
+B|bl|CX-01|蒼龍勇氣|atk|xP8TgMk/transparent-Photoroom.webp
+B|bl|CX-04-01|蒼龍勇氣 特別版|atk|DPBC4B2P/image.webp
+B|bl|CX-15|邪神狂怒|sta|VchmS4Pm/transparent-Photoroom.webp
+B|bl|CX-17-06|赫燃天鳳|bal|4Zc4skPH/transparent-Photoroom.webp
+B|ra||0-70|x|ks17XmFj/RC-PRD-085683-01.webp
+B|ra||0-80|x|Y5y8mYT/RC-PRD-100001-01.webp
+B|ra||3-70|x|5DqNTjL/RC-PRD-914570-03.webp
+B|ra||6-70|x|YBRR0gBq/RC-PRD-939580-00.webp
+B|ra||7-80|x|FL7jBGry/RC-PRD-939511-01.webp
+B|ra||9-80|x|TBnyYjNm/RC-PRD-305725-02.webp
+B|bi||D|x|fdqdcBXD/BT-PRD-914570-01.webp
+B|bi||GR|x|FqXbgtHT/BT-PRD-956969-01.webp
+B|bi||HN|x|WNspkVQX/BT-PRD-910565-00.webp
+B|bi||TK|x|DP2gdCb6/BT-PRD-995678-00.webp
+B|bi||WB|x|dJkDfpfK/BT-PRD-956983-01.webp
+B|bi||Y|x|nqncxxrS/BT-EVE-088899-00.webp
+B|as||輔助K|x|7tXdDbyk/AB-PRD-072447-00.webp
+B|as||輔助S|x|SDDTnTTj/AB-PRD-993872-00.webp
+C+|bl|BX-14-01|鮫鯊鋒鰭(紫)|atk|yFzFdYvj/transparent-Photoroom.webp
+C+|bl|BX-14-02|鮫鯊鋒鰭(黃)|atk|nMQ5S5Zg/image.webp
+C+|bl|BX-20-02|鮫鯊鋒鰭|atk|93bZBV9F/image.webp
+C+|bl|BX-31-05|鮫鯊鋒鰭|atk|Swp92bmN/transparent-Photoroom.webp
+C+|bl|BX-46-01|蒼穹龍神|atk|YTTLXFxr/transparent-Photoroom.webp
+C+|bl|BX-48-02|鮫鯊鋒鰭(藍)|atk|fYDyfxqj/image.webp
+C+|bl|BXG-06|鮫鯊鋒鰭 金屬塗層:藍|atk|35ChQBcG/blade-BXG-06-BXG-06-BL-PRD-936121-00.webp
+C+|bl|BXG-23|蒼穹龍神 透明版|atk|QFxNDkLr/transparent-Photoroom.webp
+C+|bl|BXG-55|鮫鯊鋒鰭 金屬塗層:闇黑|atk|h1ych38b/blade-BXG-55-BXG-55-BL-PRD-085706-00.webp
+C+|bl|BXG-81|雄鹿鹿角|def|Wpv2VLMX/transparent-Photoroom.webp
+C+|bl|BXH-01|蒼穹龍神 金屬塗層:藍|atk|gQ4z35W/blade-BXH-01-BXH-01-BL-PRD-910510-00.webp
+C+|bl|CX-06-01|極狐九尾(白)|atk|SwW17ynD/transparent-Photoroom.webp
+C+|bl|CX-06-02|極狐九尾(黑)|atk|Rp1std6X/transparent-Photoroom.webp
+C+|bl|CX-06-03|極狐九尾(金)|atk|KxRv3bx1/transparent-Photoroom.webp
+C+|bl|CX-08-01|魔犬烈焰|sta|4wXtG85J/transparent-Photoroom.webp
+C+|bl|CX-08-02|巨鯨烈焰|sta|XZ85z1yY/transparent-Photoroom.webp
+C+|bl|CX-09|焰神滅世|bal|FkMzT42B/transparent-Photoroom.webp
+C+|bl|UX-15-02|暴龍咆哮|atk|6RcZ4579/image.png
+C|bl|BX-02|惡魔紅鐮|bal|V00HGv8c/transparent-Photoroom.webp
+C|bl|BX-08-01|惡魔紅鐮|bal|Tqp0b79D/image.webp
+C|bl|BX-14-04|惡魔紅鐮(綠)|bal|5x5gB3Kw/image.webp
+C|bl|BX-48-04|惡魔紅鐮(金)|bal|nN2jP1Vv/image.webp
+C|bl|BXG-03|惡魔紅鐮 金屬塗層:燦金|bal|Y7KSjqW3/blade-BXG-03-BXG-03-BL-PRD-913344-00.webp
+C|bl|BXG-43|魔導至尊R 金屬塗層:闇黑|sta|zTS1b0gQ/blade-BXG-43-BXG-43-BL-PRD-930907-00.webp
+C|bl|BXG-79|黃蜂要塞|bal|jP7gfzWJ/transparent-Photoroom.webp
+C|bl|BXG-80|海妖扭動|sta|v68j5fG8/transparent-Photoroom.webp
+C|bl|BXH-15|英仙幽冥B 金屬塗層:燦金|def|3YGshtQ7/blade-BXH-15-BXH-15-BL-EVE-958772-01.webp
+C|bl|CX-02|魔導至尊|sta|wF1gLr7L/transparent-Photoroom.webp
+C|bl|CX-03|英仙幽冥|def|qFX315B1/transparent-Photoroom.webp
+C|bl|CX-04-02|英仙幽冥 特別版|def|SXjSWYrZ/image.webp
+C|bl|CX-05-01|惡魔獵魂|bal|xS059MKp/transparent-Photoroom.webp
+C|bl|CX-05-02|戰犀獵魂|bal|B5fKrN0f/transparent-Photoroom.webp
+C|bl|CX-10|銀狼狩獵|sta|JwjGWC0z/transparent-Photoroom.webp
+C|ra||4-55|x|b5tknBDf/RC-PRD-989002-02.webp
+C|ra||5-70|x|hx4tBvKV/RC-PRD-305749-02.webp
+C|bi||A|x|67P0pKRr/BT-PRD-941460-00.webp
+C|bi||C|x|35VFMDzD/BT-PRD-914563-00.webp
+C|bi||GP|x|35p4JG5F/BT-PRD-914464-00.webp
+C|bi||I|x|NgmzmqX2/BT-PRD-097259-00.webp
+C|bi||TP|x|99n11Swy/BT-PRD-939504-00.webp
+C|bi||WW|x|PsXbxB2x/BT-PRD-096153-00.webp
+C|bi||Z|x|F4v6h2Qx/BT-PRD-080558-00.webp
+C|as||輔助E|x|bMrcwxsB/AB-EVE-088899-00.webp
+C|as||輔助T|x|7JV9VPN6/AB-PRD-994350-00.webp
+C|as||輔助V|x|tPNXjsHy/AB-PRD-097266-00.webp
+C|as||輔助Z|x|zVFrNL8L/AB-PRD-096153-00.webp
+D+|bl|BX-01|蒼龍神劍|atk|93YhYZ8Y/transparent-Photoroom.webp
+D+|bl|BX-04|騎士重盾|def|bR83Wcrk/transparent-Photoroom.webp
+D+|bl|BX-06|騎士重盾(藍)|def|9mjy25x6/image.webp
+D+|bl|BX-07|蒼龍神劍 特別版|atk|93YhYZ8Y/transparent-Photoroom.webp
+D+|bl|BX-08-02|騎士重盾|def|mC0yHkhb/transparent-Photoroom.webp
+D+|bl|BX-14-03|蒼龍神劍(黑)|atk|B9fBv0g/image.webp
+D+|bl|BX-14-05|騎士重盾(青)|def|PZS1cGmj/image.webp
+D+|bl|BX-17-01|蒼龍神劍 火紅版|atk|kV9LF12j/image.webp
+D+|bl|BX-20-01|蒼龍利刃|atk|jk7KXkqp/image.png
+D+|bl|BX-20-03|騎士重盾|def|S4LD9pbK/image.webp
+D+|bl|BX-22|蒼龍神劍|atk|tpLKk5Kn/transparent-Photoroom.webp
+D+|bl|BX-31-03|惡魔鎖鏈|bal|VY5yhPN3/transparent-Photoroom.webp
+D+|bl|BX-31-04|蒼龍利刃|atk|MmRTwp0/transparent-Photoroom.webp
+D+|bl|BX-44|三角強襲|def|MyNv1sm2/transparent-Photoroom.webp
+D+|bl|BXA-01|蒼龍神劍|atk|X9Xv43C/blade-BXA-01-BXA-01-BL-PRD-939672-00.webp
+D+|bl|BXC-00-01|蒼龍神劍 金屬塗層:燦金|atk|5hr029dW/blade-BXC-00-01-BXC-00-01-BL-EVE-910909-01.webp
+D+|bl|BXC-00-02|蒼龍神劍 金屬塗層:白銀|atk|qLVfjP8Y/blade-BXC-00-02-BXC-00-02-BL-EVE-910909-02.webp
+D+|bl|BXC-00-03|蒼龍神劍 金屬塗層:黃銅|atk|hJyqJnC2/blade-BXC-00-03-BXC-00-03-BL-EVE-910909-03.webp
+D+|bl|BXC-07|鱷魚粉碎|atk|LTV2DFD/transparent-Photoroom.webp
+D+|bl|BXG-12-04|蒼龍神劍 閃耀貼紙版|atk|99K3skdx/blade-BXG-12-04-BXG-12-04-BL-PRD-946816-04.webp
+D+|bl|BXG-14|蒼龍利刃|atk|HLqNrFcz/image-Photoroom.webp
+D+|bl|BXG-25-01|蒼龍神劍 金屬塗層:珍珠白|atk|DgQpkmYV/blade-BXG-25-01-BXG-25-01-BL-PRD-953982-01.webp
+D+|bl|BXG-25-03|蒼龍利刃 金屬塗層:珍珠白|atk|TG0yhYh/blade-BXG-25-03-BXG-25-03-BL-PRD-953982-03.webp
+D+|bl|BXG-49|蒼龍神劍 版本2.0|atk|vvzcc1pz/blade-BXG-49-BXG-49-BL-PRD-603873-00.webp
+D+|bl|BXG-52|蒼龍神劍 金屬塗層:闇黑|atk|jkWJHnpZ/blade-BXG-52-BXG-52-BL-PRD-090960-00.webp
+D+|bl|BXH-02|騎士重盾 金屬塗層:燦金|def|2765gXkV/blade-BXH-02-BXH-02-BL-EVE-910879-01.webp
+D+|bl|CX-05-05|鳳凰尾翼(黑)|sta|bgfn4wj5/transparent-Photoroom.webp
+D+|bl|UX-07-01|鳳凰尾翼|sta|yFKp6VBC/transparent-Photoroom.webp
+D+|bl|UX-18-05|蒼龍利刃|atk|hJHNq4vV/transparent-Photoroom.webp
+D|bl|BX-03|魔導幻箭|sta|Gv43b1Y5/transparent-Photoroom.webp
+D|bl|BX-05|魔導幻箭|sta|93qpkJ6m/image.webp
+D|bl|BX-08-03|魔導幻箭|sta|XxWCvdS5/image.webp
+D|bl|BX-14-06|魔導幻箭(紅)|sta|8DPR18tm/image.webp
+D|bl|BX-16-01|王蛇鞭尾|sta|Rpbc2LdF/transparent-Photoroom.webp
+D|bl|BX-16-02|王蛇鞭尾|sta|JwMdxyy7/image.webp
+D|bl|BX-16-03|王蛇鞭尾|sta|hJkMtnHh/image.webp
+D|bl|BX-17-02|魔導幻箭 水籃版|sta|gLgQpkg8/image.webp
+D|bl|BX-21-03|魔導幻箭|sta|0VmvnJhY/image.webp
+D|bl|BX-24-01|飛龍旋翼(綠)|sta|ZzmfHm4G/transparent-Photoroom.webp
+D|bl|BX-24-04|王蛇鞭尾|sta|HTnyFsGR/transparent-Photoroom.webp
+D|bl|BX-24-06|魔導幻箭|sta|GfJvyhrj/transparent-Photoroom.webp
+D|bl|BX-26|幻獸刺心|bal|dst33fBQ/transparent-Photoroom.webp
+D|bl|BX-33|皓戰猛虎|bal|Lhq4jzx4/transparent-Photoroom.webp
+D|bl|BX-35-02|玄冥戰甲(黃)|def|Q3Q3kTpK/transparent-Photoroom.webp
+D|bl|BX-35-03|幻獸刺心|bal|TqF975tZ/transparent-Photoroom.webp
+D|bl|BX-35-06|王蛇鞭尾|sta|3yFTX5Nv/transparent-Photoroom.webp
+D|bl|BX-48-03|猛獁獠牙(黑)|bal|sdq4PV91/image.png
+D|bl|BX-50-04|幽靈元魂|def|rG7vsKS1/transparent-Photoroom.webp
+D|bl|BXG-19|惡魔重錘 金屬塗層:紅 FC巴塞隆納版|bal|twS7pSX5/blade-BXG-19-BXG-19-BL-PRD-952329-00.webp
+D|bl|BXG-32|猛瑪長牙(闇黑)|bal|S4XNK9mz/image.webp
+D|bl|CX-05-04|雄獅巔峰|def|gZ3PkZ3f/transparent-Photoroom.webp
+D|bl|CX-08-05|玄冥戰甲|def|7xZpD0vK/transparent-Photoroom.webp
+D|bl|CX-17-04|惡魔重錘|bal|r2KzVdpj/transparent-Photoroom.webp
+D|bl|UX-02|惡魔重錘|bal|8Rcwcgw/transparent-Photoroom.webp
+D|bl|UX-06|雄獅巔峰|def|LD0xzDLX/transparent-Photoroom.webp
+D|bl|UX-10-04|惡魔重錘(藍)|atk|hJ2Qh15K/image.webp
+D|bl|UX-12-01|幽靈元魂(紫) 籤王|sta|v4PGj3FR/image.png
+D|bl|UX-12-02|幽靈元魂(綠)|sta|C3YYfwgD/transparent-Photoroom.webp
+D|bl|UX-18-06|皓戰猛虎|bal|MykVT9ZR/transparent-Photoroom.webp
+D|ra||1-80|x|pv1WbSQX/RC-PRD-305718-02.webp
+D|ra||3-80|x|1Yz5c1ZR/RC-PRD-305732-02.webp
+D|ra||3-85|x|1jsfKXB/RC-PRD-096092-04.webp
+D|ra||4-70|x|TDMwLcSR/RC-PRD-305718-01.webp
+D|ra||6-80|x|4g5HcBfr/RC-PRD-957492-00.webp
+D|ra||9-65|x|hxXTHhHk/RC-PRD-096146-03.webp
+D|ra||M-85|x|r84YMht/RC-PRD-939528-00.webp
+D|bi||DB|x|JNqbHNS/BT-PRD-953654-00.webp
+D|bi||G|x|hxDv2wrP/BT-PRD-914594-01.webp
+D|bi||GB|x|LhCn6cvc/BT-PRD-305718-01.webp
+D|bi||GF|x|b5RxD0dB/BT-PRD-913092-00.webp
+D|bi||HT|x|0y12LzKG/BT-PRD-305725-02.webp
+D|bi||S|x|hhvNw09/BT-PRD-913061-00.webp
+D|bi||V|x|XZmBgtjK/BT-PRD-939597-00.webp
+D|as||輔助A|x|J46y2jN/AB-PRD-930495-00.webp
+D|as||輔助B|x|4gN9wBGp/AB-PRD-085683-01.webp
+D|as||輔助C|x|Sw6KHqwk/AB-PRD-939627-02.webp
+D|as||輔助D|x|zHCTnyRn/AB-PRD-995678-00.webp
+D|as||輔助M|x|8DzkVyNY/AB-PRD-956983-02.webp
+E+|bl|BX-24-02|飛龍旋翼(黃)|sta|SCCsvCj/transparent-Photoroom.webp
+E+|bl|BX-39-01|護城龍神(紅)|bal|rRcDxvsw/transparent-Photoroom.webp
+E+|bl|BX-39-02|護城龍神|bal|Nnbt4wdz/transparent-Photoroom.webp
+E+|bl|BX-46-02|戰羊阻截|def|b5WHrXdD/transparent-Photoroom.webp
+E+|bl|CX-11-03|鮫鯊撕裂|sta|XfSdSDGM/transparent-Photoroom.webp
+E+|bl|UX-07-02|飛龍旋翼|sta|TBck0Zv0/transparent-Photoroom.webp
+E+|bl|UX-10-03|翼龍神翼|sta|Q7MZhVNk/image.png
+E+|bl|UX-12-06|飛龍旋翼|sta|sddHKWZn/transparent-Photoroom.webp
+E|bl|BX-13|騎士長槍|def|QFyjd5zf/transparent-Photoroom.webp
+E|bl|BX-15|雄獅獵爪|bal|Wp2nfqjH/transparent-Photoroom.webp
+E|bl|BX-19|戰犀重角|def|8DY1DCHs/transparent-Photoroom.webp
+E|bl|BX-21-02|騎士長槍|def|CsMfQFL3/image.webp
+E|bl|BX-24-03|騎士長槍|def|Gv5qRqvf/transparent-Photoroom.webp
+E|bl|BX-24-05|雄獅獵爪|bal|NdpVzxSt/transparent-Photoroom.webp
+E|bl|BX-27-01|魔獸護甲|def|gb7xFkHB/transparent-Photoroom.webp
+E|bl|BX-27-02|魔獸護甲|def|pjxL4Hh8/transparent-Photoroom.webp
+E|bl|BX-27-03|魔獸護甲|def|fVZG79yL/transparent-Photoroom.webp
+E|bl|BX-31-06|戰犀重角|def|KpQMbdsB/transparent-Photoroom.webp
+E|bl|BX-37|悍熊猛爪|def|B5DfyPGz/transparent-Photoroom.webp
+E|bl|BX-39-03|護城龍神|bal|0ymvNxN1/transparent-Photoroom.webp
+E|bl|BXC-11|武士鋼鐵|bal|prGBm3st/transparent-Photoroom.webp
+E|bl|BXG-05|雄獅獵爪(燦金)|bal|Lz1T6W3X/image.webp
+E|bl|BXG-16|忍者刺刀|def|Y9nrksq/transparent-Photoroom.webp
+E|bl|UX-05-01|忍者闇影(紫)|def|bj9pZGpW/transparent-Photoroom.webp
+E|bl|UX-05-02|忍者闇影(黑)|def|QWk7yD9/transparent-Photoroom.webp
+E|bl|UX-05-03|忍者闇影(黃)|def|6JXNbcjw/transparent-Photoroom.webp
+E|bl|UX-07-03|魔獸護甲|def|d0xRRNsb/transparent-Photoroom.webp
+E|bl|UX-12-03|忍者闇影(藍)|def|4ZVfMBqF/transparent-Photoroom.webp
+E|bl|UX-12-04|雄獅獵爪|bal|7dLG6Q07/transparent-Photoroom.webp
+E|ra||2-60|x|Sw53PftL/RC-PRD-914563-00.webp
+E|ra||2-70|x|6JBNgF3m/RC-PRD-993773-00.webp
+E|ra||2-80|x|fV2xdjHX/RC-PRD-096092-05.webp
+E|ra||4-80|x|8gn78PWr/RC-PRD-305749-01.webp
+E|ra||5-80|x|Y71N9MCR/RC-PRD-912972-01.webp
+E|bi||BS|x|SXT4QDtC/BT-PRD-939528-00.webp
+E|bi||GN|x|HTTS6Wc8/BT-PRD-914600-00.webp
+E|bi||M|x|rRRWGK0j/BT-PRD-939580-00.webp
+E|bi||MN|x|b06bnWt/BT-PRD-956983-04.webp
+E|bi||N|x|skPxz54/BT-PRD-910404-00.webp
+E|bi||Q|x|LddNyspT/BT-PRD-914532-01.webp
+E|bi||RA|x|kbtyW4j/BT-PRD-946816-01.webp
+E|bi||Tr|x|m5tyNsjb/BT-PRD-930495-00.webp
+E|as||輔助O|x|nSKQy2V/AB-PRD-096146-01.webp
+E|as||輔助R|x|hFrN9b1W/AB-PRD-930907-00.webp
+-|bl|BX-00-01|歐比王肯諾比|def|7xXhvqpT/image.png
+-|bl|BX-00-02|丘巴卡|sta|3yXk338Z/blade-BX-00-02-BX-00-02-BL-PRD-305749-01.webp
+-|bl|BX-00-02|風暴兵|def|SDBN6Rpg/blade-BX-00-02-BX-00-02-BL-PRD-305749-02.webp
+-|bl|BX-00-03|紅浩克|atk|nhT88Cj/blade-BX-00-03-BX-00-03-BL-PRD-305718-02.webp
+-|bl|BX-00-03|美國隊長|atk|d4FnKQjX/blade-BX-00-03-BX-00-03-BL-PRD-305718-01.webp
+-|bl|BX-00-04|終極蜘蛛人|sta|jvp3TJk3/blade-BX-00-04-BX-00-04-BL-PRD-305725-01.webp
+-|bl|BX-00-04|綠惡魔|sta|ZpphTq9C/blade-BX-00-04-BX-00-04-BL-PRD-305725-02.webp
+-|bl|BX-50-05|銀狼烈焰|atk|Z67nxJhy/transparent-Photoroom.webp
+-|bl|BX-50-06|魔犬獵魂|sta|GQJCXRFH/transparent-Photoroom.webp
+-|bl|BXC-02|地獄鐮刀 特別跨界陀螺|bal|MxJPt76w/blade-BXC-02-BXC-02-BL-PRD-932970-00.webp
+-|bl|BXC-13|蒼龍至尊S 金屬塗層:水藍|sta|kVVX181T/blade-BXC-13-BXC-13-BL-PRD-993872-00.webp
+-|bl|BXG-01|烈焰飛鳳S|bal|tMWjhbWN/transparent-Photoroom.webp
+-|bl|BXG-04|銀牙烈虎|bal|9Hph9MP0/transparent-Photoroom.webp
+-|bl|BXG-07-00|雷霆天龍(上升攻擊型)|atk|rKywpCGp/transparent-Photoroom.webp
+-|bl|BXG-07-01|雷霆天龍(連擊型)|atk|PvX7S5qq/transparent-Photoroom.webp
+-|bl|BXG-11|堅甲戰龜|def|nM1KrHRL/transparent-Photoroom.webp
+-|bl|BXG-12-00|暴風天馬|atk|NgXZYg0x/blade-BXG-12-00-BXG-12-00-BL-PRD-096504-00.webp
+-|bl|BXG-12-01|龍騎士S|atk|0ppL3hQ9/transparent-Photoroom.webp
+-|bl|BXG-12-02|暴風天馬|atk|spq5FVt4/transparent-Photoroom.webp
+-|bl|BXG-12-03|天翼戰神|atk|pjf5kTnm/transparent-Photoroom.webp
+-|bl|BXG-13|神力聖劍|atk|whrzQj42/transparent-Photoroom.webp
+-|bl|BXG-15|烈焰飛鳳S 闇黑版|bal|9H4L0P7C/blade-BXG-15-BXG-15-BL-PRD-947110-00.webp
+-|bl|BXG-20|巨岩雄獅|def|5hpbp4LM/transparent-Photoroom.webp
+-|bl|BXG-21|暴風巨神|bal|zHPCp2XK/transparent-Photoroom.webp
+-|bl|BXG-22|龍騎士S|atk|0ppL3hQ9/transparent-Photoroom.webp
+-|bl|BXG-29-01|鋼鐵人|sta|PGNMFwmx/blade-BXG-29-01-BXG-29-01-BL-PRD-980841-01.webp
+-|bl|BXG-29-02|薩諾斯|bal|Z1fdc1Ng/blade-BXG-29-02-BXG-29-02-BL-PRD-980841-02.webp
+-|bl|BXG-30-01|蜘蛛人|bal|d4RsBY6B/blade-BXG-30-01-BXG-30-01-BL-PRD-980858-01.webp
+-|bl|BXG-30-02|猛毒|def|pv2DxrVJ/blade-BXG-30-02-BXG-30-02-BL-PRD-980858-02.webp
+-|bl|BXG-33-01|路克天行者|sta|kgPdYtKS/image.webp
+-|bl|BXG-33-02|達斯維達|bal|ZRzChgJT/image.webp
+-|bl|BXG-34-01|曼達洛人|atk|qM0QDqJ7/blade-BXG-34-01-BXG-34-01-BL-PRD-982357-01.webp
+-|bl|BXG-34-02|星區長吉迪恩|def|nsGfyPvs/blade-BXG-34-02-BXG-34-02-BL-PRD-982357-02.webp
+-|bl|BXG-36-01|柯博文|bal|fdtS3ZGm/image.webp
+-|bl|BXG-36-02|密卡登|sta|gZ78f6Gr/image.webp
+-|bl|BXG-37-01|金剛王|atk|DPQc3yYK/blade-BXG-37-01-BXG-37-01-BL-PRD-982487-01.webp
+-|bl|BXG-37-02|天王星|def|JRk2Lwwy/blade-BXG-37-02-BXG-37-02-BL-PRD-982487-02.webp
+-|bl|BXG-38|雄獅獠牙|atk|cSYHTC43/T4-60A.png
+-|bl|BXG-39|飛龍懸浮 金屬塗層:紫|def|63G90V5/blade-BXG-39-BXG-39-BL-PRD-993643-00.webp
+-|bl|BXG-39|飛龍懸浮 DMM 抽獎A獎|def|Y4WzLMQz/blade-BXG-39-BXG-39-BL-PRD-993636-00.webp
+-|bl|BXG-40-01|暴龍|def|fV3mTgMm/image.webp
+-|bl|BXG-40-02|滄龍|atk|gbZbP370/image.webp
+-|bl|BXG-41-01|翼龍|def|0R1KP33y/transparent-Photoroom.webp
+-|bl|BXG-41-02|棘龍|bal|VWGygS6f/transparent-Photoroom.webp
+-|bl|BXG-47|暴風天馬|atk|C3Hb3VGN/blade-BXG-47-BXG-47-BL-PRD-096504-00.webp
+-|bl|BXG-57-01|福音戰士至尊 B 零號機版本|bal|yJ5cGCv/blade-BXG-57-01-BXG-57-01-BL-PRD-085683-01.webp
+-|bl|BXG-57-02|福音戰士勇氣 A 初號機版本|atk|5hrLVZYW/blade-BXG-57-02-BXG-57-02-BL-PRD-085683-02.webp
+-|bl|BXG-57-03|福音戰士九尾 T ２號機版本|atk|jvnv9Y1Z/blade-BXG-57-03-BXG-57-03-BL-PRD-085683-03.webp
+-|bl|BXG-70|迪卡狂怒|bal|6jb1Tpv/image-Photoroom.webp
+-|bl|CX-05-03|惡魔至尊|sta|rKwhY9Jq/image.webp
+-|bl|CX-08-03|魔犬幽冥|def|k6mTpQBF/image.webp
+-|bl|CX-19-01|鱷魚碾壓|def|Swn2ngWx/image-Photoroom.webp
+-|bl|CX-19-02|鱷魚碾壓|def|jZGqQnTN/image-Photoroom.webp
+-|bl|CX-19-03|鱷魚碾壓|def|0jrVWG9w/image-Photoroom.webp
+-|bl|UX-10-05|騎士圓甲改造組|atk|XZgwDSyx/BT-PRD-939542-05.webp
+-|bl|UX-10-06|騎士圓甲改造組|atk|tw8hxP2R/BT-PRD-939542-06.webp
+-|bl|UX-12-05|鳳凰翔羽(黑)|atk|pBs7Rrdq/image.png
+-|bl|UX-15-03|惡魔勇氣|atk|5X46XXPs/transparent-Photoroom.webp
+-|bl|UX-18-03|天馬九尾|atk|svbrfZzS/transparent-Photoroom.webp
+-|bl|UX-18-04|焰神勇氣|atk|SGDZkg5/transparent-Photoroom.webp
+-|bl|UX-21-03|飛龍懸浮|def|d0F6m35G/blade-UX-21-03-UX-21-03-BL-PRD-085546-03.webp
+-|as||輔助Q|x|zHJM6NWy/assist-CX-19-01-Q-AB-PRD-080626-01.webp
+-|ra||8-80|x|BHsjN51n/ratchet-UX-21-03-8-80-RC-PRD-085546-03.webp
+-|bi||DS|x|TBBBdBhB/BT-PRD-100001-01.webp
+`;
 
-var BLADE = mk("bl", [
-  ["鮫鯊狂鱗","Shark Scale","UX-15-01","atk","S","wbo"],
-  ["魔導神杖","Wizard Rod","UX-03","sta","S","wbo"],
-  ["空力天馬","Aero Pegasus","BXH-10","atk","S","wbo"],
-  ["蒼穹龍騎士","Cobalt Dragoon","BX-34","atk","S","wbo"],
-  ["天馬爆擊","Pegasus Blast","CX-07","atk","S","wbo",1],
-  ["榮耀武神","Glory Valkyrie","UX-20","atk","S","wbo"],
+var IMG_BASE = "https://i.ibb.co/";
 
-  ["隕星龍騎士","Meteor Dragoon","UX-17","atk","A","wbo"],
-  ["飛龍懸浮","Hover Wyvern","UX-21-03","def","A","wbo"],
-  ["騎士重盾","Knight Shield","BX-04","def","A","wbo"],
-  ["鳳凰飛翼","Phoenix Wing","BX-23","atk","A","wbo"],
-  ["霜輝銀狼","Silver Wolf","UX-08","sta","A","wbo"],
+/* 英文名對照。只填我核到嘅，其餘留空 —— 唔靠估。 */
+var EN = {
+  "UX-15-01":"Shark Scale","UX-03":"Wizard Rod","BXH-10":"Aero Pegasus","BXG-24":"Aero Pegasus",
+  "BX-34":"Cobalt Dragoon","CX-07":"Pegasus Blast","UX-20":"Glory Valkyrie",
+  "UX-17":"Meteor Dragoon","UX-21-03":"Hover Wyvern","BX-04":"Knight Shield",
+  "BX-23":"Phoenix Wing","UX-08":"Silver Wolf","BX-01":"Dran Sword","BX-49":"Dran Blitz",
+  "UX-19":"Bullet Griffon","UX-10-02":"Tyranno Beat","UX-11":"Impact Drake",
+  "UX-16-01":"Clock Mirage","UX-18-01":"Mummy Curse","BX-02":"Hells Scythe","BX-44":"Delta",
+  "UX-01":"Dran Buster","CX-01":"Dran Brave","BX-20-01":"Dran Dagger","BX-46-01":"Cobalt Drake",
+  "BX-20-02":"Shark Edge","UX-13":"Golem Rock","UX-14":"Scorpio Spear","BX-36-02":"Whale Wave",
+  "BX-03":"Wizard Arrow","BX-16-01":"Viper Tail","BX-24-01":"Wyvern Gale","UX-02":"Hells Hammer",
+  "BX-21-01":"Hells Chain","BX-15":"Leon Claw","BX-13":"Knight Lance","UX-09":"Samurai Saber",
+  "LR":"Low Rush","FB":"Free Ball","H":"Hexa","UF":"Under Flat","E":"Elevate","R":"Rush",
+  "K":"Kick","B":"Ball","UN":"Under Needle","O":"Orb","F":"Flat","LF":"Low Flat","N":"Needle",
+  "P":"Point","S":"Spike","T":"Taper","GB":"Gear Ball","GF":"Gear Flat","GN":"Gear Needle",
+  "GP":"Gear Point","HN":"High Needle","HT":"High Taper","MN":"Metal Needle"
+};
 
-  ["蒼龍神劍","Dran Sword","BX-01","atk","B","wbo"],
-  ["蒼龍突擊","Dran Blitz","BX-49","atk","B","wbo",1],
-  ["子彈獅鷲","Bullet Griffon","UX-19","bal","B","wbo"],
-  ["暴龍霸擊","Tyranno Beat","UX-10-02","atk","B","wbo"],
-  ["衝擊龍神","Impact Drake","UX-11","atk","B","wbo"],
-  ["時鐘幻象","Clock Mirage","UX-16-01","sta","B","wbo"],
-
-  ["古屍詛咒","Mummy Curse","UX-18-01","def","C","wbo"],
-  ["惡魔紅鐮","Hells Scythe","BX-02","bal","C","wbo"],
-  ["三角強襲","Delta","BX-44","def","C","wbo",1],
-
-  ["蒼龍爆刃","Dran Buster","UX-01","atk",null,null],
-  ["蒼龍勇氣","Dran Brave","CX-01","atk",null,null],
-  ["蒼龍利刃","Dran Dagger","BX-20-01","atk",null,null],
-  ["蒼穹龍神","Cobalt Drake","BX-46-01","atk",null,null],
-  ["鮫鯊鋒鰭","Shark Edge","BX-20-02","atk",null,null],
-  ["暴龍咆哮",null,"UX-15-02","atk",null,null],
-  ["極狐九尾",null,"CX-06-01","atk",null,null],
-  ["龍王閃擊",null,"CX-13","atk",null,null],
-  ["大蛇簇擁",null,"BXC-15","atk",null,null],
-  ["戰神伏特",null,"BXH-14","atk",null,null],
-  ["鱷魚粉碎",null,"BXC-07","atk",null,null],
-  ["武士星劍","Samurai Saber","UX-09","atk",null,null,1],
-  ["翼龍神翼",null,"UX-10-03","sta",null,null],
-
-  ["騎士長槍","Knight Lance","BX-13","def",null,null],
-  ["騎士圓甲",null,"UX-10-01","def",null,null],
-  ["騎士堡壘",null,"CX-14","def",null,null],
-  ["魔像奇岩","Golem Rock","UX-13","def",null,null],
-  ["英仙幽冥",null,"CX-03","def",null,null],
-  ["玄冥戰甲",null,"BX-35-01","def",null,null],
-  ["雄獅巔峰",null,"UX-06","def",null,null],
-  ["天堂之環",null,"BX-50-01","def",null,null],
-  ["忍者闇影",null,"UX-05-01","def",null,null],
-  ["魔獸護甲",null,"BX-27-01","def",null,null],
-  ["戰犀重角",null,"BX-19","def",null,null],
-  ["悍熊猛爪",null,"BX-37","def",null,null],
-  ["雄鹿鹿角",null,"BXG-81","def",null,null],
-
-  ["魔導幻箭","Wizard Arrow","BX-03","sta",null,null],
-  ["魔導至尊",null,"CX-02","sta",null,null],
-  ["邪神狂怒",null,"CX-15","sta",null,null],
-  ["王蛇鞭尾","Viper Tail","BX-16-01","sta",null,null],
-  ["飛龍旋翼","Wyvern Gale","BX-24-01","sta",null,null],
-  ["鳳凰尾翼",null,"UX-07-01","sta",null,null],
-  ["幽靈元魂",null,"UX-12-01","sta",null,null],
-  ["腕龍鞭擊",null,"CX-18-01","sta",null,null],
-  ["銀狼狩獵",null,"CX-10","sta",null,null],
-  ["海妖扭動",null,"BXG-80","sta",null,null],
-
-  ["惡魔重錘","Hells Hammer","UX-02","bal",null,null],
-  ["惡魔鎖鏈","Hells Chain","BX-21-01","bal",null,null],
-  ["惡魔幽冥",null,"UX-21-01","bal",null,null],
-  ["雄獅獵爪","Leon Claw","BX-15","bal",null,null],
-  ["巨鯨怒濤","Whale Wave","BX-36-02","bal",null,null],
-  ["天蠍長矛","Scorpio Spear","UX-14","bal",null,null],
-  ["赫燃天鳳",null,"BX-38","bal",null,null],
-  ["皓戰猛虎",null,"BX-33","bal",null,null],
-  ["幻獸刺心",null,"BX-26","bal",null,null],
-  ["猛獁獠牙",null,"BX-48-03","bal",null,null],
-  ["護城龍神",null,"BX-39-02","bal",null,null],
-  ["武士魂斬",null,"BX-45","bal",null,null],
-  ["帝王威能",null,"CX-11-01","bal",null,null],
-  ["獨角極變",null,"CX-17-01","bal",null,null],
-  ["焰神滅世",null,"CX-09","bal",null,null],
-  ["黃蜂要塞",null,"BXG-79","bal",null,null]
-]);
-
-var RATCHET = mk("ra", [
-  ["1-60",null,"固鎖","x","S","wbo"],
-  ["9-60",null,"固鎖","x","S","wbo"],
-  ["5-60",null,"固鎖","x","S","wbo"],
-  ["1-70",null,"固鎖","x","S","wbo"],
-  ["3-60",null,"固鎖","x","S","wbo"],
-  ["4-50",null,"固鎖","x","S","wbo"],
-  ["7-60",null,"固鎖","x",null,null],
-  ["0-60",null,"固鎖","x",null,null],["4-60",null,"固鎖","x",null,null],
-  ["6-60",null,"固鎖","x",null,null],["1-50",null,"固鎖","x",null,null],
-  ["4-55",null,"固鎖","x",null,null],["7-55",null,"固鎖","x",null,null],
-  ["0-70",null,"固鎖","x",null,null],["2-70",null,"固鎖","x",null,null],
-  ["3-70",null,"固鎖","x",null,null],["4-70",null,"固鎖","x",null,null],
-  ["5-70",null,"固鎖","x",null,null],["6-70",null,"固鎖","x",null,null],
-  ["7-70",null,"固鎖","x",null,null],["9-70",null,"固鎖","x",null,null],
-  ["2-60",null,"固鎖","x",null,null],["9-65",null,"固鎖","x",null,null],
-  ["0-80",null,"固鎖","x",null,null],["1-80",null,"固鎖","x",null,null],
-  ["2-80",null,"固鎖","x",null,null],["3-80",null,"固鎖","x",null,null],
-  ["4-80",null,"固鎖","x",null,null],["5-80",null,"固鎖","x",null,null],
-  ["6-80",null,"固鎖","x",null,null],["7-80",null,"固鎖","x",null,null],
-  ["8-70",null,"固鎖","x",null,null],["8-80",null,"固鎖","x",null,null],
-  ["9-80",null,"固鎖","x",null,null],["3-85",null,"固鎖","x",null,null],
-  ["M-85",null,"固鎖","x",null,null]
-]);
-
-var BIT = mk("bi", [
-  ["LR","Low Rush","軸心","x","S","jp"],
-  ["FB","Free Ball","軸心","x","S","jp"],
-  ["H","Hexa","軸心","x","S","jp"],
-  ["UF","Under Flat","軸心","x","S","jp"],
-  ["E","Elevate","軸心","x","S","jp"],
-  ["R","Rush","軸心","x","A","wbo"],
-  ["K","Kick","軸心","x","A","wbo"],
-  ["B","Ball","軸心","x","A","wbo"],
-  ["UN","Under Needle","軸心","x","A","wbo"],
-  ["O","Orb","軸心","x","A","wbo"],
-  ["F","Flat","軸心","x",null,null],["LF","Low Flat","軸心","x",null,null],
-  ["N","Needle","軸心","x",null,null],["P","Point","軸心","x",null,null],
-  ["S","Spike","軸心","x",null,null],["T","Taper","軸心","x",null,null],
-  ["GB","Gear Ball","軸心","x",null,null],["GF","Gear Flat","軸心","x",null,null],
-  ["GN","Gear Needle","軸心","x",null,null],["GP","Gear Point","軸心","x",null,null],
-  ["HN","High Needle","軸心","x",null,null],["HT","High Taper","軸心","x",null,null],
-  ["MN","Metal Needle","軸心","x",null,null],["DB",null,"軸心","x",null,null],
-  ["FF",null,"軸心","x",null,null],["GU",null,"軸心","x",null,null],
-  ["NR",null,"軸心","x",null,null],["OP",null,"軸心","x",null,null],
-  ["U",null,"軸心","x",null,null],["W",null,"軸心","x",null,null],
-  ["J",null,"軸心","x",null,null],["LO",null,"軸心","x",null,null],
-  ["D",null,"軸心","x",null,null],["GR",null,"軸心","x",null,null],
-  ["TK",null,"軸心","x",null,null],["WB",null,"軸心","x",null,null],
-  ["Y",null,"軸心","x",null,null],["A",null,"軸心","x",null,null],
-  ["C",null,"軸心","x",null,null],["I",null,"軸心","x",null,null],
-  ["TP",null,"軸心","x",null,null],["WW",null,"軸心","x",null,null],
-  ["Z",null,"軸心","x",null,null],["G",null,"軸心","x",null,null],
-  ["V",null,"軸心","x",null,null],["BS",null,"軸心","x",null,null],
-  ["M",null,"軸心","x",null,null],["Q",null,"軸心","x",null,null],
-  ["RA",null,"軸心","x",null,null],["Tr",null,"軸心","x",null,null],
-  ["DS",null,"軸心","x",null,null],["L",null,"軸心","x",null,null]
-]);
-
-var ASSIST = mk("as", [
-  ["輔助H",null,"輔助戰刃","x",null,null],["輔助W",null,"輔助戰刃","x",null,null],
-  ["輔助F",null,"輔助戰刃","x",null,null],["輔助G",null,"輔助戰刃","x",null,null],
-  ["輔助J",null,"輔助戰刃","x",null,null],["輔助K",null,"輔助戰刃","x",null,null],
-  ["輔助S",null,"輔助戰刃","x",null,null],["輔助A",null,"輔助戰刃","x",null,null],
-  ["輔助B",null,"輔助戰刃","x",null,null],["輔助C",null,"輔助戰刃","x",null,null],
-  ["輔助D",null,"輔助戰刃","x",null,null],["輔助M",null,"輔助戰刃","x",null,null],
-  ["輔助E",null,"輔助戰刃","x",null,null],["輔助T",null,"輔助戰刃","x",null,null],
-  ["輔助V",null,"輔助戰刃","x",null,null],["輔助Z",null,"輔助戰刃","x",null,null],
-  ["輔助O",null,"輔助戰刃","x",null,null],["輔助R",null,"輔助戰刃","x",null,null],
-  ["輔助Q",null,"輔助戰刃","x",null,null]
-]);
-
-var CATS = [
-  {k:"bl", zh:"上蓋",  en:"BLADE",   items:BLADE},
-  {k:"ra", zh:"固鎖",  en:"RATCHET", items:RATCHET},
-  {k:"bi", zh:"軸心",  en:"BIT",     items:BIT},
-  {k:"as", zh:"輔助",  en:"ASSIST",  items:ASSIST}
-];
-var ALL = {};
-CATS.forEach(function(c){ c.items.forEach(function(it){ ALL[it.id] = it; }); });
+/* 大賽數據站嘅獨立評級（BBXHub 04/09/2026、BEYWATCH.GG 07/09/2026、
+   BeyX Hub 17/06/2026、日本社群共識）。同呢個天梯表用唔同方法，會唔一致，
+   所以另外標示，唔覆蓋。上蓋用型號查，固鎖／軸心用名查。 */
+var WBO = {
+  "UX-15-01":"S","UX-03":"S","BXH-10":"S","BXG-24":"S","BX-34":"S","CX-07":"S","UX-20":"S",
+  "UX-17":"A","UX-21-03":"A","BX-04":"A","BX-23":"A","UX-08":"A",
+  "BX-01":"B","BX-49":"B","UX-19":"B","UX-10-02":"B","UX-11":"B","UX-16-01":"B",
+  "UX-18-01":"C","BX-02":"C","BX-44":"C",
+  "1-60":"S","9-60":"S","5-60":"S","1-70":"S","3-60":"S","4-50":"S",
+  "LR":"S","FB":"S","H":"S","UF":"S","E":"S","R":"A","K":"A","B":"A","UN":"A","O":"A"
+};
 
 var TIERS = [
-  {k:"S", n:"賽場主流"}, {k:"A", n:"強力"}, {k:"B", n:"堪用"},
-  {k:"C", n:"偏弱"}, {k:"D", n:"收藏向"}, {k:"_", n:"未分類"}
+  ["X","#ff4d2e"],["S+","#ff7043"],["S","#ff9057"],["A+","#e8a04f"],["A","#cfa855"],
+  ["B+","#a89a5c"],["B","#868a64"],["C+","#6d7a72"],["C","#5f6d7d"],["D+","#586380"],
+  ["D","#525a72"],["E+","#4c5165"],["E","#464a5a"],["-","#3b424d"]
 ];
-var TYPE_ZH = {atk:"攻擊", def:"防禦", sta:"耐久", bal:"均衡", x:""};
+var TIER_COLOR = {};
+TIERS.forEach(function(t){ TIER_COLOR[t[0]] = t[1]; });
+
+var CATS = [
+  {k:"bl", zh:"上蓋", en:"BLADE"},
+  {k:"ra", zh:"固鎖", en:"RATCHET"},
+  {k:"bi", zh:"軸心", en:"BIT"},
+  {k:"as", zh:"輔助", en:"ASSIST"}
+];
+var TYPE_ZH = {atk:"攻擊", def:"防禦", sta:"耐久", bal:"均衡", spc:"特殊", x:""};
+
+/* 解析種子資料 */
+var SEED = [];
+RAW.trim().split("\n").forEach(function(line){
+  var p = line.split("|");
+  if(p.length < 6) return;
+  var code = p[2], name = p[3];
+  SEED.push({
+    id: p[1] + "/" + (code || name) + "/" + name,
+    cat: p[1], tier: p[0], code: code || null, zh: name,
+    type: p[4] || "x", img: p[5] || null,
+    en: EN[code] || EN[name] || null,
+    wbo: WBO[code] || (code ? null : WBO[name]) || null
+  });
+});
+var BY_ID = {};
+SEED.forEach(function(i){ BY_ID[i.id] = i; });
 
 /* ============================================================
-   狀態：種子放喺程式碼，改動只存 overrides，doc 好細。
+   狀態：種子放喺程式碼，改動只存 overrides
    ============================================================ */
-var LS = "beyx-tier-v1";
+var LS = "beyx-tier-v2";
 var state = {tiers:{}, owned:{}, notes:{}, custom:[], hidden:[], updatedAt:0};
 var db = null, docRef = null, saveTimer = null, booted = false;
-var ui = {cat:"bl", type:"all", ownOnly:false, q:""};
+var ui = {cat:"bl", type:"all", ownOnly:false, wboOnly:false, q:""};
 
 function loadLocal(){
   try{
@@ -424,11 +711,11 @@ function setSync(cls, tx){
 function customItems(){
   return state.custom.map(function(c){
     return {id:c.id, cat:c.cat, zh:c.zh, en:c.en||null, code:c.code||null,
-            type:c.type||"x", tier:null, src:null, q:null, isCustom:true};
+            type:c.type||"x", tier:"-", img:null, wbo:null, isCustom:true};
   });
 }
 function itemById(id){
-  if(ALL[id]) return ALL[id];
+  if(BY_ID[id]) return BY_ID[id];
   var f = customItems().filter(function(i){ return i.id === id; });
   return f[0] || null;
 }
@@ -454,7 +741,7 @@ function buildSeg(){
     var b = el("button", ui.cat === c.k ? "on" : "");
     b.appendChild(document.createTextNode(c.zh));
     b.appendChild(el("b", null, c.en));
-    b.onclick = function(){ ui.cat = c.k; buildSeg(); render(); window.scrollTo(0,0); };
+    b.onclick = function(){ ui.cat = c.k; buildSeg(); buildFilters(); render(); window.scrollTo(0,0); };
     seg.appendChild(b);
   });
 }
@@ -475,6 +762,10 @@ function buildFilters(){
   o.dataset.t = "own";
   o.onclick = function(){ ui.ownOnly = !ui.ownOnly; buildFilters(); render(); };
   box.appendChild(o);
+  var w = el("button", "chipf" + (ui.wboOnly ? " on" : ""), "有大賽數據");
+  w.dataset.t = "wbo";
+  w.onclick = function(){ ui.wboOnly = !ui.wboOnly; buildFilters(); render(); };
+  box.appendChild(w);
   var a = el("button", "chipf", "＋ 加零件");
   a.dataset.t = "add";
   a.onclick = openAdd;
@@ -483,13 +774,14 @@ function buildFilters(){
 
 function visibleItems(){
   var cat = ui.cat;
-  var pool = CATS.filter(function(c){ return c.k === cat; })[0].items
+  var pool = SEED.filter(function(i){ return i.cat === cat; })
     .concat(customItems().filter(function(i){ return i.cat === cat; }))
     .filter(function(i){ return state.hidden.indexOf(i.id) < 0; });
   var q = ui.q.trim().toLowerCase();
   return pool.filter(function(i){
     if(ui.type !== "all" && i.type !== ui.type) return false;
     if(ui.ownOnly && !state.owned[i.id]) return false;
+    if(ui.wboOnly && !i.wbo) return false;
     if(q){
       var hay = [i.zh, i.en, i.code, state.notes[i.id]].join(" ").toLowerCase();
       if(hay.indexOf(q) < 0) return false;
@@ -498,19 +790,38 @@ function visibleItems(){
   });
 }
 
-function partChip(it){
+function thumb(it, big){
+  var t = el("div", "thumb");
+  if(it.img){
+    var im = document.createElement("img");
+    im.src = IMG_BASE + it.img;
+    im.alt = it.zh;
+    im.loading = "lazy";
+    im.decoding = "async";
+    var ph = el("div", "ph", it.zh);
+    ph.style.display = "none";
+    im.onerror = function(){ im.style.display = "none"; ph.style.display = "block"; };
+    t.appendChild(im);
+    t.appendChild(ph);
+  } else {
+    t.appendChild(el("div", "ph", it.zh));
+  }
+  if(!big){
+    var flags = el("div", "flags");
+    if(it.wbo) flags.appendChild(el("span", "wbo", it.wbo));
+    if(state.notes[it.id]) flags.appendChild(el("span", "note-dot"));
+    if(state.owned[it.id]) flags.appendChild(el("span", "own"));
+    if(flags.children.length) t.appendChild(flags);
+  }
+  return t;
+}
+
+function partCard(it){
   var b = el("button", "part");
   b.dataset.t = it.type || "x";
-  var nm = el("div", "nm");
-  nm.appendChild(document.createTextNode(it.zh));
-  if(it.q) nm.appendChild(el("span", "qm", "?"));
-  if(state.notes[it.id]) nm.appendChild(el("span", "note-dot", "●"));
-  if(state.owned[it.id]) nm.appendChild(el("span", "own"));
-  b.appendChild(nm);
-  if(it.en) b.appendChild(el("div", "en", it.en));
-  if(it.code && it.code !== "固鎖" && it.code !== "軸心" && it.code !== "輔助戰刃"){
-    b.appendChild(el("div", "cd", it.code));
-  }
+  b.appendChild(thumb(it, false));
+  b.appendChild(el("div", "nm", it.zh));
+  b.appendChild(el("div", "cd", it.code || TYPE_ZH[it.type] || "—"));
   b.onclick = function(){ openEditor(it.id); };
   return b;
 }
@@ -520,39 +831,44 @@ function render(){
   board.innerHTML = "";
   var items = visibleItems();
   var byTier = {};
-  TIERS.forEach(function(t){ byTier[t.k] = []; });
+  TIERS.forEach(function(t){ byTier[t[0]] = []; });
   items.forEach(function(i){
     var t = tierOf(i);
-    byTier[t && byTier[t] ? t : "_"].push(i);
+    (byTier[t] || byTier["-"]).push(i);
   });
 
+  var shown = 0;
   TIERS.forEach(function(t){
+    var list = byTier[t[0]];
+    if(!list.length && (ui.q || ui.ownOnly || ui.wboOnly || ui.type !== "all")) return;
+    shown++;
     var row = el("div", "tier");
-    row.dataset.k = t.k;
+    row.style.setProperty("--tc", t[1]);
     var rail = el("div", "railcol");
-    rail.appendChild(el("div", "t", t.k === "_" ? "未分類" : t.k));
-    rail.appendChild(el("div", "n", String(byTier[t.k].length)));
+    var lab = el("div", "t" + (t[0] === "-" ? " sm" : ""), t[0] === "-" ? "未分級" : t[0]);
+    rail.appendChild(lab);
+    rail.appendChild(el("div", "n", String(list.length)));
     row.appendChild(rail);
     var bay = el("div", "bay");
-    if(!byTier[t.k].length){
-      bay.appendChild(el("div", "empty", t.k === "_" ? "全部排晒" : "—"));
-    } else {
-      byTier[t.k].forEach(function(i){ bay.appendChild(partChip(i)); });
-    }
+    if(!list.length) bay.appendChild(el("div", "empty", "—"));
+    else list.forEach(function(i){ bay.appendChild(partCard(i)); });
     row.appendChild(bay);
     board.appendChild(row);
   });
+  if(!shown) board.appendChild(el("div", "empty", "搵唔到符合嘅零件"));
 
-  var total = items.length;
-  var ranked = total - byTier["_"].length;
   var owned = items.filter(function(i){ return state.owned[i.id]; }).length;
-  document.getElementById("stats").innerHTML = "";
-  [["已排 ", ranked + " / " + total], ["已擁有 ", String(owned)],
+  var moved = items.filter(function(i){
+    return Object.prototype.hasOwnProperty.call(state.tiers, i.id);
+  }).length;
+  var st = document.getElementById("stats");
+  st.innerHTML = "";
+  [["顯示 ", String(items.length)], ["已擁有 ", String(owned)], ["自己改過 ", String(moved)],
    ["更新 ", state.updatedAt ? new Date(state.updatedAt).toLocaleDateString("en-GB") : "—"]]
     .forEach(function(p){
       var s = el("span", null, p[0]);
       s.appendChild(el("b", null, p[1]));
-      document.getElementById("stats").appendChild(s);
+      st.appendChild(s);
     });
 }
 
@@ -565,6 +881,7 @@ function openSheet(build){
   sheet.appendChild(el("div", "grab"));
   build(sheet);
   sheet.classList.add("on"); scrim.classList.add("on");
+  sheet.scrollTop = 0;
 }
 function closeSheet(){ sheet.classList.remove("on"); scrim.classList.remove("on"); }
 scrim.onclick = closeSheet;
@@ -573,23 +890,30 @@ function openEditor(id){
   var it = itemById(id);
   if(!it) return;
   openSheet(function(s){
-    var h = el("h2");
-    h.appendChild(document.createTextNode(it.zh));
-    if(it.q) h.appendChild(el("span", "qm", "對照待確認"));
-    s.appendChild(h);
+    var head = el("div", "sheethead");
+    head.appendChild(thumb(it, true));
+    var meta = el("div", "meta");
+    meta.appendChild(el("h2", null, it.zh));
     var bits = [it.en, it.code, TYPE_ZH[it.type]].filter(Boolean).join("  ·  ");
-    s.appendChild(el("div", "sub", bits || "自訂零件"));
+    meta.appendChild(el("div", "sub", bits || "自訂零件"));
+    if(it.wbo){
+      var w = el("div", "sub");
+      w.textContent = "大賽數據站評 " + it.wbo + " 級（同呢個天梯用唔同方法，唔一定夾）";
+      w.style.color = "var(--accent)";
+      meta.appendChild(w);
+    }
+    head.appendChild(meta);
+    s.appendChild(head);
 
     var f1 = el("div", "fld");
     f1.appendChild(el("label", null, "等級"));
     var pick = el("div", "tierpick");
     TIERS.forEach(function(t){
-      var cur = tierOf(it) || "_";
-      var b = el("button", cur === t.k ? "on" : "", t.k === "_" ? "未分" : t.k);
-      b.dataset.k = t.k;
+      var cur = tierOf(it);
+      var b = el("button", cur === t[0] ? "on" : "", t[0] === "-" ? "未分" : t[0]);
+      b.style.setProperty("--tc", t[1]);
       b.onclick = function(){
-        if(t.k === "_") delete state.tiers[it.id]; else state.tiers[it.id] = t.k;
-        if(t.k === "_" && it.tier) state.tiers[it.id] = null;
+        if(t[0] === it.tier) delete state.tiers[it.id]; else state.tiers[it.id] = t[0];
         touch(); openEditor(id);
       };
       pick.appendChild(b);
@@ -617,17 +941,12 @@ function openEditor(id){
       touch(); openEditor(id);
     };
     rb.appendChild(ob);
-    var db2 = el("button", "btn danger", "隱藏");
-    db2.onclick = function(){
+    var hb = el("button", "btn danger", "隱藏");
+    hb.onclick = function(){
       state.hidden.push(it.id); touch(); closeSheet(); toast("已隱藏 " + it.zh);
     };
-    rb.appendChild(db2);
+    rb.appendChild(hb);
     s.appendChild(rb);
-    if(it.src){
-      s.appendChild(el("div", "sub",
-        (it.src === "wbo" ? "預設等級來自大賽數據站彙整" : "預設等級來自日本社群共識")
-        + "，可以隨時改"));
-    }
   });
 }
 
@@ -635,7 +954,7 @@ function openAdd(){
   openSheet(function(s){
     s.appendChild(el("h2", null, "加零件"));
     var cat = CATS.filter(function(c){ return c.k === ui.cat; })[0];
-    s.appendChild(el("div", "sub", "加入「" + cat.zh + "」" + cat.en));
+    s.appendChild(el("div", "sub", "加入「" + cat.zh + "」" + cat.en + "，會放喺未分級"));
     var mkf = function(lab, ph){
       var f = el("div", "fld");
       f.appendChild(el("label", null, lab));
@@ -651,7 +970,7 @@ function openAdd(){
     if(ui.cat === "bl"){
       var f = el("div", "fld");
       f.appendChild(el("label", null, "屬性"));
-      var row = el("div", "tierpick");
+      var row = el("div", "typepick");
       ["atk","def","sta","bal"].forEach(function(t){
         var b = el("button", "", TYPE_ZH[t]);
         b.onclick = function(){
@@ -667,10 +986,11 @@ function openAdd(){
     var cancel = el("button", "btn", "取消"); cancel.onclick = closeSheet;
     var ok = el("button", "btn primary", "加入");
     ok.onclick = function(){
-      if(!zh.value.trim()){ toast("要填名稱"); return; }
-      state.custom.push({id:"c-" + Date.now(), cat:ui.cat, zh:zh.value.trim(),
+      var nm = zh.value.trim();
+      if(!nm){ toast("要填名稱"); return; }
+      state.custom.push({id:"c/" + Date.now() + "/" + nm, cat:ui.cat, zh:nm,
         en:en.value.trim(), code:cd.value.trim(), type:typ});
-      touch(); closeSheet(); toast("加咗 " + zh.value.trim());
+      touch(); closeSheet(); toast("加咗 " + nm);
     };
     rb.appendChild(cancel); rb.appendChild(ok);
     s.appendChild(rb);
@@ -680,20 +1000,25 @@ function openAdd(){
 function openSources(){
   openSheet(function(s){
     s.appendChild(el("h2", null, "資料來源"));
-    s.appendChild(el("div", "sub", "種子等級嘅出處同限制"));
+    s.appendChild(el("div", "sub", "等級、名稱、型號、相片嘅出處"));
     var d = el("div", "src");
     d.innerHTML =
-      "<h3>有填等級嘅部分</h3><ul>" +
-      "<li><b>上蓋 S–C 級</b>：BBXHub（2026-09-04 更新，3,918 場賽事 / 39,726 組配置）同 BEYWATCH.GG（2026-09-07 更新，3,282 場賽事）嘅大賽入賞統計。</li>" +
-      "<li><b>固鎖 S 級</b>：以上兩站入賞率頭幾位，同埋 BeyX Hub 2026-06-17 列出嘅頂級配置入面實際用到嘅。</li>" +
-      "<li><b>軸心 S 級</b>：日本社群普遍認嘅五強 LR / FB / H / UF / E；A 級係頂級配置入面出現過嘅。</li>" +
+      "<h3>天梯等級（X 到 E，共 386 件）</h3>" +
+      "<p>整份抄自 <a href=\"https://stan-yao.github.io/beyblade_x_tier/\" target=\"_blank\" rel=\"noopener\">台灣天梯情報站</a>，2026-09-08 擷取。等級、名稱、型號、屬性同相片都係佢哋嘅資料，唔係我自己評。呢個 app 淨係俾你喺佢個底稿上面改。</p>" +
+      "<h3>相片</h3>" +
+      "<p>圖片外連自 i.ibb.co（原站用嘅圖床），冇下載重發。載唔到就會顯示零件名。</p>" +
+      "<div class=\"caveat\"><b>Artifact 版睇唔到相：</b>claude.ai 個 Artifact 封鎖所有外部圖片，所以相只會喺 GitHub Pages 版出到。</div>" +
+      "<h3>橙色角標＝大賽數據</h3>" +
+      "<p>有橙色 S / A / B / C 角標嘅，代表大賽入賞統計另外有評級。兩套數據方法唔同，唔一定夾（例：騎士重盾喺呢度係 D+，大賽數據係 A），撳入去會兩個都見到。</p>" +
+      "<ul>" +
+      "<li>BBXHub — 3,918 場賽事 / 39,726 組配置（04/09/2026）</li>" +
+      "<li>BEYWATCH.GG — 3,282 場賽事（07/09/2026）</li>" +
+      "<li>BeyX Hub — 頂級配置清單（17/06/2026）</li>" +
+      "<li>軸心五強 LR / FB / H / UF / E — 日本社群共識（07/2026）</li>" +
       "</ul>" +
-      "<h3>冇填等級嘅部分</h3>" +
-      "<p>其餘全部放喺「未分類」，等你自己排。零件名同型號抄自台灣天梯情報站嘅清單，等級一律冇搬過嚟。</p>" +
-      "<div class=\"caveat\"><b>要講清楚：</b>你提到嘅 Namaste 阿土同白 Shiro 嘅天梯，內容係喺 YouTube 影片入面講，我讀唔到影片，所以佢哋嘅排名一個都冇填入去。要照佢哋嘅版本，睇完片自己拉，或者話我知邊隻排邊級我幫你入。</div>" +
-      "<div class=\"caveat\">帶 <b>?</b> 標記嘅，係中英文對照我唔夠肯定（天馬爆擊／Pegasus Blast、蒼龍突擊／Dran Blitz、三角強襲／Delta），落場前自己核一核。</div>" +
+      "<div class=\"caveat\">Namaste 阿土同白 Shiro 嘅天梯係喺 YouTube 影片入面講，抽唔到文字，所以佢哋嘅排名冇入。要跟佢哋嘅版本要自己睇片改。</div>" +
       "<h3>幾時要更新</h3>" +
-      "<p>大賽數據站每星期五自動更新，所以呢個種子等級係 2026 年 9 月頭嘅快照。CX 系統同 Over Blade（爆擊）仲喺度爬升，過幾個月要重新睇過。</p>";
+      "<p>原站不時會改，呢度係 2026 年 9 月頭嘅快照。你改過嘅零件會一直保住你嘅版本，唔會被覆蓋。</p>";
     s.appendChild(d);
     var b = el("button", "btn", "知道");
     b.onclick = closeSheet;
@@ -725,7 +1050,7 @@ function openMenu(){
       });
     }
     mkb("清除我的所有改動", "danger", function(){
-      if(!confirm("會清走全部等級改動、備註同擁有標記，確定？")) return;
+      if(!confirm("會清走全部等級改動、備註同擁有標記，回到原站版本。確定？")) return;
       state = {tiers:{}, owned:{}, notes:{}, custom:[], hidden:[], updatedAt:Date.now()};
       touch(); closeSheet(); toast("已重設");
     });
@@ -734,7 +1059,7 @@ function openMenu(){
 }
 
 function doExport(){
-  var payload = JSON.stringify({app:"beyx-tier", v:1, exportedAt:new Date().toISOString(),
+  var payload = JSON.stringify({app:"beyx-tier", v:2, exportedAt:new Date().toISOString(),
     state:state}, null, 2);
   var name = "beyx-tier-" + new Date().toISOString().slice(0,10) + ".json";
   if(window.__dl){
@@ -778,9 +1103,11 @@ function toast(msg){
    ============================================================ */
 document.getElementById("srcbtn").onclick = openSources;
 document.getElementById("menubtn").onclick = openMenu;
-var qi = document.getElementById("q"), qc = document.getElementById("qclr");
+var qi = document.getElementById("q"), qc = document.getElementById("qclr"), qt = null;
 qi.oninput = function(){
-  ui.q = qi.value; qc.hidden = !qi.value; render();
+  qc.hidden = !qi.value;
+  clearTimeout(qt);
+  qt = setTimeout(function(){ ui.q = qi.value; render(); }, 150);
 };
 qc.onclick = function(){ qi.value = ""; ui.q = ""; qc.hidden = true; render(); };
 document.addEventListener("keydown", function(e){
