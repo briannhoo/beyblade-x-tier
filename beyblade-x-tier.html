@@ -107,8 +107,22 @@ main{display:flex;flex-direction:column;gap:9px;padding:0 0 40px;
   box-shadow:0 0 0 1.5px var(--well)}
 .wbo{font-family:var(--mono);font-size:8px;line-height:1.4;padding:0 3px;border-radius:2px;
   background:var(--accent);color:#14161a;font-weight:500}
-.note-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
-  box-shadow:0 0 0 1.5px var(--well)}
+.wbo.cfg{background:var(--rail);color:var(--ink-2);font-family:var(--body);font-size:8.5px}
+
+/* 推薦配置 */
+.combos{display:flex;flex-direction:column;gap:6px}
+.combo{background:var(--ground);border:1px solid var(--rail);border-radius:6px;
+  padding:9px 11px;display:flex;align-items:center;gap:10px}
+.combo .cmb{font-family:var(--mono);font-size:14px;letter-spacing:.02em;flex:1;min-width:0}
+.combo .cmb small{display:block;font-family:var(--body);font-size:10.5px;color:var(--muted);
+  letter-spacing:0;margin-top:3px;line-height:1.4;white-space:pre-line}
+.combo .rate{font-family:var(--disp);font-size:19px;font-weight:700;color:var(--accent);
+  line-height:1;text-align:right;flex:none}
+.combo .rate span{display:block;font-family:var(--body);font-size:9px;font-weight:400;
+  color:var(--muted);letter-spacing:.08em;margin-top:3px}
+.combo .rate.none{font-size:11px;font-family:var(--body);font-weight:400;color:var(--muted)}
+.nodata{background:var(--ground);border-left:2px solid var(--rail);padding:9px 11px;
+  border-radius:0 5px 5px 0;color:var(--muted);font-size:12.5px}
 .part .nm{font-size:11px;line-height:1.25;font-weight:500;min-height:27px;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .part .cd{font-family:var(--mono);font-size:9px;color:var(--muted);
@@ -134,11 +148,6 @@ main{display:flex;flex-direction:column;gap:9px;padding:0 0 40px;
 .fld{margin-bottom:14px}
 .fld>label{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--muted);margin-bottom:6px}
-.tierpick{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.tierpick button{padding:9px 0;border:1px solid var(--rail);border-radius:5px;
-  font-family:var(--disp);font-weight:600;font-size:13px;color:var(--ink-2);background:var(--ground)}
-.tierpick button.on{background:var(--tc,var(--panel-2));border-color:var(--tc,var(--ink-2));
-  color:#14161a}
 .typepick{display:flex;gap:5px}
 .typepick button{flex:1;padding:9px 0;border:1px solid var(--rail);border-radius:5px;
   font-size:13px;color:var(--ink-2);background:var(--ground)}
@@ -623,6 +632,93 @@ var WBO = {
   "LR":"S","FB":"S","H":"S","UF":"S","E":"S","R":"A","K":"A","B":"A","UN":"A","O":"A"
 };
 
+/* ============================================================
+   推薦配置同勝率。全部有出處，冇數據嘅就唔填。
+   勝率 = 該配置喺大賽入賞紀錄入面嘅勝出比例，唔係全部對局。
+   ============================================================ */
+var COMBO_SRC = {
+  bw: "BEYWATCH.GG 勝率統計 · 3,282 場 / 33,000 組 · 07/09/2026",
+  bx: "BeyX Hub 頂級配置清單 · 17/06/2026",
+  jp: "日本社群推薦配置 · 23/07/2026",
+  wc: "BEYBLADE X World Championship 2025 優勝者",
+  ev: "WBO 大賽入賞 · Imperial Sins 加拿大 · 01/2026"
+};
+
+/* 用上蓋名做 key，所以配色版／金屬塗層版都吃到同一份配置 */
+var COMBOS = {
+  "鮫鯊狂鱗": [
+    {c:"1-70 LR", wr:46.7, s:["bw","bx"]},
+    {c:"3-60 LR", s:["wc"]},
+    {c:"4-50 UF", s:["jp"]},
+    {c:"7-60 R",  s:["ev"]}
+  ],
+  "魔導神杖": [
+    {c:"1-60 H",  wr:64.3, s:["bw","bx","wc"]},
+    {c:"9-60 B",  s:["jp","bx"]},
+    {c:"1-60 FB", s:["ev","bx"]}
+  ],
+  "空力天馬": [
+    {c:"1-60 R", wr:22.1, s:["bw"]},
+    {c:"7-60 L", s:["wc"]}
+  ],
+  "天馬爆擊": [
+    {c:"帝王 · Heavy · 9-60 K", wr:13.0, s:["bw"]}
+  ],
+  "蒼穹龍騎士": [
+    {c:"5-60 E", wr:23.7, s:["bw","bx"]},
+    {c:"7-60 T", s:["jp"]},
+    {c:"9-60 E", s:["ev"]}
+  ],
+  "榮耀武神": [
+    {c:"一體固鎖 · K",  wr:1.3, s:["bw"]},
+    {c:"一體固鎖 · LF", s:["jp"]}
+  ],
+  "隕星龍騎士": [
+    {c:"7-60 L", wr:6.5, s:["bw"]},
+    {c:"5-70 J", s:["jp"]}
+  ],
+  "飛龍懸浮": [
+    {c:"9-60 K", wr:19.2, s:["bw"]},
+    {c:"1-60 R", s:["bx"]}
+  ],
+  "鳳凰飛翼": [
+    {c:"1-60 R", wr:28.6, s:["bw"]}
+  ],
+  "霜輝銀狼": [
+    {c:"9-60 FB", wr:15.4, s:["bw","bx"]},
+    {c:"3-80 FB", s:["jp"]}
+  ],
+  "惡魔重錘": [{c:"4-60 T",  s:["jp"]}],
+  "衝擊龍神": [{c:"9-60 LF", s:["jp"]}],
+  "巨鯨怒濤": [{c:"4-70 B",  s:["jp"]}]
+};
+
+/* 反向索引：固鎖／軸心用喺邊啲配置度 */
+function combosFor(it){
+  if(it.cat === "bl"){
+    var keys = Object.keys(COMBOS);
+    for(var i = 0; i < keys.length; i++){
+      if(it.zh.indexOf(keys[i]) === 0) return COMBOS[keys[i]].map(function(x){
+        return {c:x.c, wr:x.wr, s:x.s, blade:null};
+      });
+    }
+    return [];
+  }
+  var out = [];
+  Object.keys(COMBOS).forEach(function(blade){
+    COMBOS[blade].forEach(function(x){
+      var toks = x.c.split(/[\s·]+/).filter(Boolean);
+      if(toks.indexOf(it.zh) >= 0) out.push({c:x.c, wr:x.wr, s:x.s, blade:blade});
+    });
+  });
+  return out;
+}
+function bestWr(list){
+  var m = null;
+  list.forEach(function(x){ if(typeof x.wr === "number" && (m === null || x.wr > m)) m = x.wr; });
+  return m;
+}
+
 var TIERS = [
   ["X","#ff4d2e"],["S+","#ff7043"],["S","#ff9057"],["A+","#e8a04f"],["A","#cfa855"],
   ["B+","#a89a5c"],["B","#868a64"],["C+","#6d7a72"],["C","#5f6d7d"],["D+","#586380"],
@@ -652,6 +748,10 @@ RAW.trim().split("\n").forEach(function(line){
     en: EN[code] || EN[name] || null,
     wbo: WBO[code] || (code ? null : WBO[name]) || null
   });
+});
+SEED.forEach(function(i){
+  i.combos = combosFor(i);
+  i.wr = bestWr(i.combos);
 });
 var BY_ID = {};
 SEED.forEach(function(i){ BY_ID[i.id] = i; });
@@ -746,7 +846,7 @@ function buildFilters(){
   o.dataset.t = "own";
   o.onclick = function(){ ui.ownOnly = !ui.ownOnly; buildFilters(); render(); };
   box.appendChild(o);
-  var w = el("button", "chipf" + (ui.wboOnly ? " on" : ""), "有大賽數據");
+  var w = el("button", "chipf" + (ui.wboOnly ? " on" : ""), "有配置數據");
   w.dataset.t = "wbo";
   w.onclick = function(){ ui.wboOnly = !ui.wboOnly; buildFilters(); render(); };
   box.appendChild(w);
@@ -765,9 +865,10 @@ function visibleItems(){
   return pool.filter(function(i){
     if(ui.type !== "all" && i.type !== ui.type) return false;
     if(ui.ownOnly && !state.owned[i.id]) return false;
-    if(ui.wboOnly && !i.wbo) return false;
+    if(ui.wboOnly && !(i.combos && i.combos.length)) return false;
     if(q){
-      var hay = [i.zh, i.en, i.code, state.notes[i.id]].join(" ").toLowerCase();
+      var hay = [i.zh, i.en, i.code,
+        (i.combos || []).map(function(x){ return x.c; }).join(" ")].join(" ").toLowerCase();
       if(hay.indexOf(q) < 0) return false;
     }
     return true;
@@ -792,8 +893,8 @@ function thumb(it, big){
   }
   if(!big){
     var flags = el("div", "flags");
-    if(it.wbo) flags.appendChild(el("span", "wbo", it.wbo));
-    if(state.notes[it.id]) flags.appendChild(el("span", "note-dot"));
+    if(typeof it.wr === "number") flags.appendChild(el("span", "wbo", it.wr + "%"));
+    else if(it.combos && it.combos.length) flags.appendChild(el("span", "wbo cfg", "配置"));
     if(state.owned[it.id]) flags.appendChild(el("span", "own"));
     if(flags.children.length) t.appendChild(flags);
   }
@@ -842,13 +943,10 @@ function render(){
   if(!shown) board.appendChild(el("div", "empty", "搵唔到符合嘅零件"));
 
   var owned = items.filter(function(i){ return state.owned[i.id]; }).length;
-  var moved = items.filter(function(i){
-    return Object.prototype.hasOwnProperty.call(state.tiers, i.id);
-  }).length;
+  var withCombo = items.filter(function(i){ return i.combos && i.combos.length; }).length;
   var st = document.getElementById("stats");
   st.innerHTML = "";
-  [["顯示 ", String(items.length)], ["已擁有 ", String(owned)], ["自己改過 ", String(moved)],
-   ["更新 ", state.updatedAt ? new Date(state.updatedAt).toLocaleDateString("en-GB") : "—"]]
+  [["顯示 ", String(items.length)], ["已擁有 ", String(owned)], ["有配置 ", String(withCombo)]]
     .forEach(function(p){
       var s = el("span", null, p[0]);
       s.appendChild(el("b", null, p[1]));
@@ -890,32 +988,43 @@ function openEditor(id){
     s.appendChild(head);
 
     var f1 = el("div", "fld");
-    f1.appendChild(el("label", null, "等級"));
-    var pick = el("div", "tierpick");
-    TIERS.forEach(function(t){
-      var cur = tierOf(it);
-      var b = el("button", cur === t[0] ? "on" : "", t[0] === "-" ? "未分" : t[0]);
-      b.style.setProperty("--tc", t[1]);
-      b.onclick = function(){
-        if(t[0] === it.tier) delete state.tiers[it.id]; else state.tiers[it.id] = t[0];
-        touch(); openEditor(id);
-      };
-      pick.appendChild(b);
-    });
-    f1.appendChild(pick);
+    var isBlade = it.cat === "bl";
+    f1.appendChild(el("label", null, isBlade ? "推薦配置" : "用喺呢啲配置"));
+    var list = it.combos || [];
+    if(!list.length){
+      f1.appendChild(el("div", "nodata",
+        isBlade ? "呢隻上蓋冇公開嘅大賽配置數據。"
+                : "呢件零件冇出現喺有記錄嘅頂級配置入面。"));
+    } else {
+      var box = el("div", "combos");
+      list.forEach(function(x){
+        var row = el("div", "combo");
+        var cm = el("div", "cmb", (x.blade ? x.blade + "　" : "") + x.c);
+        cm.appendChild(el("small", null,
+          x.s.map(function(k){ return COMBO_SRC[k]; }).join("\n")));
+        row.appendChild(cm);
+        var r = el("div", "rate" + (typeof x.wr === "number" ? "" : " none"));
+        if(typeof x.wr === "number"){
+          r.textContent = x.wr + "%";
+          r.appendChild(el("span", null, "勝率"));
+        } else {
+          r.textContent = "冇勝率數據";
+        }
+        row.appendChild(r);
+        box.appendChild(row);
+      });
+      f1.appendChild(box);
+    }
     s.appendChild(f1);
 
-    var f2 = el("div", "fld");
-    f2.appendChild(el("label", null, "備註（配置、實測、影片出處）"));
-    var ta = el("textarea");
-    ta.value = state.notes[it.id] || "";
-    ta.placeholder = "例：阿土 4 月天梯排 A／自己實測 1-60 H 好穩";
-    ta.oninput = function(){
-      if(ta.value.trim()) state.notes[it.id] = ta.value; else delete state.notes[it.id];
-      clearTimeout(ta._t); ta._t = setTimeout(touch, 400);
-    };
-    f2.appendChild(ta);
-    s.appendChild(f2);
+    if(it.wbo){
+      var f2 = el("div", "fld");
+      f2.appendChild(el("label", null, "另一套評級"));
+      f2.appendChild(el("div", "nodata",
+        "大賽入賞統計評 " + it.wbo + " 級。呢個天梯表係 " + tierOf(it) +
+        " 級 —— 兩套方法唔同，唔一定夾。"));
+      s.appendChild(f2);
+    }
 
     var rb = el("div", "rowbtns");
     var ob = el("button", "btn" + (state.owned[it.id] ? " on" : ""),
@@ -992,17 +1101,23 @@ function openSources(){
       "<h3>相片</h3>" +
       "<p>圖片外連自 i.ibb.co（原站用嘅圖床），冇下載重發。載唔到就會顯示零件名。</p>" +
       "<div class=\"caveat\"><b>Artifact 版睇唔到相：</b>claude.ai 個 Artifact 封鎖所有外部圖片，所以相只會喺 GitHub Pages 版出到。</div>" +
-      "<h3>橙色角標＝大賽數據</h3>" +
-      "<p>有橙色 S / A / B / C 角標嘅，代表大賽入賞統計另外有評級。兩套數據方法唔同，唔一定夾（例：騎士重盾喺呢度係 D+，大賽數據係 A），撳入去會兩個都見到。</p>" +
+      "<h3>推薦配置同勝率（橙色角標）</h3>" +
+      "<p>角標數字＝該上蓋最佳配置嘅勝率。勝率係指喺大賽入賞紀錄入面嘅勝出比例，唔係全部對局，所以低數字唔一定代表弱 —— 可能只係用嘅人少。寫「配置」嘅係有推薦配置但冇勝率數字。</p>" +
       "<ul>" +
-      "<li>BBXHub — 3,918 場賽事 / 39,726 組配置（04/09/2026）</li>" +
-      "<li>BEYWATCH.GG — 3,282 場賽事（07/09/2026）</li>" +
+      "<li>BEYWATCH.GG — 3,282 場賽事 / 33,000 組配置，勝率數字全部由此（07/09/2026）</li>" +
       "<li>BeyX Hub — 頂級配置清單（17/06/2026）</li>" +
-      "<li>軸心五強 LR / FB / H / UF / E — 日本社群共識（07/2026）</li>" +
+      "<li>日本社群推薦配置 12 選（23/07/2026）</li>" +
+      "<li>BEYBLADE X World Championship 2025 優勝者用嘅配置</li>" +
+      "<li>WBO 大賽入賞紀錄 · Imperial Sins 加拿大（01/2026）</li>" +
+      "<li>BBXHub — 3,918 場賽事 / 39,726 組配置，用嚟做另一套評級（04/09/2026）</li>" +
       "</ul>" +
-      "<div class=\"caveat\">Namaste 阿土同白 Shiro 嘅天梯係喺 YouTube 影片入面講，抽唔到文字，所以佢哋嘅排名冇入。要跟佢哋嘅版本要自己睇片改。</div>" +
+      "<div class=\"caveat\"><b>覆蓋率：13 款底版上蓋有配置數據</b>，配色版同金屬塗層版共用底版嘅配置，所以 279 張上蓋卡入面有 37 張有數據；固鎖 11 件、軸心 12 件。其餘冇公開嘅大賽配置紀錄，我唔會靠估填。</div>" +
+      "<h3>兩套評級唔夾</h3>" +
+      "<p>大賽入賞統計嘅評級同呢個天梯表方法唔同，結論會唔一致（例：騎士重盾喺呢度係 D+，大賽數據係 A）。撳入去兩個都見到，唔會覆蓋。</p>" +
+      "<h3>攞唔到嘅嘢</h3>" +
+      "<div class=\"caveat\">日本頂尖選手嘅 X（Twitter）帖文<b>抽唔到</b> —— x.com 拒絕存取（HTTP 402）。所以冇任何個人選手嘅天梯或配置入到嚟。同樣，Namaste 阿土同白 Shiro 嘅天梯係 YouTube 影片內容，抽唔到文字。</div>" +
       "<h3>幾時要更新</h3>" +
-      "<p>原站不時會改，呢度係 2026 年 9 月頭嘅快照。你改過嘅零件會一直保住你嘅版本，唔會被覆蓋。</p>";
+      "<p>勝率統計逢星期五更新，呢度係 2026 年 9 月頭嘅快照。CX 系統同 Over Blade 仲喺度爬升，過幾個月要重新睇過。</p>";
     s.appendChild(d);
     var b = el("button", "btn", "知道");
     b.onclick = closeSheet;
@@ -1034,8 +1149,8 @@ function openMenu(){
       });
     }
     mkb("清除我的所有改動", "danger", function(){
-      if(!confirm("會清走全部等級改動、備註同擁有標記，回到原站版本。確定？")) return;
-      state = {tiers:{}, owned:{}, notes:{}, custom:[], hidden:[], updatedAt:Date.now()};
+      if(!confirm("會清走全部擁有標記、自訂零件同隱藏紀錄。確定？")) return;
+      state = {owned:{}, custom:[], hidden:[], updatedAt:Date.now()};
       touch(); closeSheet(); toast("已重設");
     });
     mkb("關閉", "", closeSheet);
