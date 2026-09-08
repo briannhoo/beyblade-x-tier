@@ -199,6 +199,12 @@ textarea:focus,.txt:focus{outline:none;border-color:var(--accent)}
   background:var(--panel-2);border:1px solid var(--rail);border-radius:999px;
   padding:8px 16px;font-size:13px;opacity:0;pointer-events:none;transition:.2s}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+/* 切換分類時嘅短提示 */
+.hint{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.94);z-index:49;
+  background:rgba(28,32,38,.94);border:1px solid var(--rail);border-radius:10px;
+  padding:14px 24px;font-family:var(--disp);font-size:19px;font-weight:600;letter-spacing:.04em;
+  opacity:0;pointer-events:none;transition:opacity .14s,transform .14s;white-space:nowrap}
+.hint.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
 </style>
 
 <header>
@@ -227,6 +233,7 @@ textarea:focus,.txt:focus{outline:none;border-color:var(--accent)}
 <div class="scrim" id="scrim"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
 <div class="toast" id="toast"></div>
+<div class="hint" id="hint"></div>
 
 <script>
 /* ============================================================
@@ -1368,7 +1375,7 @@ function partCard(g){
   b.appendChild(el("div", "nm", g.zh));
   var n = g.variants.length;
   b.appendChild(el("div", "cd", n > 1 ? n + " 個版本" : (g.code || TYPE_ZH[g.type] || "—")));
-  b.onclick = function(){ openEditor(g.id); };
+  b.onclick = function(){ if(!swipeFired) openEditor(g.id); };
   return b;
 }
 
@@ -1650,6 +1657,8 @@ function openSources(){
       "<p>整份抄自 <a href=\"https://stan-yao.github.io/beyblade_x_tier/\" target=\"_blank\" rel=\"noopener\">台灣天梯情報站</a>，2026-09-08 擷取。等級、名稱、型號、屬性同相片都係佢哋嘅資料，唔係我自己評。</p>" +
       "<p><b>最高一級改咗做 S。</b>原站頂層有 X / S+ / S 三格，大部分網上天梯以 S 為最高，所以呢三格收埋做 S —— 只係向上合併，冇任何零件被降級。其餘 A+ 到 E 同原站一樣。</p>" +
       "<p>另外，A賞飛龍已按 Brian 指正歸入 <b>飛龍懸浮</b>，屬性由「特殊」改為防禦。</p>" +
+      "<h3>手勢</h3>" +
+      "<p>喺天梯上面<b>左右滑</b>切換上蓋／固鎖／軸心／輔助。面板打開時<b>向下拉</b>就關閉（要先捲返到頂）。電腦用左右方向鍵一樣得。</p>" +
       "<h3>邊度買得到</h3>" +
       "<p>撳固鎖／軸心／輔助戰刃，會列晒邊啲上蓋開盒附呢件零件，按等級排。撳上蓋就喺版本清單見到每盒附咩零件。呢份「產品→零件」對照同樣抄自原站（佢個倉庫功能用嘅就係呢份資料），36 個固鎖、52 個軸心、19 個輔助全部有出處。</p>" +
       "<h3>同款版本已合併</h3>" +
@@ -1751,6 +1760,89 @@ function doImport(e){
   r.readAsText(f);
 }
 
+/* ============================================================
+   手勢：左右滑切換分類、面板向下拉關閉
+   ============================================================ */
+var swipeFired = false;   // 剛滑動過就唔好當撳卡片
+
+function catIndex(){
+  for(var i = 0; i < CATS.length; i++) if(CATS[i].k === ui.cat) return i;
+  return 0;
+}
+function gotoCat(i){
+  if(i < 0 || i >= CATS.length) return false;
+  if(CATS[i].k === ui.cat) return false;
+  ui.cat = CATS[i].k;
+  buildSeg(); buildFilters(); render();
+  window.scrollTo(0, 0);
+  hint(CATS[i].zh + "　" + CATS[i].en);
+  return true;
+}
+
+/* 左右滑：切換上蓋／固鎖／軸心／輔助 */
+(function(){
+  var x0 = 0, y0 = 0, t0 = 0, tracking = false;
+  var SKIP = ".filters,.seg,.search,.sheet,.scrim";
+  document.body.addEventListener("touchstart", function(e){
+    if(e.touches.length !== 1 || sheet.classList.contains("on")){ tracking = false; return; }
+    if(e.target.closest && e.target.closest(SKIP)){ tracking = false; return; }
+    var t = e.touches[0];
+    x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); tracking = true;
+  }, {passive:true});
+  document.body.addEventListener("touchend", function(e){
+    if(!tracking) return;
+    tracking = false;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - x0, dy = t.clientY - y0;
+    if(Date.now() - t0 > 700) return;
+    if(Math.abs(dx) < 60) return;
+    if(Math.abs(dx) < Math.abs(dy) * 1.8) return;   // 直向為主就當捲動
+    if(gotoCat(catIndex() + (dx < 0 ? 1 : -1))){
+      swipeFired = true;
+      setTimeout(function(){ swipeFired = false; }, 400);
+    }
+  }, {passive:true});
+})();
+
+/* 面板向下拉關閉 */
+(function(){
+  var y0 = 0, dy = 0, dragging = false, fromTop = false;
+  sheet.addEventListener("touchstart", function(e){
+    if(e.touches.length !== 1) return;
+    y0 = e.touches[0].clientY; dy = 0;
+    fromTop = sheet.scrollTop <= 0;    // 內容捲到頂先拉得郁
+    dragging = true;
+    sheet.style.transition = "none";
+  }, {passive:true});
+  sheet.addEventListener("touchmove", function(e){
+    if(!dragging || !fromTop) return;
+    dy = e.touches[0].clientY - y0;
+    if(dy <= 0) return;
+    e.preventDefault();
+    sheet.style.transform = "translateY(" + dy + "px)";
+    scrim.style.opacity = String(Math.max(0, 1 - dy / 400));
+  }, {passive:false});
+  var end = function(){
+    if(!dragging) return;
+    dragging = false;
+    sheet.style.transition = "";
+    sheet.style.transform = "";
+    scrim.style.opacity = "";
+    if(fromTop && dy > 90) closeSheet();
+  };
+  sheet.addEventListener("touchend", end, {passive:true});
+  sheet.addEventListener("touchcancel", end, {passive:true});
+})();
+
+var hintT = null;
+function hint(msg){
+  var h = document.getElementById("hint");
+  h.textContent = msg;
+  h.classList.add("on");
+  clearTimeout(hintT);
+  hintT = setTimeout(function(){ h.classList.remove("on"); }, 900);
+}
+
 var toastT = null;
 function toast(msg){
   var t = document.getElementById("toast");
@@ -1772,7 +1864,12 @@ qi.oninput = function(){
 };
 qc.onclick = function(){ qi.value = ""; ui.q = ""; qc.hidden = true; render(); };
 document.addEventListener("keydown", function(e){
-  if(e.key === "Escape") closeSheet();
+  if(e.key === "Escape"){ closeSheet(); return; }
+  if(sheet.classList.contains("on")) return;
+  if(e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  if(e.key === "ArrowRight"){ gotoCat(catIndex() + 1); e.preventDefault(); }
+  if(e.key === "ArrowLeft"){ gotoCat(catIndex() - 1); e.preventDefault(); }
 });
 
 loadLocal();
