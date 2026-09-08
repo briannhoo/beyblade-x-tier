@@ -140,6 +140,20 @@ main{display:flex;flex-direction:column;gap:9px;padding:0 0 40px;
 .combo .rate.none{font-size:11px;font-family:var(--body);font-weight:400;color:var(--muted)}
 .nodata{background:var(--ground);border-left:2px solid var(--rail);padding:9px 11px;
   border-radius:0 5px 5px 0;color:var(--muted);font-size:12.5px}
+
+/* 版本清單 */
+.vars{display:flex;flex-direction:column;gap:6px}
+.varow{display:flex;align-items:center;gap:10px;background:var(--ground);
+  border:1px solid var(--rail);border-radius:6px;padding:7px 9px}
+.varow .thumb{width:46px;flex:none;border:1px solid var(--rail)}
+.varow .vinfo{flex:1;min-width:0}
+.varow .vname{font-size:13px;line-height:1.3}
+.varow .vcode{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:2px}
+.varow .vtier{font-family:var(--disp);font-size:15px;font-weight:700;flex:none;
+  width:32px;text-align:center;line-height:1}
+.varow .vown{flex:none;width:32px;height:32px;border:1px solid var(--rail);border-radius:5px;
+  display:grid;place-items:center;font-size:14px;color:var(--muted);background:var(--panel)}
+.varow .vown.on{border-color:var(--ok);color:var(--ok);background:var(--panel-2)}
 .part .nm{font-size:11px;line-height:1.25;font-weight:500;min-height:27px;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .part .cd{font-family:var(--mono);font-size:9px;color:var(--muted);
@@ -711,7 +725,8 @@ var COMBOS = {
   "衝擊龍神": [{c:"9-60 LF", s:["jp"]}],
   "巨鯨怒濤": [{c:"4-70 B",  s:["jp"]}],
   "蒼龍突擊": [{c:"3-60 R",  s:["jp"]}],
-  "騎士長槍": [{c:"3-70 N",  s:["jp"]}]
+  "騎士長槍": [{c:"3-70 N",  s:["jp"]}],
+  "雄獅巔峰": [{c:"7-60 GN", s:["jp"]}]
 };
 
 /* 反向索引：固鎖／軸心用喺邊啲配置度 */
@@ -770,12 +785,61 @@ RAW.trim().split("\n").forEach(function(line){
     wbo: WBO[code] || (code ? null : WBO[name]) || null
   });
 });
-SEED.forEach(function(i){
-  i.combos = combosFor(i);
-  i.wr = bestWr(i.combos);
-});
+/* ============================================================
+   同一款上蓋嘅所有版本（配色、金屬塗層、特別版）併成一組。
+   帶英文字尾嘅（蒼龍勇氣S、魔導至尊R、邪神狂怒FE）當作唔同型號，唔合併。
+   ============================================================ */
+function baseName(zh){
+  var s = zh;
+  var i = s.indexOf("金屬塗層");
+  if(i > 0) s = s.slice(0, i);
+  s = s.replace(/[（(].*$/, "");
+  var parts = s.trim().split(/\s+/);
+  var out = [parts[0]];
+  for(var k = 1; k < parts.length; k++){
+    var p = parts[k];
+    if(/版|籤王|特別|跨界|抽獎|限定|改造組/.test(p)) break;
+    if(/^[綠黑紅藍黃紫白青金粉橘銀灰左右]$/.test(p)) break;
+    if(/^[A-Za-z]{2,}$/.test(p)) break;
+    out.push(p);
+  }
+  return out.join(" ");
+}
+
+var TIER_RANK = {};
+TIERS.forEach(function(t, i){ TIER_RANK[t[0]] = i; });
+
+var GROUPS = [];
+(function(){
+  var map = {};
+  SEED.forEach(function(it){
+    var base = it.cat === "bl" ? baseName(it.zh) : it.zh;
+    var key = it.cat + "/" + base;
+    if(!map[key]){
+      map[key] = {id:key, cat:it.cat, zh:base, variants:[]};
+      GROUPS.push(map[key]);
+    }
+    map[key].variants.push(it);
+  });
+  GROUPS.forEach(function(g){
+    g.variants.sort(function(a, b){ return TIER_RANK[a.tier] - TIER_RANK[b.tier]; });
+    var best = g.variants[0];
+    g.tier = best.tier;
+    g.type = best.type;
+    g.img  = best.img;
+    g.code = g.variants.length === 1 ? best.code : null;
+    g.en = null; g.wbo = null;
+    g.variants.forEach(function(v){
+      if(!g.en && v.en) g.en = v.en;
+      if(!g.wbo && v.wbo) g.wbo = v.wbo;
+    });
+    g.combos = combosFor(g);
+    g.wr = bestWr(g.combos);
+  });
+})();
+
 var BY_ID = {};
-SEED.forEach(function(i){ BY_ID[i.id] = i; });
+GROUPS.forEach(function(g){ BY_ID[g.id] = g; });
 
 /* ============================================================
    狀態：種子放喺程式碼，改動只存 overrides
@@ -815,8 +879,11 @@ function setSync(cls, tx){
 
 function customItems(){
   return state.custom.map(function(c){
-    return {id:c.id, cat:c.cat, zh:c.zh, en:c.en||null, code:c.code||null,
-            type:c.type||"x", tier:"-", img:null, wbo:null, isCustom:true};
+    var v = {id:c.id, cat:c.cat, zh:c.zh, en:c.en||null, code:c.code||null,
+             type:c.type||"x", tier:"-", img:null, wbo:null};
+    return {id:c.id, cat:c.cat, zh:c.zh, en:v.en, code:v.code, type:v.type,
+            tier:"-", img:null, wbo:null, combos:[], wr:null,
+            variants:[v], isCustom:true};
   });
 }
 function itemById(id){
@@ -824,9 +891,8 @@ function itemById(id){
   var f = customItems().filter(function(i){ return i.id === id; });
   return f[0] || null;
 }
-function tierOf(it){
-  return Object.prototype.hasOwnProperty.call(state.tiers, it.id)
-    ? state.tiers[it.id] : it.tier;
+function ownedCount(g){
+  return g.variants.filter(function(v){ return state.owned[v.id]; }).length;
 }
 
 /* ============================================================
@@ -879,17 +945,18 @@ function buildFilters(){
 
 function visibleItems(){
   var cat = ui.cat;
-  var pool = SEED.filter(function(i){ return i.cat === cat; })
-    .concat(customItems().filter(function(i){ return i.cat === cat; }))
-    .filter(function(i){ return state.hidden.indexOf(i.id) < 0; });
+  var pool = GROUPS.filter(function(g){ return g.cat === cat; })
+    .concat(customItems().filter(function(g){ return g.cat === cat; }))
+    .filter(function(g){ return state.hidden.indexOf(g.id) < 0; });
   var q = ui.q.trim().toLowerCase();
-  return pool.filter(function(i){
-    if(ui.type !== "all" && i.type !== ui.type) return false;
-    if(ui.ownOnly && !state.owned[i.id]) return false;
-    if(ui.wboOnly && !(i.combos && i.combos.length)) return false;
+  return pool.filter(function(g){
+    if(ui.type !== "all" && g.type !== ui.type) return false;
+    if(ui.ownOnly && !ownedCount(g)) return false;
+    if(ui.wboOnly && !(g.combos && g.combos.length)) return false;
     if(q){
-      var hay = [i.zh, i.en, i.code,
-        (i.combos || []).map(function(x){ return x.c; }).join(" ")].join(" ").toLowerCase();
+      var hay = [g.zh, g.en,
+        g.variants.map(function(v){ return v.zh + " " + (v.code || ""); }).join(" "),
+        (g.combos || []).map(function(x){ return x.c; }).join(" ")].join(" ").toLowerCase();
       if(hay.indexOf(q) < 0) return false;
     }
     return true;
@@ -912,11 +979,11 @@ function thumb(it, big){
   } else {
     t.appendChild(el("div", "ph", it.zh));
   }
-  if(!big){
+  if(big === "card"){
     /* 右上角固定留俾大賽數據站評級 */
     var flags = el("div", "flags");
     if(it.wbo) flags.appendChild(el("span", "wbo", it.wbo));
-    if(state.owned[it.id]) flags.appendChild(el("span", "own"));
+    if(ownedCount(it)) flags.appendChild(el("span", "own"));
     if(flags.children.length) t.appendChild(flags);
     /* 勝率／有配置擺左下角 */
     if(typeof it.wr === "number") t.appendChild(el("span", "wrate", it.wr + "%"));
@@ -925,13 +992,14 @@ function thumb(it, big){
   return t;
 }
 
-function partCard(it){
+function partCard(g){
   var b = el("button", "part");
-  b.dataset.t = it.type || "x";
-  b.appendChild(thumb(it, false));
-  b.appendChild(el("div", "nm", it.zh));
-  b.appendChild(el("div", "cd", it.code || TYPE_ZH[it.type] || "—"));
-  b.onclick = function(){ openEditor(it.id); };
+  b.dataset.t = g.type || "x";
+  b.appendChild(thumb(g, "card"));
+  b.appendChild(el("div", "nm", g.zh));
+  var n = g.variants.length;
+  b.appendChild(el("div", "cd", n > 1 ? n + " 個版本" : (g.code || TYPE_ZH[g.type] || "—")));
+  b.onclick = function(){ openEditor(g.id); };
   return b;
 }
 
@@ -941,9 +1009,8 @@ function render(){
   var items = visibleItems();
   var byTier = {};
   TIERS.forEach(function(t){ byTier[t[0]] = []; });
-  items.forEach(function(i){
-    var t = tierOf(i);
-    (byTier[t] || byTier["-"]).push(i);
+  items.forEach(function(g){
+    (byTier[g.tier] || byTier["-"]).push(g);
   });
 
   var shown = 0;
@@ -966,11 +1033,13 @@ function render(){
   });
   if(!shown) board.appendChild(el("div", "empty", "搵唔到符合嘅零件"));
 
-  var owned = items.filter(function(i){ return state.owned[i.id]; }).length;
-  var withCombo = items.filter(function(i){ return i.combos && i.combos.length; }).length;
+  var vars = items.reduce(function(n, g){ return n + g.variants.length; }, 0);
+  var owned = items.reduce(function(n, g){ return n + ownedCount(g); }, 0);
+  var withCombo = items.filter(function(g){ return g.combos && g.combos.length; }).length;
   var st = document.getElementById("stats");
   st.innerHTML = "";
-  [["顯示 ", String(items.length)], ["已擁有 ", String(owned)], ["有配置 ", String(withCombo)]]
+  [["款 ", String(items.length)], ["版本 ", String(vars)],
+   ["已擁有 ", String(owned)], ["有配置 ", String(withCombo)]]
     .forEach(function(p){
       var s = el("span", null, p[0]);
       s.appendChild(el("b", null, p[1]));
@@ -997,10 +1066,14 @@ function openEditor(id){
   if(!it) return;
   openSheet(function(s){
     var head = el("div", "sheethead");
-    head.appendChild(thumb(it, true));
+    head.appendChild(thumb(it, "big"));
     var meta = el("div", "meta");
     meta.appendChild(el("h2", null, it.zh));
     var bits = [it.en, it.code, TYPE_ZH[it.type]].filter(Boolean).join("  ·  ");
+    if(it.variants.length > 1){
+      bits = [it.en, TYPE_ZH[it.type], it.variants.length + " 個版本"]
+        .filter(Boolean).join("  ·  ");
+    }
     meta.appendChild(el("div", "sub", bits || "自訂零件"));
     if(it.wbo){
       var w = el("div", "sub");
@@ -1041,28 +1114,52 @@ function openEditor(id){
     }
     s.appendChild(f1);
 
+    /* 版本清單：每個版本嘅相、型號、等級，可以逐個標已擁有 */
+    var fv = el("div", "fld");
+    fv.appendChild(el("label", null,
+      it.variants.length > 1 ? "版本（" + it.variants.length + "）· 撳右邊標已擁有" : "型號"));
+    var vbox = el("div", "vars");
+    it.variants.forEach(function(v){
+      var row = el("div", "varow");
+      row.appendChild(thumb(v, "var"));
+      var vi = el("div", "vinfo");
+      vi.appendChild(el("div", "vname", v.zh));
+      vi.appendChild(el("div", "vcode", v.code || TYPE_ZH[v.type] || "—"));
+      row.appendChild(vi);
+      var vt = el("div", "vtier", v.tier === "-" ? "—" : v.tier);
+      vt.style.color = TIER_COLOR[v.tier] || "var(--muted)";
+      row.appendChild(vt);
+      var ob = el("button", "vown" + (state.owned[v.id] ? " on" : ""),
+                  state.owned[v.id] ? "✓" : "＋");
+      ob.title = state.owned[v.id] ? "已擁有，撳一下取消" : "標記已擁有";
+      ob.onclick = function(){
+        if(state.owned[v.id]) delete state.owned[v.id]; else state.owned[v.id] = 1;
+        touch(); openEditor(id);
+      };
+      row.appendChild(ob);
+      vbox.appendChild(row);
+    });
+    fv.appendChild(vbox);
+    s.appendChild(fv);
+
     if(it.wbo){
       var f2 = el("div", "fld");
       f2.appendChild(el("label", null, "另一套評級"));
       f2.appendChild(el("div", "nodata",
-        "大賽入賞統計評 " + it.wbo + " 級。呢個天梯表係 " + tierOf(it) +
+        "大賽入賞統計評 " + it.wbo + " 級。呢個天梯表最高排到 " + it.tier +
         " 級 —— 兩套方法唔同，唔一定夾。"));
       s.appendChild(f2);
     }
 
     var rb = el("div", "rowbtns");
-    var ob = el("button", "btn" + (state.owned[it.id] ? " on" : ""),
-                state.owned[it.id] ? "✓ 已擁有" : "標記已擁有");
-    ob.onclick = function(){
-      if(state.owned[it.id]) delete state.owned[it.id]; else state.owned[it.id] = 1;
-      touch(); openEditor(id);
-    };
-    rb.appendChild(ob);
-    var hb = el("button", "btn danger", "隱藏");
+    var hb = el("button", "btn danger", "喺天梯度隱藏呢款");
     hb.onclick = function(){
       state.hidden.push(it.id); touch(); closeSheet(); toast("已隱藏 " + it.zh);
     };
     rb.appendChild(hb);
+    var cb = el("button", "btn", "關閉");
+    cb.onclick = closeSheet;
+    rb.appendChild(cb);
     s.appendChild(rb);
   });
 }
@@ -1121,7 +1218,10 @@ function openSources(){
     var d = el("div", "src");
     d.innerHTML =
       "<h3>天梯等級（X 到 E，共 386 件）</h3>" +
-      "<p>整份抄自 <a href=\"https://stan-yao.github.io/beyblade_x_tier/\" target=\"_blank\" rel=\"noopener\">台灣天梯情報站</a>，2026-09-08 擷取。等級、名稱、型號、屬性同相片都係佢哋嘅資料，唔係我自己評。呢個 app 淨係俾你喺佢個底稿上面改。</p>" +
+      "<p>整份抄自 <a href=\"https://stan-yao.github.io/beyblade_x_tier/\" target=\"_blank\" rel=\"noopener\">台灣天梯情報站</a>，2026-09-08 擷取。等級、名稱、型號、屬性同相片都係佢哋嘅資料，唔係我自己評。</p>" +
+      "<h3>同款版本已合併</h3>" +
+      "<p>同一款上蓋嘅配色、金屬塗層、特別版併成一張卡，279 個上蓋版本收埋成 139 款。<b>卡片排喺該款最高嗰個版本嘅等級</b>，撳入去見到每個版本嘅相、型號同各自等級，可以逐個標已擁有。</p>" +
+      "<p>帶英文字尾嘅當作唔同型號，唔會合併（蒼龍勇氣 vs 蒼龍勇氣S、魔導至尊 vs 魔導至尊R、邪神狂怒 vs 邪神狂怒FE）。</p>" +
       "<h3>相片</h3>" +
       "<p>圖片外連自 i.ibb.co（原站用嘅圖床），冇下載重發。載唔到就會顯示零件名。</p>" +
       "<div class=\"caveat\"><b>Artifact 版睇唔到相：</b>claude.ai 個 Artifact 封鎖所有外部圖片，所以相只會喺 GitHub Pages 版出到。</div>" +
@@ -1136,7 +1236,7 @@ function openSources(){
       "<li>WBO 大賽入賞紀錄 · Imperial Sins 加拿大（01/2026）</li>" +
       "<li>BBXHub — 3,918 場賽事 / 39,726 組配置，用嚟做另一套評級（04/09/2026）</li>" +
       "</ul>" +
-      "<div class=\"caveat\"><b>覆蓋率：15 款底版上蓋有配置數據</b>，配色版同金屬塗層版共用底版嘅配置，所以 279 張上蓋卡入面有 44 張有數據；固鎖 12 件、軸心 13 件。其餘冇公開嘅大賽配置紀錄，我唔會靠估填。</div>" +
+      "<div class=\"caveat\"><b>覆蓋率：139 款上蓋入面，16 款有配置數據</b>；固鎖 12 件、軸心 13 件。其餘冇公開嘅大賽配置紀錄，我唔會靠估填。</div>" +
       "<h3>兩套評級唔夾</h3>" +
       "<p>大賽入賞統計嘅評級同呢個天梯表方法唔同，結論會唔一致（例：騎士重盾喺呢度係 D+，大賽數據係 A）。撳入去兩個都見到，唔會覆蓋。</p>" +
       "<h3>攞唔到嘅嘢</h3>" +
