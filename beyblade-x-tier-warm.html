@@ -7,25 +7,45 @@
    主題 = 底色（7 選 1）× 模式（日／夜／跟系統）
    底色只換 --accent 系列同 --bg-l / --bg-d；模式換中性色同玻璃透明度。
    ============================================================ */
-:root,[data-accent=orange]{
-  --accent:#f97316; --accent-2:#fb9247; --accent-3:#fdb478;
-  --glow:249,115,22; --glow-2:255,162,81;
-  --bg-l:#f3ece5; --bg-d:#1a1613;
+/* 官方屬性色（取自 Beyblade 四屬性圖）：
+   攻擊＝藍、防禦＝綠、耐久＝橙、均衡＝紅 */
+:root{
+  --atk-rgb:18,118,207;  --def-rgb:0,153,77;
+  --sta-rgb:242,146,30;  --bal-rgb:224,35,28;
+  --spc-rgb:139,92,246;  --x-rgb:150,148,156;
+  --atk:rgb(var(--atk-rgb)); --def:rgb(var(--def-rgb));
+  --sta:rgb(var(--sta-rgb)); --bal:rgb(var(--bal-rgb));
+  --spc:rgb(var(--spc-rgb));
+  --trim-a:.34; --trim-wash:.13; --trim-wash2:.04; --trim-hover:.72;
+}
+
+/* 背景色 = 四隻屬性色 + 紫 / 深灰 / 雪白
+   注意：預設值一定要擺喺所有 [data-accent] 之前。
+   :root 同 [data-accent=x] 特異度一樣，後寫嘅贏 —— 預設擺後面會蓋過全部。 */
+:root{
+  --accent:#f2921e; --accent-2:#f6ab51; --accent-3:#fac68a;
+  --glow:242,146,30; --glow-2:250,198,138;
+  --bg-l:#f6ede1; --bg-d:#1a1510;
+}
+[data-accent=blue]{
+  --accent:#1276cf; --accent-2:#4a9ae0; --accent-3:#8cc0ec;
+  --glow:18,118,207; --glow-2:140,192,236;
+  --bg-l:#e9f0f8; --bg-d:#0f1520;
+}
+[data-accent=green]{
+  --accent:#00994d; --accent-2:#33b273; --accent-3:#7fcda6;
+  --glow:0,153,77; --glow-2:127,205,166;
+  --bg-l:#e9f2ed; --bg-d:#0e1a14;
+}
+[data-accent=orange]{
+  --accent:#f2921e; --accent-2:#f6ab51; --accent-3:#fac68a;
+  --glow:242,146,30; --glow-2:250,198,138;
+  --bg-l:#f6ede1; --bg-d:#1a1510;
 }
 [data-accent=red]{
-  --accent:#e5484d; --accent-2:#ef6f70; --accent-3:#f59a99;
-  --glow:229,72,77; --glow-2:245,154,153;
-  --bg-l:#f5eae8; --bg-d:#1c1312;
-}
-[data-accent=cyan]{
-  --accent:#06b6d4; --accent-2:#3fcbe0; --accent-3:#7cdcea;
-  --glow:6,182,212; --glow-2:124,220,234;
-  --bg-l:#e7f0f3; --bg-d:#101a1d;
-}
-[data-accent=yellow]{
-  --accent:#e0a800; --accent-2:#ecc23f; --accent-3:#f4d97b;
-  --glow:224,168,0; --glow-2:244,217,123;
-  --bg-l:#f4efdf; --bg-d:#1a1710;
+  --accent:#e0231c; --accent-2:#e9564f; --accent-3:#f28b86;
+  --glow:224,35,28; --glow-2:242,139,134;
+  --bg-l:#f7eae9; --bg-d:#1c1211;
 }
 [data-accent=purple]{
   --accent:#8b5cf6; --accent-2:#a583f8; --accent-3:#c3aefb;
@@ -37,10 +57,10 @@
   --glow:107,114,128; --glow-2:176,181,189;
   --bg-l:#ecedef; --bg-d:#141517;
 }
-[data-accent=ivory]{
-  --accent:#b08d57; --accent-2:#c6a97c; --accent-3:#dbc5a3;
-  --glow:176,141,87; --glow-2:219,197,163;
-  --bg-l:#faf7f1; --bg-d:#191714;
+[data-accent=snow]{
+  --accent:#64748b; --accent-2:#8b98ac; --accent-3:#b4bdcb;
+  --glow:100,116,139; --glow-2:180,189,203;
+  --bg-l:#fbfcfe; --bg-d:#16181c;
 }
 
 /* ---- 日間（預設） ---- */
@@ -87,6 +107,9 @@
     --chrome-line:rgba(255,255,255,.28);
     --chrome-sheen:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.30);
     --chrome-solid:rgba(255,255,255,.16);
+    --atk-rgb:82,166,236; --def-rgb:48,192,124; --sta-rgb:248,174,82;
+    --bal-rgb:242,92,86; --spc-rgb:171,140,250; --x-rgb:168,166,174;
+    --trim-a:.46; --trim-wash:.16; --trim-wash2:.06; --trim-hover:.85;
     --scrim:rgba(0,0,0,.55);
     --sheet-bg:rgba(28,23,19,.90);
     --glow-a1:.34; --glow-a2:.20; --glow-a3:0;
@@ -109,6 +132,9 @@
     --chrome-line:rgba(255,255,255,.28);
     --chrome-sheen:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.30);
     --chrome-solid:rgba(255,255,255,.16);
+    --atk-rgb:82,166,236; --def-rgb:48,192,124; --sta-rgb:248,174,82;
+    --bal-rgb:242,92,86; --spc-rgb:171,140,250; --x-rgb:168,166,174;
+    --trim-a:.46; --trim-wash:.16; --trim-wash2:.06; --trim-hover:.85;
   --scrim:rgba(0,0,0,.55);
   --sheet-bg:rgba(28,23,19,.90);
   --glow-a1:.34; --glow-a2:.20; --glow-a3:0;
@@ -207,11 +233,22 @@ main{display:flex;flex-direction:column;gap:12px;padding:8px var(--pad) 44px}
   align-content:flex-start;grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
 .bay .empty{color:var(--muted);font-size:12.5px;padding:10px 2px;grid-column:1/-1}
 
-.part{background:var(--card);border:1px solid var(--card-line);border-radius:20px;
+/* 每張卡有條磨砂描邊，顏色跟屬性走 */
+.part{--tt:var(--x-rgb);
+  background:linear-gradient(158deg,rgba(var(--tt),var(--trim-wash)),
+    rgba(var(--tt),var(--trim-wash2))),var(--card);
+  border:1.5px solid rgba(var(--tt),var(--trim-a));border-radius:20px;
   padding:8px;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;
-  transition:.2s}
-.part:hover{background:var(--card-on);transform:translateY(-3px);
-  box-shadow:0 10px 26px rgba(0,0,0,.14)}
+  backdrop-filter:blur(10px) saturate(1.2);-webkit-backdrop-filter:blur(10px) saturate(1.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34);transition:.2s}
+.part[data-t=atk]{--tt:var(--atk-rgb)}
+.part[data-t=def]{--tt:var(--def-rgb)}
+.part[data-t=sta]{--tt:var(--sta-rgb)}
+.part[data-t=bal]{--tt:var(--bal-rgb)}
+.part[data-t=spc]{--tt:var(--spc-rgb)}
+.part:hover{border-color:rgba(var(--tt),var(--trim-hover));transform:translateY(-3px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 10px 26px rgba(var(--tt),.26)}
+.part .thumb{box-shadow:inset 0 0 0 1px rgba(var(--tt),.16)}
 .thumb{aspect-ratio:1;background:linear-gradient(160deg,var(--well-a),var(--well-b));
   border-radius:15px;overflow:hidden;position:relative;display:grid;place-items:center}
 .thumb img{width:100%;height:100%;object-fit:contain;display:block}
@@ -337,13 +374,13 @@ textarea:focus,.txt:focus{outline:none;border-color:var(--ink-2)}
 .swatch.on{border-color:var(--ink);color:var(--ink)}
 .sw-dot{width:34px;height:34px;border-radius:50%;flex:none;
   box-shadow:inset 0 0 0 1px rgba(0,0,0,.10)}
-.swatch[data-a=orange] .sw-dot{background:radial-gradient(circle at 50% 32%,#f97316,#f3ece5)}
-.swatch[data-a=red] .sw-dot{background:radial-gradient(circle at 50% 32%,#e5484d,#f5eae8)}
-.swatch[data-a=cyan] .sw-dot{background:radial-gradient(circle at 50% 32%,#06b6d4,#e7f0f3)}
-.swatch[data-a=yellow] .sw-dot{background:radial-gradient(circle at 50% 32%,#e0a800,#f4efdf)}
+.swatch[data-a=blue] .sw-dot{background:radial-gradient(circle at 50% 32%,#1276cf,#e9f0f8)}
+.swatch[data-a=green] .sw-dot{background:radial-gradient(circle at 50% 32%,#00994d,#e9f2ed)}
+.swatch[data-a=orange] .sw-dot{background:radial-gradient(circle at 50% 32%,#f2921e,#f6ede1)}
+.swatch[data-a=red] .sw-dot{background:radial-gradient(circle at 50% 32%,#e0231c,#f7eae9)}
 .swatch[data-a=purple] .sw-dot{background:radial-gradient(circle at 50% 32%,#8b5cf6,#eeeaf7)}
 .swatch[data-a=graphite] .sw-dot{background:radial-gradient(circle at 50% 32%,#6b7280,#ecedef)}
-.swatch[data-a=ivory] .sw-dot{background:radial-gradient(circle at 50% 32%,#b08d57,#faf7f1)}
+.swatch[data-a=snow] .sw-dot{background:radial-gradient(circle at 50% 32%,#64748b,#fbfcfe)}
 .modenote{font-size:11.5px;color:var(--muted);margin-top:-8px;margin-bottom:18px}
 
 /* ============================================================
@@ -375,9 +412,15 @@ textarea:focus,.txt:focus{outline:none;border-color:var(--ink-2)}
   box-shadow:-3px 0 0 3px var(--sand),var(--chrome-sheen)}
 /* 細徽章用實色，漸變喺咁細嘅面積睇唔出仲會糊 */
 .wbo,.origtag{background:var(--chrome-solid);color:var(--on-pill)}
-/* 攻擊篩選仍然用重點色，唔改鉻 */
-.chipf[data-t=atk].on{background:var(--accent);color:#fff;border-color:transparent;
-  box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+/* 四隻屬性篩選用官方屬性色，唔改鉻 */
+.chipf[data-t=atk].on,.chipf[data-t=def].on,
+.chipf[data-t=sta].on,.chipf[data-t=bal].on{
+  color:#fff;border-color:transparent;box-shadow:none;
+  backdrop-filter:none;-webkit-backdrop-filter:none}
+.chipf[data-t=atk].on{background:var(--atk)}
+.chipf[data-t=def].on{background:var(--def)}
+.chipf[data-t=sta].on{background:var(--sta)}
+.chipf[data-t=bal].on{background:var(--bal)}
 
 @media (min-width:920px){
   main,header,.stats{padding-left:calc(var(--pad) + 4vw);padding-right:calc(var(--pad) + 4vw)}
@@ -1886,13 +1929,13 @@ function openAdd(){
    ============================================================ */
 var THEME_LS = "beyx-theme-v1";
 var ACCENTS = [
+  {k:"blue",     zh:"藍"},
+  {k:"green",    zh:"綠"},
   {k:"orange",   zh:"橙"},
   {k:"red",      zh:"紅"},
-  {k:"cyan",     zh:"青"},
-  {k:"yellow",   zh:"黃"},
   {k:"purple",   zh:"紫"},
   {k:"graphite", zh:"深灰"},
-  {k:"ivory",    zh:"米白"}
+  {k:"snow",     zh:"雪白"}
 ];
 var MODES = [{k:"light", zh:"日間"}, {k:"dark", zh:"夜間"}, {k:"system", zh:"跟系統"}];
 var theme = {mode:"system", accent:"orange"};
@@ -1962,7 +2005,7 @@ function openSettings(){
     s.appendChild(f2);
 
     s.appendChild(el("div", "nodata",
-      "背景色亦都係重點色：影響光暈、S／A+／A 三級嘅顏色、勝率標記同連結。"));
+      "背景色亦都係重點色：影響光暈、S／A+／A 三級嘅顏色、勝率標記同連結。頭四隻就係官方屬性色（藍攻擊、綠防禦、橙耐久、紅均衡）。"));
 
     var done = el("button", "btn primary", "完成");
     done.style.marginTop = "18px";
