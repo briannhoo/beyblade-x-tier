@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# 由 beyblade-x-tier.html（Artifact 版，單檔無 head）產生 docs/index.html（GitHub Pages 版）。
+# 由 beyblade-x-tier.html（Artifact 版，單檔無 head）產生 docs/dark/index.html（深色版，副頁）。
 # 兩邊共用同一份 app 程式碼，改完 source 行一次呢個就同步。
 set -euo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
 SRC="$DIR/beyblade-x-tier.html"
-OUT="$DIR/docs/index.html"
+OUT="$DIR/docs/dark/index.html"
 
 [ -f "$SRC" ] || { echo "搵唔到 $SRC"; exit 1; }
 
@@ -43,4 +43,4 @@ HEAD
 } > "$OUT"
 
 echo "已產生 $OUT  ($(wc -c < "$OUT") bytes)"
-echo "提醒：改完 app 記得升 docs/sw.js 入面嘅 VERSION，唔係手機會食舊 cache。"
+echo "提醒：改完 app 記得升 docs/dark/sw.js 入面嘅 VERSION，唔係手機會食舊 cache。"

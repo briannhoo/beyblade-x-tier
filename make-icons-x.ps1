@@ -3,7 +3,7 @@
 # 用法： powershell -ExecutionPolicy Bypass -File make-icons-x.ps1
 Add-Type -AssemblyName System.Drawing
 
-$out = Join-Path $PSScriptRoot 'docs/warm'
+$out = Join-Path $PSScriptRoot 'docs'
 if (-not (Test-Path $out)) { New-Item -ItemType Directory -Path $out -Force | Out-Null }
 
 $bg     = [System.Drawing.ColorTranslator]::FromHtml('#17130f')

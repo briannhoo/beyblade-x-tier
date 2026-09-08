@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# 由 beyblade-x-tier-warm.html（Artifact 版，單檔無 head）產生 docs/warm/index.html。
-# 暖色版同深色正式版分開部署：深色喺 /，暖色喺 /warm/。
+# 由 beyblade-x-tier-warm.html（Artifact 版，單檔無 head）產生 docs/index.html（主頁）。
+# 暖色版係主頁（/），深色版喺 /dark/。
 set -euo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
 SRC="$DIR/beyblade-x-tier-warm.html"
-OUT="$DIR/docs/warm/index.html"
+OUT="$DIR/docs/index.html"
 
 [ -f "$SRC" ] || { echo "搵唔到 $SRC"; exit 1; }
-mkdir -p "$DIR/docs/warm"
+mkdir -p "$DIR/docs"
 
 LINE="$(grep -n '^</style>$' "$SRC" | head -1 | cut -d: -f1)"
 [ -n "$LINE" ] || { echo "source 入面搵唔到單獨一行嘅 </style>"; exit 1; }
@@ -43,4 +43,4 @@ HEAD
 } > "$OUT"
 
 echo "已產生 $OUT  ($(wc -c < "$OUT") bytes)"
-echo "提醒：改完 app 記得升 docs/warm/sw.js 入面嘅 VERSION。"
+echo "提醒：改完 app 記得升 docs/sw.js 入面嘅 VERSION。"

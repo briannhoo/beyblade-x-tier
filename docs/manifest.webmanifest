@@ -1,18 +1,18 @@
 {
-  "name": "X 天梯 Beyblade X Tier",
+  "name": "X 天梯 Warm",
   "short_name": "X 天梯",
-  "description": "個人 Beyblade X 天梯表：上蓋／固鎖／軸心／輔助戰刃分級、擁有紀錄同備註。",
+  "description": "Beyblade X 天梯表暖色版：屬性描邊、推薦配置、勝率、邊度買得到。",
   "lang": "zh-HK",
   "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#14161a",
-  "theme_color": "#14161a",
+  "background_color": "#f6ede1",
+  "theme_color": "#f6ede1",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

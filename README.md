@@ -2,7 +2,12 @@
 
 個人用嘅 Beyblade X 天梯表。上蓋 / 固鎖 / 軸心 / 輔助戰刃分級，附推薦配置、勝率同「邊度買得到」。單檔、零依賴、離線用得。
 
-**網址**：https://briannhoo.github.io/beyblade-x-tier/
+**主頁係暖色版**（米色底、磨砂玻璃、屬性描邊、可換 7 隻底色同日／夜／跟系統）。深色版仍然保留喺 `/dark/`。
+
+**網址**
+
+- 暖色版（主頁）：https://briannhoo.github.io/beyblade-x-tier/
+- 深色版：https://briannhoo.github.io/beyblade-x-tier/dark/
 
 iPhone Safari 開條 link → 分享 → 加入主畫面，就有全螢幕 app。
 

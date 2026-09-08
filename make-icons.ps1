@@ -2,7 +2,7 @@
 # 用法： powershell -ExecutionPolicy Bypass -File make-icons.ps1
 Add-Type -AssemblyName System.Drawing
 
-$out = Join-Path $PSScriptRoot 'pwa'
+$out = Join-Path $PSScriptRoot 'docs/dark'
 if (-not (Test-Path $out)) { New-Item -ItemType Directory -Path $out | Out-Null }
 
 $ground = [System.Drawing.ColorTranslator]::FromHtml('#14161a')
