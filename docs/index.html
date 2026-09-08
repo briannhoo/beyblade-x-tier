@@ -121,7 +121,10 @@ main{display:flex;flex-direction:column;gap:9px;padding:0 0 40px;
   box-shadow:0 0 0 1.5px var(--well)}
 .wbo{font-family:var(--mono);font-size:8px;line-height:1.4;padding:0 3px;border-radius:2px;
   background:var(--accent);color:#14161a;font-weight:500}
-.wbo.cfg{background:var(--rail);color:var(--ink-2);font-family:var(--body);font-size:8.5px}
+.wrate{position:absolute;left:3px;bottom:3px;font-family:var(--mono);font-size:8px;
+  line-height:1.4;padding:0 3px;border-radius:2px;background:rgba(15,17,20,.88);
+  color:var(--accent);border:1px solid var(--accent);font-weight:500}
+.wrate.cfg{color:var(--ink-2);border-color:var(--rail);font-family:var(--body);font-size:8.5px}
 
 /* 推薦配置 */
 .combos{display:flex;flex-direction:column;gap:6px}
@@ -706,7 +709,9 @@ var COMBOS = {
   ],
   "惡魔重錘": [{c:"4-60 T",  s:["jp"]}],
   "衝擊龍神": [{c:"9-60 LF", s:["jp"]}],
-  "巨鯨怒濤": [{c:"4-70 B",  s:["jp"]}]
+  "巨鯨怒濤": [{c:"4-70 B",  s:["jp"]}],
+  "蒼龍突擊": [{c:"3-60 R",  s:["jp"]}],
+  "騎士長槍": [{c:"3-70 N",  s:["jp"]}]
 };
 
 /* 反向索引：固鎖／軸心用喺邊啲配置度 */
@@ -908,11 +913,14 @@ function thumb(it, big){
     t.appendChild(el("div", "ph", it.zh));
   }
   if(!big){
+    /* 右上角固定留俾大賽數據站評級 */
     var flags = el("div", "flags");
-    if(typeof it.wr === "number") flags.appendChild(el("span", "wbo", it.wr + "%"));
-    else if(it.combos && it.combos.length) flags.appendChild(el("span", "wbo cfg", "配置"));
+    if(it.wbo) flags.appendChild(el("span", "wbo", it.wbo));
     if(state.owned[it.id]) flags.appendChild(el("span", "own"));
     if(flags.children.length) t.appendChild(flags);
+    /* 勝率／有配置擺左下角 */
+    if(typeof it.wr === "number") t.appendChild(el("span", "wrate", it.wr + "%"));
+    else if(it.combos && it.combos.length) t.appendChild(el("span", "wrate cfg", "配置"));
   }
   return t;
 }
@@ -1117,8 +1125,9 @@ function openSources(){
       "<h3>相片</h3>" +
       "<p>圖片外連自 i.ibb.co（原站用嘅圖床），冇下載重發。載唔到就會顯示零件名。</p>" +
       "<div class=\"caveat\"><b>Artifact 版睇唔到相：</b>claude.ai 個 Artifact 封鎖所有外部圖片，所以相只會喺 GitHub Pages 版出到。</div>" +
-      "<h3>推薦配置同勝率（橙色角標）</h3>" +
-      "<p>角標數字＝該上蓋最佳配置嘅勝率。勝率係指喺大賽入賞紀錄入面嘅勝出比例，唔係全部對局，所以低數字唔一定代表弱 —— 可能只係用嘅人少。寫「配置」嘅係有推薦配置但冇勝率數字。</p>" +
+      "<h3>卡片上兩個角標</h3>" +
+      "<p><b>右上角（實心橙）＝大賽數據站評級</b> S / A / B / C。<b>左下角（空心橙）＝該配置嘅勝率</b>，寫「配置」即係有推薦配置但冇勝率數字。</p>" +
+      "<p>勝率係指喺大賽入賞紀錄入面嘅勝出比例，唔係全部對局，所以低數字唔一定代表弱 —— 可能只係用嘅人少。</p>" +
       "<ul>" +
       "<li>BEYWATCH.GG — 3,282 場賽事 / 33,000 組配置，勝率數字全部由此（07/09/2026）</li>" +
       "<li>BeyX Hub — 頂級配置清單（17/06/2026）</li>" +
@@ -1127,7 +1136,7 @@ function openSources(){
       "<li>WBO 大賽入賞紀錄 · Imperial Sins 加拿大（01/2026）</li>" +
       "<li>BBXHub — 3,918 場賽事 / 39,726 組配置，用嚟做另一套評級（04/09/2026）</li>" +
       "</ul>" +
-      "<div class=\"caveat\"><b>覆蓋率：13 款底版上蓋有配置數據</b>，配色版同金屬塗層版共用底版嘅配置，所以 279 張上蓋卡入面有 37 張有數據；固鎖 11 件、軸心 12 件。其餘冇公開嘅大賽配置紀錄，我唔會靠估填。</div>" +
+      "<div class=\"caveat\"><b>覆蓋率：15 款底版上蓋有配置數據</b>，配色版同金屬塗層版共用底版嘅配置，所以 279 張上蓋卡入面有 44 張有數據；固鎖 12 件、軸心 13 件。其餘冇公開嘅大賽配置紀錄，我唔會靠估填。</div>" +
       "<h3>兩套評級唔夾</h3>" +
       "<p>大賽入賞統計嘅評級同呢個天梯表方法唔同，結論會唔一致（例：騎士重盾喺呢度係 D+，大賽數據係 A）。撳入去兩個都見到，唔會覆蓋。</p>" +
       "<h3>攞唔到嘅嘢</h3>" +
