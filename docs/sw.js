@@ -1,6 +1,6 @@
 /* X 天梯 service worker
    改咗 app 之後記得升 VERSION，唔係啲 client 會食舊 cache。 */
-var VERSION = "beyx-tier-v4";
+var VERSION = "beyx-tier-v5";
 var SHELL = [
   "./",
   "./index.html",
@@ -39,10 +39,12 @@ self.addEventListener("fetch", function(e){
   var url;
   try { url = new URL(req.url); } catch(err){ return; }
 
-  // 開頁：先試網絡（攞最新版），斷網就出 cache
+  // 開頁：先試網絡（攞最新版），斷網就出 cache。
+  // 一定要 cache:"reload" 繞過 HTTP cache —— GitHub Pages 對 HTML 設 max-age=600，
+  // 唔繞過嘅話部署後最多 10 分鐘仲會出舊版。
   if(req.mode === "navigate"){
     e.respondWith(
-      fetch(req).then(function(res){
+      fetch(new Request(req.url, {cache: "reload", credentials: "same-origin"})).then(function(res){
         var copy = res.clone();
         caches.open(VERSION).then(function(c){ c.put("./index.html", copy); });
         return res;
