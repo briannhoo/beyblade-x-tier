@@ -51,7 +51,13 @@
   --card:rgba(255,255,255,.62); --card-line:rgba(255,255,255,.8); --card-on:#fff;
   --chip:rgba(255,255,255,.9); --field:rgba(255,255,255,.7);
   --well-a:#fdfbf9; --well-b:#efe6dd;
-  --pill:#191613; --on-pill:#fff;
+  --pill:#191613; --on-pill:#f4f6f8;
+  /* 磨砂深鉻：斜向漸變製造金屬反光，上下內陰影做倒角 */
+  --chrome:linear-gradient(155deg,rgba(96,101,110,.86) 0%,rgba(48,52,59,.92) 46%,
+    rgba(26,28,33,.95) 100%);
+  --chrome-line:rgba(255,255,255,.18);
+  --chrome-sheen:inset 0 1px 0 rgba(255,255,255,.26),inset 0 -1px 0 rgba(0,0,0,.4);
+  --chrome-solid:#292c32;
   --scrim:rgba(60,45,32,.30);
   --sheet-bg:rgba(251,248,245,.86);
   --glow-a1:.72; --glow-a2:.42; --glow-a3:.5;
@@ -75,7 +81,12 @@
     --card-on:rgba(255,255,255,.11);
     --chip:rgba(255,255,255,.10); --field:rgba(255,255,255,.06);
     --well-a:rgba(255,255,255,.09); --well-b:rgba(255,255,255,.03);
-    --pill:#f2ede8; --on-pill:#17130f;
+    --pill:#f2ede8; --on-pill:#ffffff;
+    --chrome:linear-gradient(155deg,rgba(196,202,212,.30) 0%,rgba(122,129,140,.24) 46%,
+      rgba(74,80,90,.34) 100%);
+    --chrome-line:rgba(255,255,255,.28);
+    --chrome-sheen:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.30);
+    --chrome-solid:rgba(255,255,255,.16);
     --scrim:rgba(0,0,0,.55);
     --sheet-bg:rgba(28,23,19,.90);
     --glow-a1:.34; --glow-a2:.20; --glow-a3:0;
@@ -92,7 +103,12 @@
   --card-on:rgba(255,255,255,.11);
   --chip:rgba(255,255,255,.10); --field:rgba(255,255,255,.06);
   --well-a:rgba(255,255,255,.09); --well-b:rgba(255,255,255,.03);
-  --pill:#f2ede8; --on-pill:#17130f;
+  --pill:#f2ede8; --on-pill:#ffffff;
+    --chrome:linear-gradient(155deg,rgba(196,202,212,.30) 0%,rgba(122,129,140,.24) 46%,
+      rgba(74,80,90,.34) 100%);
+    --chrome-line:rgba(255,255,255,.28);
+    --chrome-sheen:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.30);
+    --chrome-solid:rgba(255,255,255,.16);
   --scrim:rgba(0,0,0,.55);
   --sheet-bg:rgba(28,23,19,.90);
   --glow-a1:.34; --glow-a2:.20; --glow-a3:0;
@@ -118,9 +134,13 @@ button{cursor:pointer;background:none;border:none}
 
 header{position:relative;z-index:30;padding:var(--pad) var(--pad) 0}
 .hbar{display:flex;align-items:center;gap:12px;padding:0 6px 14px}
-.mark{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:50%;
-  background:var(--pill);color:var(--on-pill);font-family:var(--disp);font-weight:500;
-  font-size:16px;line-height:1}
+/* 標誌：左邊實心人字 + 右上／右下兩條斜槓，斜槓跟住重點色走 */
+.mark{width:38px;height:38px;flex:none;display:grid;place-items:center}
+.mark svg{width:100%;height:100%;display:block;overflow:visible}
+.mark path{fill:none;stroke-width:18;stroke-linecap:butt;stroke-linejoin:miter}
+.mark .lx{stroke:var(--ink)}
+.mark .lm{stroke:var(--accent-3)}
+.mark .lc{stroke:var(--accent)}
 h1{margin:0;font-family:var(--disp);font-size:19px;font-weight:500;letter-spacing:-.015em}
 h1 span{display:block;font-size:10.5px;font-weight:400;color:var(--muted);
   letter-spacing:.1em;text-transform:uppercase;margin-top:1px}
@@ -326,6 +346,39 @@ textarea:focus,.txt:focus{outline:none;border-color:var(--ink-2)}
 .swatch[data-a=ivory] .sw-dot{background:radial-gradient(circle at 50% 32%,#b08d57,#faf7f1)}
 .modenote{font-size:11.5px;color:var(--muted);margin-top:-8px;margin-bottom:18px}
 
+/* ============================================================
+   磨砂深鉻：原本用純黑嘅控件全部換成呢個
+   ============================================================ */
+.seg button.on,
+.chipf.on,
+.typepick button.on,
+.varow .vown.on,
+.btn.primary,
+.iconbtn:hover,
+.toast,
+.hint{
+  background:var(--chrome);
+  border:1px solid var(--chrome-line);
+  color:var(--on-pill);
+  backdrop-filter:blur(16px) saturate(1.35);
+  -webkit-backdrop-filter:blur(16px) saturate(1.35);
+}
+.seg button.on,.chipf.on,.typepick button.on,.varow .vown.on,.iconbtn:hover{
+  box-shadow:var(--chrome-sheen)}
+.btn.primary{box-shadow:var(--chrome-sheen)}
+.toast{box-shadow:var(--chrome-sheen),0 14px 34px rgba(0,0,0,.34)}
+.hint{box-shadow:var(--chrome-sheen),0 24px 60px rgba(0,0,0,.38)}
+.seg button.on b{color:var(--on-pill);opacity:.66}
+/* 主要按鈕右邊嘅圓頭：保留同底色一樣嘅缺口 */
+.btn.primary::after{background:var(--chrome);color:var(--on-pill);
+  border:1px solid var(--chrome-line);
+  box-shadow:-3px 0 0 3px var(--sand),var(--chrome-sheen)}
+/* 細徽章用實色，漸變喺咁細嘅面積睇唔出仲會糊 */
+.wbo,.origtag{background:var(--chrome-solid);color:var(--on-pill)}
+/* 攻擊篩選仍然用重點色，唔改鉻 */
+.chipf[data-t=atk].on{background:var(--accent);color:#fff;border-color:transparent;
+  box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+
 @media (min-width:920px){
   main,header,.stats{padding-left:calc(var(--pad) + 4vw);padding-right:calc(var(--pad) + 4vw)}
   .sheet{left:auto;top:0;bottom:0;width:440px;max-height:none;border-radius:34px 0 0 34px;
@@ -338,7 +391,13 @@ textarea:focus,.txt:focus{outline:none;border-color:var(--ink-2)}
 
 <header>
   <div class="hbar">
-    <div class="mark">X</div>
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 120 120">
+        <path class="lx" d="M22 18 L58 60 L22 102"/>
+        <path class="lm" d="M78 48 L106 16"/>
+        <path class="lc" d="M78 72 L106 104"/>
+      </svg>
+    </div>
     <h1>X 天梯<span>Beyblade X Tier</span></h1>
     <div class="hbtns">
       <span class="pill" id="sync"><span class="dot"></span><span id="synctx">載入中</span></span>
