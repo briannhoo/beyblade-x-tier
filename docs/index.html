@@ -308,7 +308,7 @@ S|bi||T|x|VYyhmJQ5/BT-PRD-910398-00.webp
 S|bi||UF|x|CKSBthC9/BT-PRD-982432-01.webp
 S|bi||UN|x|0SHZ0Sn/BT-PRD-097266-00.webp
 S|bi||W|x|21VVVP2D/BT-EVE-958772-03.webp
-A+|bl|A賞飛龍|A賞飛龍|spc|ZRm5NZVn/A.png
+A+|bl||飛龍懸浮 A賞|def|ZRm5NZVn/A.png
 A+|bl|BX-31-01|暴龍霸擊(紅)|atk|VWbjCT9g/transparent-Photoroom.webp
 A+|bl|BX-31-02|暴龍霸擊|atk|ZRd4KqZx/transparent-Photoroom.webp
 A+|bl|BX-35-05|鳳凰飛翼(藍)|atk|wFg5f430/transparent-Photoroom.webp
@@ -674,25 +674,29 @@ var COMBO_SRC = {
   bx: "BeyX Hub 頂級配置清單 · 17/06/2026",
   jp: "日本社群推薦配置 · 23/07/2026",
   wc: "BEYBLADE X World Championship 2025 優勝者",
-  ev: "WBO 大賽入賞 · Imperial Sins 加拿大 · 01/2026"
+  ev: "WBO 大賽入賞 · Imperial Sins 加拿大 · 01/2026",
+  mk: "日本最強組合排行（ミツケヨ）· 07/09/2026",
+  kn: "日本最強組合排行（カウナラ）· 31/08/2026",
+  zr: "世界大會配置解讀（まっさらログ）· 04/12/2025"
 };
 
 /* 用上蓋名做 key，所以配色版／金屬塗層版都吃到同一份配置 */
 var COMBOS = {
   "鮫鯊狂鱗": [
     {c:"1-70 LR", wr:46.7, s:["bw","bx"]},
-    {c:"3-60 LR", s:["wc"]},
+    {c:"3-60 LR", s:["wc","zr"]},
     {c:"4-50 UF", s:["jp"]},
     {c:"7-60 R",  s:["ev"]}
   ],
   "魔導神杖": [
-    {c:"1-60 H",  wr:64.3, s:["bw","bx","wc"]},
+    {c:"1-60 H",  wr:64.3, s:["bw","bx","wc","zr"]},
     {c:"9-60 B",  s:["jp","bx"]},
-    {c:"1-60 FB", s:["ev","bx"]}
+    {c:"1-60 FB", s:["ev","bx"]},
+    {c:"5-70 DB", s:["mk","kn"]}
   ],
   "空力天馬": [
     {c:"1-60 R", wr:22.1, s:["bw"]},
-    {c:"7-60 L", s:["wc"]}
+    {c:"7-60 L", s:["wc","zr"]}
   ],
   "天馬爆擊": [
     {c:"帝王 · Heavy · 9-60 K", wr:13.0, s:["bw"]}
@@ -715,18 +719,32 @@ var COMBOS = {
     {c:"1-60 R", s:["bx"]}
   ],
   "鳳凰飛翼": [
-    {c:"1-60 R", wr:28.6, s:["bw"]}
+    {c:"1-60 R",  wr:28.6, s:["bw"]},
+    {c:"9-60 GF", s:["mk"]}
   ],
   "霜輝銀狼": [
     {c:"9-60 FB", wr:15.4, s:["bw","bx"]},
-    {c:"3-80 FB", s:["jp"]}
+    {c:"3-80 FB", s:["jp","mk"]}
   ],
-  "惡魔重錘": [{c:"4-60 T",  s:["jp"]}],
-  "衝擊龍神": [{c:"9-60 LF", s:["jp"]}],
-  "巨鯨怒濤": [{c:"4-70 B",  s:["jp"]}],
+  "惡魔重錘": [
+    {c:"4-60 T", s:["jp"]},
+    {c:"3-70 H", s:["mk"]}
+  ],
+  "衝擊龍神": [
+    {c:"9-60 LF", s:["jp"]},
+    {c:"9-60 LR", s:["mk"]}
+  ],
+  "巨鯨怒濤": [
+    {c:"4-70 B", s:["jp"]},
+    {c:"5-80 E", s:["mk"]}
+  ],
   "蒼龍突擊": [{c:"3-60 R",  s:["jp"]}],
   "騎士長槍": [{c:"3-70 N",  s:["jp"]}],
-  "雄獅巔峰": [{c:"7-60 GN", s:["jp"]}]
+  "雄獅巔峰": [{c:"7-60 GN", s:["jp"]}],
+  "蒼龍爆刃": [{c:"1-60 A",  s:["mk"]}],
+  "蒼龍利刃": [{c:"4-70 P",  s:["kn"]}],
+  "魔像奇岩": [{c:"1-60 UN", s:["kn","mk"]}],
+  "騎士重盾": [{c:"3-80 N",  s:["kn"]}]
 };
 
 /* 反向索引：固鎖／軸心用喺邊啲配置度 */
@@ -755,10 +773,14 @@ function bestWr(list){
   return m;
 }
 
+/* 原站頂層係 X / S+ / S 三格。大部分網上天梯以 S 為最高，所以呢三格
+   全部收埋做 S —— 只會向上合併，唔會有任何零件被降級。 */
+var TIER_REMAP = {"X":"S", "S+":"S"};
+
 var TIERS = [
-  ["X","#ff4d2e"],["S+","#ff7043"],["S","#ff9057"],["A+","#e8a04f"],["A","#cfa855"],
-  ["B+","#a89a5c"],["B","#868a64"],["C+","#6d7a72"],["C","#5f6d7d"],["D+","#586380"],
-  ["D","#525a72"],["E+","#4c5165"],["E","#464a5a"],["-","#3b424d"]
+  ["S","#ff4d2e"],["A+","#ff7043"],["A","#e8a04f"],["B+","#c9b04a"],["B","#96a05e"],
+  ["C+","#6d8f8a"],["C","#5f7d9c"],["D+","#58699c"],["D","#545a80"],
+  ["E+","#4c5165"],["E","#464a5a"],["-","#3b424d"]
 ];
 var TIER_COLOR = {};
 TIERS.forEach(function(t){ TIER_COLOR[t[0]] = t[1]; });
@@ -779,7 +801,7 @@ RAW.trim().split("\n").forEach(function(line){
   var code = p[2], name = p[3];
   SEED.push({
     id: p[1] + "/" + (code || name) + "/" + name,
-    cat: p[1], tier: p[0], code: code || null, zh: name,
+    cat: p[1], tier: TIER_REMAP[p[0]] || p[0], code: code || null, zh: name,
     type: p[4] || "x", img: p[5] || null,
     en: EN[code] || EN[name] || null,
     wbo: WBO[code] || (code ? null : WBO[name]) || null
@@ -798,7 +820,7 @@ function baseName(zh){
   var out = [parts[0]];
   for(var k = 1; k < parts.length; k++){
     var p = parts[k];
-    if(/版|籤王|特別|跨界|抽獎|限定|改造組/.test(p)) break;
+    if(/版|籤王|特別|跨界|抽獎|限定|改造組|賞/.test(p)) break;
     if(/^[綠黑紅藍黃紫白青金粉橘銀灰左右]$/.test(p)) break;
     if(/^[A-Za-z]{2,}$/.test(p)) break;
     out.push(p);
@@ -1217,8 +1239,10 @@ function openSources(){
     s.appendChild(el("div", "sub", "等級、名稱、型號、相片嘅出處"));
     var d = el("div", "src");
     d.innerHTML =
-      "<h3>天梯等級（X 到 E，共 386 件）</h3>" +
+      "<h3>天梯等級（S 到 E，共 386 件）</h3>" +
       "<p>整份抄自 <a href=\"https://stan-yao.github.io/beyblade_x_tier/\" target=\"_blank\" rel=\"noopener\">台灣天梯情報站</a>，2026-09-08 擷取。等級、名稱、型號、屬性同相片都係佢哋嘅資料，唔係我自己評。</p>" +
+      "<p><b>最高一級改咗做 S。</b>原站頂層有 X / S+ / S 三格，大部分網上天梯以 S 為最高，所以呢三格收埋做 S —— 只係向上合併，冇任何零件被降級。其餘 A+ 到 E 同原站一樣。</p>" +
+      "<p>另外，A賞飛龍已按 Brian 指正歸入 <b>飛龍懸浮</b>，屬性由「特殊」改為防禦。</p>" +
       "<h3>同款版本已合併</h3>" +
       "<p>同一款上蓋嘅配色、金屬塗層、特別版併成一張卡，279 個上蓋版本收埋成 139 款。<b>卡片排喺該款最高嗰個版本嘅等級</b>，撳入去見到每個版本嘅相、型號同各自等級，可以逐個標已擁有。</p>" +
       "<p>帶英文字尾嘅當作唔同型號，唔會合併（蒼龍勇氣 vs 蒼龍勇氣S、魔導至尊 vs 魔導至尊R、邪神狂怒 vs 邪神狂怒FE）。</p>" +
@@ -1234,6 +1258,8 @@ function openSources(){
       "<li>日本社群推薦配置 12 選（23/07/2026）</li>" +
       "<li>BEYBLADE X World Championship 2025 優勝者用嘅配置</li>" +
       "<li>WBO 大賽入賞紀錄 · Imperial Sins 加拿大（01/2026）</li>" +
+      "<li>日本最強組合排行 ミツケヨ（07/09/2026）、カウナラ（31/08/2026）</li>" +
+      "<li>世界大會配置解讀 まっさらログ（04/12/2025）</li>" +
       "<li>BBXHub — 3,918 場賽事 / 39,726 組配置，用嚟做另一套評級（04/09/2026）</li>" +
       "</ul>" +
       "<div class=\"caveat\"><b>覆蓋率：139 款上蓋入面，16 款有配置數據</b>；固鎖 12 件、軸心 13 件。其餘冇公開嘅大賽配置紀錄，我唔會靠估填。</div>" +

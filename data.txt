@@ -61,7 +61,7 @@ S|bi||T|x|VYyhmJQ5/BT-PRD-910398-00.webp
 S|bi||UF|x|CKSBthC9/BT-PRD-982432-01.webp
 S|bi||UN|x|0SHZ0Sn/BT-PRD-097266-00.webp
 S|bi||W|x|21VVVP2D/BT-EVE-958772-03.webp
-A+|bl|A賞飛龍|A賞飛龍|spc|ZRm5NZVn/A.png
+A+|bl||飛龍懸浮 A賞|def|ZRm5NZVn/A.png
 A+|bl|BX-31-01|暴龍霸擊(紅)|atk|VWbjCT9g/transparent-Photoroom.webp
 A+|bl|BX-31-02|暴龍霸擊|atk|ZRd4KqZx/transparent-Photoroom.webp
 A+|bl|BX-35-05|鳳凰飛翼(藍)|atk|wFg5f430/transparent-Photoroom.webp

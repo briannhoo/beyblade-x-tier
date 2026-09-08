@@ -1,6 +1,6 @@
 /* X 天梯 service worker
    改咗 app 之後記得升 VERSION，唔係啲 client 會食舊 cache。 */
-var VERSION = "beyx-tier-v6";
+var VERSION = "beyx-tier-v7";
 var SHELL = [
   "./",
   "./index.html",
