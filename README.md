@@ -83,24 +83,41 @@ Leon Crest 個軸心，我抽到嘅網頁資料寫 `N`，Brian 講係 `GN`（Gea
 ## 檔案結構
 
 ```
-beyblade-x-tier.html     # source（單檔，無 <head>，同時係 Claude Artifact 版本，386 件資料內嵌）
-data.txt                 # 由原站擷取嘅 386 行天梯原始資料
-parts.txt                # 由原站擷取嘅 279 行「產品 → 零件」對照
-build.sh                 # 由 source 產生 docs/index.html
-make-icons.ps1           # 產生 PWA icon（PowerShell + System.Drawing）
-docs/                    # GitHub Pages 服務嘅資料夾
-  index.html             # build 出嚟，唔好直接改
-  sw.js                  # service worker（離線）
-  manifest.webmanifest
-  *.png                  # icon
+beyblade-x-tier-warm.html   # 暖色版 source（主頁 + Claude Artifact 版本）
+beyblade-x-tier.html        # 深色版 source
+beyblade-x-tier-light.html  # 淺色試作，未上線
+data.txt                    # 由原站擷取嘅 386 行天梯原始資料
+parts.txt                   # 由原站擷取嘅 279 行「產品 → 零件」對照
+build-warm.sh               # 暖色 source → docs/index.html（主頁）
+build.sh                    # 深色 source → docs/dark/index.html
+make-icons-x.ps1            # 暖色版 icon（分裂式 X logo）
+make-icons.ps1              # 深色版 icon
+docs/                       # GitHub Pages 服務嘅資料夾
+  index.html                # 暖色版（主頁），build 出嚟唔好直接改
+  sw.js manifest.webmanifest *.png
+  dark/                     # 深色版（副頁），自成一套
+  warm/index.html           # 轉址返主頁，俾舊 link 用
 ```
+
+兩個 source 共用同一份資料同邏輯，只係 `<style>` 同少量 UI 唔同。
 
 ## 改嘢流程
 
-1. 改 `beyblade-x-tier.html`（唯一一份 app 程式碼）
-2. `bash build.sh`
-3. 升 `docs/sw.js` 入面嘅 `VERSION`，唔係已裝咗嘅手機會繼續食舊 cache
-4. commit + push，Pages 自動出返新版
+**改暖色版（主頁）**
+
+1. 改 `beyblade-x-tier-warm.html`
+2. `bash build-warm.sh`
+3. 升 `docs/sw.js` 嘅 `VERSION`，唔係已裝咗嘅手機會食舊 cache
+4. commit + push
+
+**改深色版**：同上，但用 `beyblade-x-tier.html` → `bash build.sh` → 升 `docs/dark/sw.js`。
+
+## 兩個 service worker 要注意
+
+`CacheStorage` 係 **per-origin 唔係 per-scope**，所以主頁同 `/dark/` 兩個 SW 共用同一個 cache 空間。有兩件事一定要守：
+
+- **activate 只可以清自己前綴嘅 cache**（`beyx-warm-` / `beyx-tier-`）。如果照抄「刪走所有唔係自己版本嘅 cache」，行完 `/dark/` 就會清走主頁個 cache，反之亦然，變成拉鋸。
+- **唔可以用 `caches.match()`**，佢會搜尋成個 origin 所有 cache，離線 fallback 有機會攞到另一版嘅 `index.html`。要 `caches.open(VERSION)` 之後先 `match`。
 
 改 icon 就行 `powershell -ExecutionPolicy Bypass -File make-icons.ps1`。
 注意 `.ps1` 要存 UTF-8 **連 BOM**，Windows PowerShell 5.1 先讀得正中文註解。
