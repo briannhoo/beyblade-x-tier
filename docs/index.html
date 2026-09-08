@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14161a">
+<meta name="description" content="個人 Beyblade X 天梯表：上蓋／固鎖／軸心／輔助戰刃分級、擁有紀錄同備註。">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="X 天梯">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<title>X 天梯</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#14161a; --panel:#1c2026; --panel-2:#232830; --rail:#2b313a;
+  --ink:#e8eaed; --ink-2:#b6bcc6; --muted:#818995;
+  --accent:#ff4d2e; --accent-dim:#5c2116;
+  --atk:#c9503c; --def:#4a90d9; --sta:#46a06a; --bal:#c08a3e;
+  --ok:#46a06a; --warn:#c08a3e;
+  --disp:"Chakra Petch","PingFang HK","Microsoft JhengHei",sans-serif;
+  --body:system-ui,-apple-system,"PingFang HK","Noto Sans HK","Microsoft JhengHei",sans-serif;
+  --mono:"Roboto Mono",ui-monospace,monospace;
+  --pad:clamp(12px,3.5vw,20px);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);
+  font-size:15px;line-height:1.5;-webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;overflow-x:hidden}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+header{position:sticky;top:0;z-index:30;background:var(--ground);
+  border-bottom:1px solid var(--rail);padding-top:env(safe-area-inset-top,0px)}
+.hbar{display:flex;align-items:center;gap:10px;padding:10px var(--pad) 8px}
+.mark{width:30px;height:30px;flex:none;display:grid;place-items:center;
+  background:var(--accent);color:#14161a;font-family:var(--disp);font-weight:700;
+  font-size:19px;line-height:1;clip-path:polygon(0 0,100% 0,100% 76%,76% 100%,0 100%)}
+h1{margin:0;font-family:var(--disp);font-size:17px;font-weight:600;letter-spacing:.04em}
+h1 span{display:block;font-family:var(--body);font-size:10.5px;font-weight:400;
+  color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.hbtns{margin-left:auto;display:flex;gap:6px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 9px;
+  border:1px solid var(--rail);border-radius:999px;color:var(--muted);
+  font-family:var(--mono);white-space:nowrap}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex:none}
+.pill.live .dot{background:var(--ok)}
+.pill.local .dot{background:var(--warn)}
+.iconbtn{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--rail);
+  border-radius:6px;color:var(--ink-2);font-size:14px;background:var(--panel)}
+.iconbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+.tools{display:flex;flex-direction:column;gap:8px;padding:0 var(--pad) 10px}
+.seg{display:flex;background:var(--panel);border:1px solid var(--rail);border-radius:7px;
+  padding:2px;gap:2px}
+.seg button{flex:1;padding:7px 4px;border-radius:5px;font-size:12.5px;color:var(--muted);
+  font-weight:500;white-space:nowrap}
+.seg button.on{background:var(--panel-2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--rail)}
+.seg button b{display:block;font-family:var(--mono);font-size:10px;font-weight:400;
+  color:var(--muted);margin-top:1px}
+.seg button.on b{color:var(--accent)}
+.filters{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.filters::-webkit-scrollbar{display:none}
+.chipf{flex:none;padding:5px 11px;border:1px solid var(--rail);border-radius:999px;
+  font-size:12px;color:var(--ink-2);background:var(--panel)}
+.chipf.on{border-color:currentColor;background:var(--panel-2)}
+.chipf[data-t=atk].on{color:var(--atk)}
+.chipf[data-t=def].on{color:var(--def)}
+.chipf[data-t=sta].on{color:var(--sta)}
+.chipf[data-t=bal].on{color:var(--bal)}
+.chipf[data-t=all].on,.chipf[data-t=own].on{color:var(--accent)}
+.search{display:flex;align-items:center;gap:8px;background:var(--panel);
+  border:1px solid var(--rail);border-radius:7px;padding:0 10px}
+.search input{flex:1;background:none;border:none;padding:9px 0;font-size:14px;min-width:0}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{outline:none}
+.search button{color:var(--muted);font-size:15px;padding:4px}
+
+main{display:flex;flex-direction:column;gap:10px;padding:0 0 40px;
+  padding-left:max(var(--pad),env(safe-area-inset-left,0px));
+  padding-right:max(var(--pad),env(safe-area-inset-right,0px))}
+.tier{display:flex;background:var(--panel);border:1px solid var(--rail);
+  border-radius:8px;overflow:hidden;min-height:66px}
+.railcol{flex:none;width:54px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;padding:8px 0;position:relative;
+  background:var(--panel-2);border-right:1px solid var(--rail)}
+.railcol::after{content:"";position:absolute;top:0;bottom:0;left:0;width:4px;
+  background:repeating-linear-gradient(180deg,var(--tc) 0 5px,transparent 5px 9px)}
+.railcol .t{font-family:var(--disp);font-size:24px;font-weight:700;line-height:1;color:var(--tc)}
+.railcol .n{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.tier[data-k=S]{--tc:#ff4d2e}
+.tier[data-k=A]{--tc:#e08a4a}
+.tier[data-k=B]{--tc:#c9b04a}
+.tier[data-k=C]{--tc:#6f8fa8}
+.tier[data-k=D]{--tc:#5a6270}
+.tier[data-k="_"]{--tc:#3b424d}
+.tier[data-k="_"] .railcol .t{font-size:12px;font-family:var(--body);
+  writing-mode:vertical-rl;letter-spacing:.2em;color:var(--muted)}
+.bay{flex:1;display:flex;flex-wrap:wrap;gap:6px;padding:9px;align-content:flex-start;min-width:0}
+.bay .empty{color:var(--muted);font-size:12px;align-self:center;padding:4px 2px}
+
+.part{display:flex;flex-direction:column;gap:1px;text-align:left;background:var(--ground);
+  border:1px solid var(--rail);border-left:3px solid var(--pc);border-radius:5px;
+  padding:6px 9px 6px 8px;min-width:0;max-width:100%;transition:border-color .12s,transform .12s}
+.part:hover{border-color:var(--pc);transform:translateY(-1px)}
+.part[data-t=atk]{--pc:#c9503c}
+.part[data-t=def]{--pc:#4a90d9}
+.part[data-t=sta]{--pc:#46a06a}
+.part[data-t=bal]{--pc:#c08a3e}
+.part[data-t=x]{--pc:#5a6270}
+.part .nm{font-size:13.5px;font-weight:500;line-height:1.25;display:flex;
+  align-items:center;gap:5px;white-space:nowrap}
+.part .en{font-size:10.5px;color:var(--muted);font-family:var(--mono);line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.part .cd{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.own{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
+.qm{font-size:9.5px;color:var(--warn);border:1px solid var(--warn);border-radius:3px;
+  padding:0 3px;line-height:1.4;font-family:var(--mono)}
+.note-dot{color:var(--accent);font-size:10px}
+
+.scrim{position:fixed;top:0;right:0;bottom:0;left:0;z-index:40;background:rgba(10,11,13,.72);
+  opacity:0;pointer-events:none;transition:opacity .18s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--panel);
+  border-top:1px solid var(--rail);border-radius:14px 14px 0 0;
+  padding:6px var(--pad) max(18px,env(safe-area-inset-bottom));
+  transform:translateY(100%);transition:transform .22s cubic-bezier(.32,.72,0,1);
+  max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sheet.on{transform:translateY(0)}
+.grab{width:34px;height:4px;border-radius:2px;background:var(--rail);margin:6px auto 12px}
+.sheet h2{font-family:var(--disp);font-size:17px;margin:0 0 2px;font-weight:600;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sheet .sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-bottom:14px}
+.fld{margin-bottom:14px}
+.fld>label{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px}
+.tierpick{display:flex;gap:5px}
+.tierpick button{flex:1;padding:11px 0;border:1px solid var(--rail);border-radius:6px;
+  font-family:var(--disp);font-weight:600;font-size:15px;color:var(--ink-2);background:var(--ground)}
+.tierpick button.on{background:var(--panel-2);border-color:var(--ink-2);color:var(--ink)}
+.tierpick button[data-k=S].on{background:var(--accent);border-color:var(--accent);color:#14161a}
+.tierpick button[data-k="_"]{font-family:var(--body);font-size:12px}
+textarea,.txt{width:100%;background:var(--ground);border:1px solid var(--rail);
+  border-radius:6px;padding:9px;font-size:14px}
+textarea{resize:vertical;min-height:62px}
+textarea:focus,.txt:focus{outline:none;border-color:var(--accent)}
+.rowbtns{display:flex;gap:8px}
+.btn{flex:1;padding:11px;border:1px solid var(--rail);border-radius:6px;text-align:center;
+  font-size:14px;background:var(--ground);color:var(--ink-2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#14161a;font-weight:600}
+.btn.on{border-color:var(--ok);color:var(--ok);background:var(--panel-2)}
+.btn.danger{color:var(--atk);border-color:var(--accent-dim)}
+.src{font-size:13px;color:var(--ink-2);line-height:1.65}
+.src h3{font-family:var(--disp);font-size:13px;margin:16px 0 4px;color:var(--ink);letter-spacing:.03em}
+.src ul{margin:0;padding-left:17px}
+.src li{margin-bottom:3px}
+.src a{color:var(--accent)}
+.src .caveat{background:var(--ground);border-left:2px solid var(--warn);padding:9px 11px;
+  border-radius:0 5px 5px 0;color:var(--ink-2);font-size:12.5px;margin-top:10px}
+.stats{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;
+  color:var(--muted);padding:0 var(--pad) 10px}
+.stats b{color:var(--ink-2);font-weight:500}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);z-index:50;
+  background:var(--panel-2);border:1px solid var(--rail);border-radius:999px;
+  padding:8px 16px;font-size:13px;opacity:0;pointer-events:none;transition:.2s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar">
+    <div class="mark">X</div>
+    <h1>X 天梯<span>Beyblade X Tier</span></h1>
+    <div class="hbtns">
+      <span class="pill" id="sync"><span class="dot"></span><span id="synctx">載入中</span></span>
+      <button class="iconbtn" id="srcbtn" title="資料來源">i</button>
+      <button class="iconbtn" id="menubtn" title="更多">⋯</button>
+    </div>
+  </div>
+  <div class="tools">
+    <div class="seg" id="seg"></div>
+    <div class="search">
+      <input id="q" type="search" placeholder="搵名 / 型號，例：鮫鯊、UX-15、1-60" autocomplete="off">
+      <button id="qclr" hidden>✕</button>
+    </div>
+    <div class="filters" id="filters"></div>
+  </div>
+</header>
+
+<div class="stats" id="stats"></div>
+<main id="board"></main>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   種子資料。tier 有值 = 有出處（見 src 欄）；null = 未分類，等自己排。
+   src: wbo = 大賽數據站彙整；jp = 日本社群共識。q:1 = 中英對照待確認。
+   ============================================================ */
+var F = ["zh","en","code","type","tier","src","q"];
+function mk(cat, rows){
+  return rows.map(function(r,i){
+    var o = {id: cat + "-" + i, cat: cat};
+    F.forEach(function(k,j){ o[k] = r[j] === undefined ? null : r[j]; });
+    return o;
+  });
+}
+
+var BLADE = mk("bl", [
+  ["鮫鯊狂鱗","Shark Scale","UX-15-01","atk","S","wbo"],
+  ["魔導神杖","Wizard Rod","UX-03","sta","S","wbo"],
+  ["空力天馬","Aero Pegasus","BXH-10","atk","S","wbo"],
+  ["蒼穹龍騎士","Cobalt Dragoon","BX-34","atk","S","wbo"],
+  ["天馬爆擊","Pegasus Blast","CX-07","atk","S","wbo",1],
+  ["榮耀武神","Glory Valkyrie","UX-20","atk","S","wbo"],
+
+  ["隕星龍騎士","Meteor Dragoon","UX-17","atk","A","wbo"],
+  ["飛龍懸浮","Hover Wyvern","UX-21-03","def","A","wbo"],
+  ["騎士重盾","Knight Shield","BX-04","def","A","wbo"],
+  ["鳳凰飛翼","Phoenix Wing","BX-23","atk","A","wbo"],
+  ["霜輝銀狼","Silver Wolf","UX-08","sta","A","wbo"],
+
+  ["蒼龍神劍","Dran Sword","BX-01","atk","B","wbo"],
+  ["蒼龍突擊","Dran Blitz","BX-49","atk","B","wbo",1],
+  ["子彈獅鷲","Bullet Griffon","UX-19","bal","B","wbo"],
+  ["暴龍霸擊","Tyranno Beat","UX-10-02","atk","B","wbo"],
+  ["衝擊龍神","Impact Drake","UX-11","atk","B","wbo"],
+  ["時鐘幻象","Clock Mirage","UX-16-01","sta","B","wbo"],
+
+  ["古屍詛咒","Mummy Curse","UX-18-01","def","C","wbo"],
+  ["惡魔紅鐮","Hells Scythe","BX-02","bal","C","wbo"],
+  ["三角強襲","Delta","BX-44","def","C","wbo",1],
+
+  ["蒼龍爆刃","Dran Buster","UX-01","atk",null,null],
+  ["蒼龍勇氣","Dran Brave","CX-01","atk",null,null],
+  ["蒼龍利刃","Dran Dagger","BX-20-01","atk",null,null],
+  ["蒼穹龍神","Cobalt Drake","BX-46-01","atk",null,null],
+  ["鮫鯊鋒鰭","Shark Edge","BX-20-02","atk",null,null],
+  ["暴龍咆哮",null,"UX-15-02","atk",null,null],
+  ["極狐九尾",null,"CX-06-01","atk",null,null],
+  ["龍王閃擊",null,"CX-13","atk",null,null],
+  ["大蛇簇擁",null,"BXC-15","atk",null,null],
+  ["戰神伏特",null,"BXH-14","atk",null,null],
+  ["鱷魚粉碎",null,"BXC-07","atk",null,null],
+  ["武士星劍","Samurai Saber","UX-09","atk",null,null,1],
+  ["翼龍神翼",null,"UX-10-03","sta",null,null],
+
+  ["騎士長槍","Knight Lance","BX-13","def",null,null],
+  ["騎士圓甲",null,"UX-10-01","def",null,null],
+  ["騎士堡壘",null,"CX-14","def",null,null],
+  ["魔像奇岩","Golem Rock","UX-13","def",null,null],
+  ["英仙幽冥",null,"CX-03","def",null,null],
+  ["玄冥戰甲",null,"BX-35-01","def",null,null],
+  ["雄獅巔峰",null,"UX-06","def",null,null],
+  ["天堂之環",null,"BX-50-01","def",null,null],
+  ["忍者闇影",null,"UX-05-01","def",null,null],
+  ["魔獸護甲",null,"BX-27-01","def",null,null],
+  ["戰犀重角",null,"BX-19","def",null,null],
+  ["悍熊猛爪",null,"BX-37","def",null,null],
+  ["雄鹿鹿角",null,"BXG-81","def",null,null],
+
+  ["魔導幻箭","Wizard Arrow","BX-03","sta",null,null],
+  ["魔導至尊",null,"CX-02","sta",null,null],
+  ["邪神狂怒",null,"CX-15","sta",null,null],
+  ["王蛇鞭尾","Viper Tail","BX-16-01","sta",null,null],
+  ["飛龍旋翼","Wyvern Gale","BX-24-01","sta",null,null],
+  ["鳳凰尾翼",null,"UX-07-01","sta",null,null],
+  ["幽靈元魂",null,"UX-12-01","sta",null,null],
+  ["腕龍鞭擊",null,"CX-18-01","sta",null,null],
+  ["銀狼狩獵",null,"CX-10","sta",null,null],
+  ["海妖扭動",null,"BXG-80","sta",null,null],
+
+  ["惡魔重錘","Hells Hammer","UX-02","bal",null,null],
+  ["惡魔鎖鏈","Hells Chain","BX-21-01","bal",null,null],
+  ["惡魔幽冥",null,"UX-21-01","bal",null,null],
+  ["雄獅獵爪","Leon Claw","BX-15","bal",null,null],
+  ["巨鯨怒濤","Whale Wave","BX-36-02","bal",null,null],
+  ["天蠍長矛","Scorpio Spear","UX-14","bal",null,null],
+  ["赫燃天鳳",null,"BX-38","bal",null,null],
+  ["皓戰猛虎",null,"BX-33","bal",null,null],
+  ["幻獸刺心",null,"BX-26","bal",null,null],
+  ["猛獁獠牙",null,"BX-48-03","bal",null,null],
+  ["護城龍神",null,"BX-39-02","bal",null,null],
+  ["武士魂斬",null,"BX-45","bal",null,null],
+  ["帝王威能",null,"CX-11-01","bal",null,null],
+  ["獨角極變",null,"CX-17-01","bal",null,null],
+  ["焰神滅世",null,"CX-09","bal",null,null],
+  ["黃蜂要塞",null,"BXG-79","bal",null,null]
+]);
+
+var RATCHET = mk("ra", [
+  ["1-60",null,"固鎖","x","S","wbo"],
+  ["9-60",null,"固鎖","x","S","wbo"],
+  ["5-60",null,"固鎖","x","S","wbo"],
+  ["1-70",null,"固鎖","x","S","wbo"],
+  ["3-60",null,"固鎖","x","S","wbo"],
+  ["4-50",null,"固鎖","x","S","wbo"],
+  ["7-60",null,"固鎖","x",null,null],
+  ["0-60",null,"固鎖","x",null,null],["4-60",null,"固鎖","x",null,null],
+  ["6-60",null,"固鎖","x",null,null],["1-50",null,"固鎖","x",null,null],
+  ["4-55",null,"固鎖","x",null,null],["7-55",null,"固鎖","x",null,null],
+  ["0-70",null,"固鎖","x",null,null],["2-70",null,"固鎖","x",null,null],
+  ["3-70",null,"固鎖","x",null,null],["4-70",null,"固鎖","x",null,null],
+  ["5-70",null,"固鎖","x",null,null],["6-70",null,"固鎖","x",null,null],
+  ["7-70",null,"固鎖","x",null,null],["9-70",null,"固鎖","x",null,null],
+  ["2-60",null,"固鎖","x",null,null],["9-65",null,"固鎖","x",null,null],
+  ["0-80",null,"固鎖","x",null,null],["1-80",null,"固鎖","x",null,null],
+  ["2-80",null,"固鎖","x",null,null],["3-80",null,"固鎖","x",null,null],
+  ["4-80",null,"固鎖","x",null,null],["5-80",null,"固鎖","x",null,null],
+  ["6-80",null,"固鎖","x",null,null],["7-80",null,"固鎖","x",null,null],
+  ["8-70",null,"固鎖","x",null,null],["8-80",null,"固鎖","x",null,null],
+  ["9-80",null,"固鎖","x",null,null],["3-85",null,"固鎖","x",null,null],
+  ["M-85",null,"固鎖","x",null,null]
+]);
+
+var BIT = mk("bi", [
+  ["LR","Low Rush","軸心","x","S","jp"],
+  ["FB","Free Ball","軸心","x","S","jp"],
+  ["H","Hexa","軸心","x","S","jp"],
+  ["UF","Under Flat","軸心","x","S","jp"],
+  ["E","Elevate","軸心","x","S","jp"],
+  ["R","Rush","軸心","x","A","wbo"],
+  ["K","Kick","軸心","x","A","wbo"],
+  ["B","Ball","軸心","x","A","wbo"],
+  ["UN","Under Needle","軸心","x","A","wbo"],
+  ["O","Orb","軸心","x","A","wbo"],
+  ["F","Flat","軸心","x",null,null],["LF","Low Flat","軸心","x",null,null],
+  ["N","Needle","軸心","x",null,null],["P","Point","軸心","x",null,null],
+  ["S","Spike","軸心","x",null,null],["T","Taper","軸心","x",null,null],
+  ["GB","Gear Ball","軸心","x",null,null],["GF","Gear Flat","軸心","x",null,null],
+  ["GN","Gear Needle","軸心","x",null,null],["GP","Gear Point","軸心","x",null,null],
+  ["HN","High Needle","軸心","x",null,null],["HT","High Taper","軸心","x",null,null],
+  ["MN","Metal Needle","軸心","x",null,null],["DB",null,"軸心","x",null,null],
+  ["FF",null,"軸心","x",null,null],["GU",null,"軸心","x",null,null],
+  ["NR",null,"軸心","x",null,null],["OP",null,"軸心","x",null,null],
+  ["U",null,"軸心","x",null,null],["W",null,"軸心","x",null,null],
+  ["J",null,"軸心","x",null,null],["LO",null,"軸心","x",null,null],
+  ["D",null,"軸心","x",null,null],["GR",null,"軸心","x",null,null],
+  ["TK",null,"軸心","x",null,null],["WB",null,"軸心","x",null,null],
+  ["Y",null,"軸心","x",null,null],["A",null,"軸心","x",null,null],
+  ["C",null,"軸心","x",null,null],["I",null,"軸心","x",null,null],
+  ["TP",null,"軸心","x",null,null],["WW",null,"軸心","x",null,null],
+  ["Z",null,"軸心","x",null,null],["G",null,"軸心","x",null,null],
+  ["V",null,"軸心","x",null,null],["BS",null,"軸心","x",null,null],
+  ["M",null,"軸心","x",null,null],["Q",null,"軸心","x",null,null],
+  ["RA",null,"軸心","x",null,null],["Tr",null,"軸心","x",null,null],
+  ["DS",null,"軸心","x",null,null],["L",null,"軸心","x",null,null]
+]);
+
+var ASSIST = mk("as", [
+  ["輔助H",null,"輔助戰刃","x",null,null],["輔助W",null,"輔助戰刃","x",null,null],
+  ["輔助F",null,"輔助戰刃","x",null,null],["輔助G",null,"輔助戰刃","x",null,null],
+  ["輔助J",null,"輔助戰刃","x",null,null],["輔助K",null,"輔助戰刃","x",null,null],
+  ["輔助S",null,"輔助戰刃","x",null,null],["輔助A",null,"輔助戰刃","x",null,null],
+  ["輔助B",null,"輔助戰刃","x",null,null],["輔助C",null,"輔助戰刃","x",null,null],
+  ["輔助D",null,"輔助戰刃","x",null,null],["輔助M",null,"輔助戰刃","x",null,null],
+  ["輔助E",null,"輔助戰刃","x",null,null],["輔助T",null,"輔助戰刃","x",null,null],
+  ["輔助V",null,"輔助戰刃","x",null,null],["輔助Z",null,"輔助戰刃","x",null,null],
+  ["輔助O",null,"輔助戰刃","x",null,null],["輔助R",null,"輔助戰刃","x",null,null],
+  ["輔助Q",null,"輔助戰刃","x",null,null]
+]);
+
+var CATS = [
+  {k:"bl", zh:"上蓋",  en:"BLADE",   items:BLADE},
+  {k:"ra", zh:"固鎖",  en:"RATCHET", items:RATCHET},
+  {k:"bi", zh:"軸心",  en:"BIT",     items:BIT},
+  {k:"as", zh:"輔助",  en:"ASSIST",  items:ASSIST}
+];
+var ALL = {};
+CATS.forEach(function(c){ c.items.forEach(function(it){ ALL[it.id] = it; }); });
+
+var TIERS = [
+  {k:"S", n:"賽場主流"}, {k:"A", n:"強力"}, {k:"B", n:"堪用"},
+  {k:"C", n:"偏弱"}, {k:"D", n:"收藏向"}, {k:"_", n:"未分類"}
+];
+var TYPE_ZH = {atk:"攻擊", def:"防禦", sta:"耐久", bal:"均衡", x:""};
+
+/* ============================================================
+   狀態：種子放喺程式碼，改動只存 overrides，doc 好細。
+   ============================================================ */
+var LS = "beyx-tier-v1";
+var state = {tiers:{}, owned:{}, notes:{}, custom:[], hidden:[], updatedAt:0};
+var db = null, docRef = null, saveTimer = null, booted = false;
+var ui = {cat:"bl", type:"all", ownOnly:false, q:""};
+
+function loadLocal(){
+  try{
+    var raw = localStorage.getItem(LS);
+    if(raw) state = Object.assign(state, JSON.parse(raw));
+  }catch(e){}
+}
+function saveLocal(){
+  try{ localStorage.setItem(LS, JSON.stringify(state)); }catch(e){}
+}
+function touch(){
+  state.updatedAt = Date.now();
+  saveLocal();
+  render();
+  if(!docRef) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){
+    docRef.set(JSON.parse(JSON.stringify(state))).catch(function(e){
+      setSync("local", "本機儲存");
+      toast("同步唔到：" + (e && e.code ? e.code : "未知"));
+    });
+  }, 500);
+}
+function setSync(cls, tx){
+  var el = document.getElementById("sync");
+  el.className = "pill " + cls;
+  document.getElementById("synctx").textContent = tx;
+}
+
+function customItems(){
+  return state.custom.map(function(c){
+    return {id:c.id, cat:c.cat, zh:c.zh, en:c.en||null, code:c.code||null,
+            type:c.type||"x", tier:null, src:null, q:null, isCustom:true};
+  });
+}
+function itemById(id){
+  if(ALL[id]) return ALL[id];
+  var f = customItems().filter(function(i){ return i.id === id; });
+  return f[0] || null;
+}
+function tierOf(it){
+  return Object.prototype.hasOwnProperty.call(state.tiers, it.id)
+    ? state.tiers[it.id] : it.tier;
+}
+
+/* ============================================================
+   畫面
+   ============================================================ */
+function el(tag, cls, tx){
+  var e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(tx != null) e.textContent = tx;
+  return e;
+}
+
+function buildSeg(){
+  var seg = document.getElementById("seg");
+  seg.innerHTML = "";
+  CATS.forEach(function(c){
+    var b = el("button", ui.cat === c.k ? "on" : "");
+    b.appendChild(document.createTextNode(c.zh));
+    b.appendChild(el("b", null, c.en));
+    b.onclick = function(){ ui.cat = c.k; buildSeg(); render(); window.scrollTo(0,0); };
+    seg.appendChild(b);
+  });
+}
+
+function buildFilters(){
+  var box = document.getElementById("filters");
+  box.innerHTML = "";
+  var defs = [["all","全部"],["atk","攻擊"],["def","防禦"],["sta","耐久"],["bal","均衡"]];
+  var isBlade = ui.cat === "bl";
+  defs.forEach(function(d){
+    if(!isBlade && d[0] !== "all") return;
+    var b = el("button", "chipf" + (ui.type === d[0] ? " on" : ""), d[1]);
+    b.dataset.t = d[0];
+    b.onclick = function(){ ui.type = d[0]; buildFilters(); render(); };
+    box.appendChild(b);
+  });
+  var o = el("button", "chipf" + (ui.ownOnly ? " on" : ""), "只看已擁有");
+  o.dataset.t = "own";
+  o.onclick = function(){ ui.ownOnly = !ui.ownOnly; buildFilters(); render(); };
+  box.appendChild(o);
+  var a = el("button", "chipf", "＋ 加零件");
+  a.dataset.t = "add";
+  a.onclick = openAdd;
+  box.appendChild(a);
+}
+
+function visibleItems(){
+  var cat = ui.cat;
+  var pool = CATS.filter(function(c){ return c.k === cat; })[0].items
+    .concat(customItems().filter(function(i){ return i.cat === cat; }))
+    .filter(function(i){ return state.hidden.indexOf(i.id) < 0; });
+  var q = ui.q.trim().toLowerCase();
+  return pool.filter(function(i){
+    if(ui.type !== "all" && i.type !== ui.type) return false;
+    if(ui.ownOnly && !state.owned[i.id]) return false;
+    if(q){
+      var hay = [i.zh, i.en, i.code, state.notes[i.id]].join(" ").toLowerCase();
+      if(hay.indexOf(q) < 0) return false;
+    }
+    return true;
+  });
+}
+
+function partChip(it){
+  var b = el("button", "part");
+  b.dataset.t = it.type || "x";
+  var nm = el("div", "nm");
+  nm.appendChild(document.createTextNode(it.zh));
+  if(it.q) nm.appendChild(el("span", "qm", "?"));
+  if(state.notes[it.id]) nm.appendChild(el("span", "note-dot", "●"));
+  if(state.owned[it.id]) nm.appendChild(el("span", "own"));
+  b.appendChild(nm);
+  if(it.en) b.appendChild(el("div", "en", it.en));
+  if(it.code && it.code !== "固鎖" && it.code !== "軸心" && it.code !== "輔助戰刃"){
+    b.appendChild(el("div", "cd", it.code));
+  }
+  b.onclick = function(){ openEditor(it.id); };
+  return b;
+}
+
+function render(){
+  var board = document.getElementById("board");
+  board.innerHTML = "";
+  var items = visibleItems();
+  var byTier = {};
+  TIERS.forEach(function(t){ byTier[t.k] = []; });
+  items.forEach(function(i){
+    var t = tierOf(i);
+    byTier[t && byTier[t] ? t : "_"].push(i);
+  });
+
+  TIERS.forEach(function(t){
+    var row = el("div", "tier");
+    row.dataset.k = t.k;
+    var rail = el("div", "railcol");
+    rail.appendChild(el("div", "t", t.k === "_" ? "未分類" : t.k));
+    rail.appendChild(el("div", "n", String(byTier[t.k].length)));
+    row.appendChild(rail);
+    var bay = el("div", "bay");
+    if(!byTier[t.k].length){
+      bay.appendChild(el("div", "empty", t.k === "_" ? "全部排晒" : "—"));
+    } else {
+      byTier[t.k].forEach(function(i){ bay.appendChild(partChip(i)); });
+    }
+    row.appendChild(bay);
+    board.appendChild(row);
+  });
+
+  var total = items.length;
+  var ranked = total - byTier["_"].length;
+  var owned = items.filter(function(i){ return state.owned[i.id]; }).length;
+  document.getElementById("stats").innerHTML = "";
+  [["已排 ", ranked + " / " + total], ["已擁有 ", String(owned)],
+   ["更新 ", state.updatedAt ? new Date(state.updatedAt).toLocaleDateString("en-GB") : "—"]]
+    .forEach(function(p){
+      var s = el("span", null, p[0]);
+      s.appendChild(el("b", null, p[1]));
+      document.getElementById("stats").appendChild(s);
+    });
+}
+
+/* ============================================================
+   底部面板
+   ============================================================ */
+var sheet = document.getElementById("sheet"), scrim = document.getElementById("scrim");
+function openSheet(build){
+  sheet.innerHTML = "";
+  sheet.appendChild(el("div", "grab"));
+  build(sheet);
+  sheet.classList.add("on"); scrim.classList.add("on");
+}
+function closeSheet(){ sheet.classList.remove("on"); scrim.classList.remove("on"); }
+scrim.onclick = closeSheet;
+
+function openEditor(id){
+  var it = itemById(id);
+  if(!it) return;
+  openSheet(function(s){
+    var h = el("h2");
+    h.appendChild(document.createTextNode(it.zh));
+    if(it.q) h.appendChild(el("span", "qm", "對照待確認"));
+    s.appendChild(h);
+    var bits = [it.en, it.code, TYPE_ZH[it.type]].filter(Boolean).join("  ·  ");
+    s.appendChild(el("div", "sub", bits || "自訂零件"));
+
+    var f1 = el("div", "fld");
+    f1.appendChild(el("label", null, "等級"));
+    var pick = el("div", "tierpick");
+    TIERS.forEach(function(t){
+      var cur = tierOf(it) || "_";
+      var b = el("button", cur === t.k ? "on" : "", t.k === "_" ? "未分" : t.k);
+      b.dataset.k = t.k;
+      b.onclick = function(){
+        if(t.k === "_") delete state.tiers[it.id]; else state.tiers[it.id] = t.k;
+        if(t.k === "_" && it.tier) state.tiers[it.id] = null;
+        touch(); openEditor(id);
+      };
+      pick.appendChild(b);
+    });
+    f1.appendChild(pick);
+    s.appendChild(f1);
+
+    var f2 = el("div", "fld");
+    f2.appendChild(el("label", null, "備註（配置、實測、影片出處）"));
+    var ta = el("textarea");
+    ta.value = state.notes[it.id] || "";
+    ta.placeholder = "例：阿土 4 月天梯排 A／自己實測 1-60 H 好穩";
+    ta.oninput = function(){
+      if(ta.value.trim()) state.notes[it.id] = ta.value; else delete state.notes[it.id];
+      clearTimeout(ta._t); ta._t = setTimeout(touch, 400);
+    };
+    f2.appendChild(ta);
+    s.appendChild(f2);
+
+    var rb = el("div", "rowbtns");
+    var ob = el("button", "btn" + (state.owned[it.id] ? " on" : ""),
+                state.owned[it.id] ? "✓ 已擁有" : "標記已擁有");
+    ob.onclick = function(){
+      if(state.owned[it.id]) delete state.owned[it.id]; else state.owned[it.id] = 1;
+      touch(); openEditor(id);
+    };
+    rb.appendChild(ob);
+    var db2 = el("button", "btn danger", "隱藏");
+    db2.onclick = function(){
+      state.hidden.push(it.id); touch(); closeSheet(); toast("已隱藏 " + it.zh);
+    };
+    rb.appendChild(db2);
+    s.appendChild(rb);
+    if(it.src){
+      s.appendChild(el("div", "sub",
+        (it.src === "wbo" ? "預設等級來自大賽數據站彙整" : "預設等級來自日本社群共識")
+        + "，可以隨時改"));
+    }
+  });
+}
+
+function openAdd(){
+  openSheet(function(s){
+    s.appendChild(el("h2", null, "加零件"));
+    var cat = CATS.filter(function(c){ return c.k === ui.cat; })[0];
+    s.appendChild(el("div", "sub", "加入「" + cat.zh + "」" + cat.en));
+    var mkf = function(lab, ph){
+      var f = el("div", "fld");
+      f.appendChild(el("label", null, lab));
+      var i = document.createElement("input");
+      i.className = "txt"; i.placeholder = ph;
+      f.appendChild(i); s.appendChild(f);
+      return i;
+    };
+    var zh = mkf("名稱（必填）", ui.cat === "ra" ? "例：3-75" : "例：新上蓋");
+    var en = mkf("英文名", "選填");
+    var cd = mkf("型號", ui.cat === "bl" ? "例：UX-22" : "選填");
+    var typ = "x";
+    if(ui.cat === "bl"){
+      var f = el("div", "fld");
+      f.appendChild(el("label", null, "屬性"));
+      var row = el("div", "tierpick");
+      ["atk","def","sta","bal"].forEach(function(t){
+        var b = el("button", "", TYPE_ZH[t]);
+        b.onclick = function(){
+          typ = t;
+          Array.prototype.forEach.call(row.children, function(c){ c.className = ""; });
+          b.className = "on";
+        };
+        row.appendChild(b);
+      });
+      f.appendChild(row); s.appendChild(f);
+    }
+    var rb = el("div", "rowbtns");
+    var cancel = el("button", "btn", "取消"); cancel.onclick = closeSheet;
+    var ok = el("button", "btn primary", "加入");
+    ok.onclick = function(){
+      if(!zh.value.trim()){ toast("要填名稱"); return; }
+      state.custom.push({id:"c-" + Date.now(), cat:ui.cat, zh:zh.value.trim(),
+        en:en.value.trim(), code:cd.value.trim(), type:typ});
+      touch(); closeSheet(); toast("加咗 " + zh.value.trim());
+    };
+    rb.appendChild(cancel); rb.appendChild(ok);
+    s.appendChild(rb);
+  });
+}
+
+function openSources(){
+  openSheet(function(s){
+    s.appendChild(el("h2", null, "資料來源"));
+    s.appendChild(el("div", "sub", "種子等級嘅出處同限制"));
+    var d = el("div", "src");
+    d.innerHTML =
+      "<h3>有填等級嘅部分</h3><ul>" +
+      "<li><b>上蓋 S–C 級</b>：BBXHub（2026-09-04 更新，3,918 場賽事 / 39,726 組配置）同 BEYWATCH.GG（2026-09-07 更新，3,282 場賽事）嘅大賽入賞統計。</li>" +
+      "<li><b>固鎖 S 級</b>：以上兩站入賞率頭幾位，同埋 BeyX Hub 2026-06-17 列出嘅頂級配置入面實際用到嘅。</li>" +
+      "<li><b>軸心 S 級</b>：日本社群普遍認嘅五強 LR / FB / H / UF / E；A 級係頂級配置入面出現過嘅。</li>" +
+      "</ul>" +
+      "<h3>冇填等級嘅部分</h3>" +
+      "<p>其餘全部放喺「未分類」，等你自己排。零件名同型號抄自台灣天梯情報站嘅清單，等級一律冇搬過嚟。</p>" +
+      "<div class=\"caveat\"><b>要講清楚：</b>你提到嘅 Namaste 阿土同白 Shiro 嘅天梯，內容係喺 YouTube 影片入面講，我讀唔到影片，所以佢哋嘅排名一個都冇填入去。要照佢哋嘅版本，睇完片自己拉，或者話我知邊隻排邊級我幫你入。</div>" +
+      "<div class=\"caveat\">帶 <b>?</b> 標記嘅，係中英文對照我唔夠肯定（天馬爆擊／Pegasus Blast、蒼龍突擊／Dran Blitz、三角強襲／Delta），落場前自己核一核。</div>" +
+      "<h3>幾時要更新</h3>" +
+      "<p>大賽數據站每星期五自動更新，所以呢個種子等級係 2026 年 9 月頭嘅快照。CX 系統同 Over Blade（爆擊）仲喺度爬升，過幾個月要重新睇過。</p>";
+    s.appendChild(d);
+    var b = el("button", "btn", "知道");
+    b.onclick = closeSheet;
+    s.appendChild(b);
+  });
+}
+
+function openMenu(){
+  openSheet(function(s){
+    s.appendChild(el("h2", null, "更多"));
+    s.appendChild(el("div", "sub", "備份同重設"));
+    var mkb = function(t, cls, fn){
+      var b = el("button", "btn " + (cls || ""), t);
+      b.style.marginBottom = "8px"; b.style.width = "100%";
+      b.onclick = fn; s.appendChild(b); return b;
+    };
+    mkb("匯出我的天梯（JSON）", "primary", doExport);
+    var lab = document.createElement("label");
+    lab.className = "btn"; lab.style.display = "block";
+    lab.style.marginBottom = "8px"; lab.textContent = "匯入 JSON";
+    var fi = document.createElement("input");
+    fi.type = "file"; fi.accept = "application/json,.json"; fi.hidden = true;
+    fi.onchange = doImport;
+    lab.appendChild(fi);
+    s.appendChild(lab);
+    if(state.hidden.length){
+      mkb("回復 " + state.hidden.length + " 個隱藏零件", "", function(){
+        state.hidden = []; touch(); closeSheet(); toast("已回復");
+      });
+    }
+    mkb("清除我的所有改動", "danger", function(){
+      if(!confirm("會清走全部等級改動、備註同擁有標記，確定？")) return;
+      state = {tiers:{}, owned:{}, notes:{}, custom:[], hidden:[], updatedAt:Date.now()};
+      touch(); closeSheet(); toast("已重設");
+    });
+    mkb("關閉", "", closeSheet);
+  });
+}
+
+function doExport(){
+  var payload = JSON.stringify({app:"beyx-tier", v:1, exportedAt:new Date().toISOString(),
+    state:state}, null, 2);
+  var name = "beyx-tier-" + new Date().toISOString().slice(0,10) + ".json";
+  if(window.__dl){
+    window.__dl.save({filename:name, data:payload})
+      .then(function(){ toast("已匯出"); })
+      .catch(function(){ toast("匯出取消咗"); });
+  } else {
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([payload], {type:"application/json"}));
+    a.download = name; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+    toast("已匯出");
+  }
+}
+function doImport(e){
+  var f = e.target.files && e.target.files[0];
+  if(!f) return;
+  var r = new FileReader();
+  r.onload = function(){
+    try{
+      var j = JSON.parse(r.result);
+      var st = j.state || j;
+      if(!st || typeof st !== "object") throw 0;
+      state = Object.assign({tiers:{}, owned:{}, notes:{}, custom:[], hidden:[]}, st);
+      touch(); closeSheet(); toast("匯入完成");
+    }catch(err){ toast("檔案讀唔到，要係本 app 匯出嘅 JSON"); }
+  };
+  r.readAsText(f);
+}
+
+var toastT = null;
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("on");
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ t.classList.remove("on"); }, 2000);
+}
+
+/* ============================================================
+   啟動
+   ============================================================ */
+document.getElementById("srcbtn").onclick = openSources;
+document.getElementById("menubtn").onclick = openMenu;
+var qi = document.getElementById("q"), qc = document.getElementById("qclr");
+qi.oninput = function(){
+  ui.q = qi.value; qc.hidden = !qi.value; render();
+};
+qc.onclick = function(){ qi.value = ""; ui.q = ""; qc.hidden = true; render(); };
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape") closeSheet();
+});
+
+loadLocal();
+buildSeg(); buildFilters(); render();
+setSync("local", "本機儲存");
+
+if(window.claude && window.claude.use){
+  window.claude.use("downloads").then(function(d){ if(d) window.__dl = d; }).catch(function(){});
+  window.claude.use("db").then(function(store){
+    if(!store) return;
+    db = store;
+    docRef = db.doc("state/tierlist");
+    docRef.onSnapshot(function(snap){
+      if(snap.exists){
+        var remote = snap.data();
+        if(!booted || (remote.updatedAt || 0) > (state.updatedAt || 0)){
+          state = Object.assign({tiers:{}, owned:{}, notes:{}, custom:[], hidden:[]}, remote);
+          saveLocal(); render();
+        }
+      } else if(!booted && state.updatedAt){
+        docRef.set(JSON.parse(JSON.stringify(state))).catch(function(){});
+      }
+      booted = true;
+      setSync("live", "已同步");
+    }, function(){
+      setSync("local", "本機儲存");
+    });
+  }).catch(function(){});
+}
+
+/* Service worker：只喺獨立網站版行（Artifact 冇 manifest，唔會註冊） */
+if(document.querySelector('link[rel="manifest"]') && "serviceWorker" in navigator){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").then(function(reg){
+      reg.addEventListener("updatefound", function(){
+        var w = reg.installing;
+        if(!w) return;
+        w.addEventListener("statechange", function(){
+          if(w.state === "installed" && navigator.serviceWorker.controller){
+            toast("有新版本，熄咗再開就更新");
+          }
+        });
+      });
+    }).catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
