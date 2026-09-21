@@ -21,10 +21,10 @@ S+|bl|UX-17|隕星龍騎士(左)|atk|RG46Mfwt/image.png
 S+|bl|UX-19|子彈獅鷲|bal|k6kDdB7s/lel-TDs-N0-Pl-JZRlo-SCNb-TXem0-PZg-ZEQj-OWlp8hb-Gm.png
 S|bl|BX-23|鳳凰飛翼|atk|7JDWgWBH/transparent-Photoroom.png
 S|bl|BX-34|蒼穹龍騎士(左)|atk|6ct6nZpS/transparent-Photoroom.png
-S|bl|BX-35-01|玄冥戰甲(綠)|def|Qj1cyBMX/transparent-Photoroom.webp
 S|bl|BX-35-04|魔導神杖(綠)|sta|cXrDPTwk/transparent-Photoroom.webp
 S|bl|BX-48-01|蒼穹龍騎士(黑)|atk|YBjQS6rG/image.webp
 S|bl|BX-48-05|蒼龍爆刃(紅)|atk|xKLpFzqg/image.webp
+S|bl|BX-53-03|空力天馬 金屬塗層:藍/青|atk|kVjNX0WB/blade-BX-53-03-BX-53-03-BL-PRD-073734-03.webp
 S|bl|BXC-03|蒼龍爆刃 金屬塗層:火紅|atk|Nd4L9v8m/blade-BXC-03-BXC-03-BL-PRD-941460-00.webp
 S|bl|BXC-20|時鐘幻象 金屬塗層:黑色 命運的倒帶士版本|sta|h1ZX948p/blade-BXC-20-BXC-20-BL-PRD-067900-00.webp
 S|bl|BXG-09|蒼穹龍騎士 金屬塗層:闇黑|atk|d4FthgqL/blade-BXG-09-BXG-09-BL-PRD-941576-00.webp
@@ -61,7 +61,6 @@ S|bi||T|x|VYyhmJQ5/BT-PRD-910398-00.webp
 S|bi||UF|x|CKSBthC9/BT-PRD-982432-01.webp
 S|bi||UN|x|0SHZ0Sn/BT-PRD-097266-00.webp
 S|bi||W|x|21VVVP2D/BT-EVE-958772-03.webp
-A+|bl||飛龍懸浮 A賞|def|ZRm5NZVn/A.png
 A+|bl|BX-31-01|暴龍霸擊(紅)|atk|VWbjCT9g/transparent-Photoroom.webp
 A+|bl|BX-31-02|暴龍霸擊|atk|ZRd4KqZx/transparent-Photoroom.webp
 A+|bl|BX-35-05|鳳凰飛翼(藍)|atk|wFg5f430/transparent-Photoroom.webp
@@ -69,7 +68,8 @@ A+|bl|BX-49|蒼龍突擊|atk|qMShhHNf/image.png
 A+|bl|BX-50-01|天堂之環|def|Q7kVGQVT/transparent-Photoroom.webp
 A+|bl|BX-50-02|天堂之環|def|9mrFcyRK/transparent-Photoroom.webp
 A+|bl|BXC-05|鳳凰飛翼|atk|HTkQZnkr/blade-BXC-05-BXC-05-BL-PRD-953654-00.webp
-A+|bl|BXG-35|鳳凰飛翼 金屬塗層:闇黑 キタニタツヤ 版|atk|ymHCLXMH/blade-BXG-35-BXG-35-BL-PRD-982128-00.webp
+A+|bl|BXG-39|飛龍懸浮 金屬塗層:紫|def|63G90V5/blade-BXG-39-BXG-39-BL-PRD-993643-00.webp
+A+|bl|BXG-39|飛龍懸浮 DMM 抽獎A獎|def|Y4WzLMQz/blade-BXG-39-BXG-39-BL-PRD-993636-00.webp
 A+|bl|BXG-61|天蠍長矛 金屬塗層:品紅|bal|nNy4w0Bs/blade-BXG-61-BXG-61-BL-PRD-080558-00.webp
 A+|bl|BXH-25-01|蒼龍突擊 金屬塗層:燦金|atk|hRy7Hj1L/blade-BXH-25-01-BXH-25-01-BL-EVE-077428-01.webp
 A+|bl|BXH-25-02|蒼龍突擊 金屬塗層:白銀|atk|wNs41BxM/blade-BXH-25-02-BXH-25-02-BL-EVE-077428-02.webp
@@ -80,12 +80,14 @@ A+|bl|UX-10-02|暴龍霸擊(紅)|atk|vvdRtQjt/image.png
 A+|bl|UX-13|魔像奇岩|def|qYBTzRfC/transparent-Photoroom.webp
 A+|bl|UX-18-01|古屍詛咒|def|Kpn6t4YC/transparent-Photoroom.png
 A+|bl|UX-18-02|古屍詛咒 綠|def|fzM0FBdr/transparent-Photoroom.webp
+A+|bl|UX-21-03|飛龍懸浮|def|d0F6m35G/blade-UX-21-03-UX-21-03-BL-PRD-085546-03.webp
 A|bl|BX-36-01|巨鯨怒濤(綠)|bal|KjXvtrfB/transparent-Photoroom.webp
 A|bl|BX-36-02|巨鯨怒濤|bal|Vc6Cvknx/transparent-Photoroom.webp
 A|bl|BX-36-03|巨鯨怒濤|bal|s9vwbqfV/transparent-Photoroom.webp
 A|bl|BX-45|武士魂斬|bal|R4MGyGcR/transparent-Photoroom.webp
 A|bl|BXC-12|武士星劍 金屬塗層:橘|atk|dwp61Qft/blade-BXC-12-BXC-12-BL-PRD-993773-00.webp
 A|bl|BXC-19|龍王閃擊BK 金屬塗層:黃|atk|0jcHqvdL/blade-BXC-19-BXC-19-BL-PRD-072447-00.webp
+A|bl|BXG-35|鳳凰飛翼 金屬塗層:闇黑 キタニタツヤ 版|atk|ymHCLXMH/blade-BXG-35-BXG-35-BL-PRD-982128-00.webp
 A|bl|BXG-42|騎士圓甲 金屬塗層:夜藍|def|8LkFZhss/blade-BXG-42-BXG-42-BL-PRD-919124-00.webp
 A|bl|BXG-54|武士星劍(世足)|atk|VWL6Mgb4/image.webp
 A|bl|BXG-56|巨鯨怒濤 金屬塗層:藍|bal|m5Rqzdmf/blade-BXG-56-BXG-56-BL-PRD-085690-00.webp
@@ -212,6 +214,7 @@ D+|bl|BX-22|蒼龍神劍|atk|tpLKk5Kn/transparent-Photoroom.webp
 D+|bl|BX-31-03|惡魔鎖鏈|bal|VY5yhPN3/transparent-Photoroom.webp
 D+|bl|BX-31-04|蒼龍利刃|atk|MmRTwp0/transparent-Photoroom.webp
 D+|bl|BX-44|三角強襲|def|MyNv1sm2/transparent-Photoroom.webp
+D+|bl|BX-53-01|騎士重盾 版本2.0|def|hJZCt7qd/blade-BX-53-01-BX-53-01-BL-PRD-073734-01.webp
 D+|bl|BXA-01|蒼龍神劍|atk|X9Xv43C/blade-BXA-01-BXA-01-BL-PRD-939672-00.webp
 D+|bl|BXC-00-01|蒼龍神劍 金屬塗層:燦金|atk|5hr029dW/blade-BXC-00-01-BXC-00-01-BL-EVE-910909-01.webp
 D+|bl|BXC-00-02|蒼龍神劍 金屬塗層:白銀|atk|qLVfjP8Y/blade-BXC-00-02-BXC-00-02-BL-EVE-910909-02.webp
@@ -241,11 +244,13 @@ D|bl|BX-24-04|王蛇鞭尾|sta|HTnyFsGR/transparent-Photoroom.webp
 D|bl|BX-24-06|魔導幻箭|sta|GfJvyhrj/transparent-Photoroom.webp
 D|bl|BX-26|幻獸刺心|bal|dst33fBQ/transparent-Photoroom.webp
 D|bl|BX-33|皓戰猛虎|bal|Lhq4jzx4/transparent-Photoroom.webp
+D|bl|BX-35-01|玄冥戰甲(綠)|def|Qj1cyBMX/transparent-Photoroom.webp
 D|bl|BX-35-02|玄冥戰甲(黃)|def|Q3Q3kTpK/transparent-Photoroom.webp
 D|bl|BX-35-03|幻獸刺心|bal|TqF975tZ/transparent-Photoroom.webp
 D|bl|BX-35-06|王蛇鞭尾|sta|3yFTX5Nv/transparent-Photoroom.webp
 D|bl|BX-48-03|猛獁獠牙(黑)|bal|sdq4PV91/image.png
 D|bl|BX-50-04|幽靈元魂|def|rG7vsKS1/transparent-Photoroom.webp
+D|bl|BX-53-02|魔導幻箭 版本2.0|sta|60yhN5Kt/blade-BX-53-02-BX-53-02-BL-PRD-073734-02.webp
 D|bl|BXG-19|惡魔重錘 金屬塗層:紅 FC巴塞隆納版|bal|twS7pSX5/blade-BXG-19-BXG-19-BL-PRD-952329-00.webp
 D|bl|BXG-32|猛瑪長牙(闇黑)|bal|S4XNK9mz/image.webp
 D|bl|CX-05-04|雄獅巔峰|def|gZ3PkZ3f/transparent-Photoroom.webp
@@ -329,6 +334,7 @@ E|as||輔助R|x|hFrN9b1W/AB-PRD-930907-00.webp
 -|bl|BX-00-04|綠惡魔|sta|ZpphTq9C/blade-BX-00-04-BX-00-04-BL-PRD-305725-02.webp
 -|bl|BX-50-05|銀狼烈焰|atk|Z67nxJhy/transparent-Photoroom.webp
 -|bl|BX-50-06|魔犬獵魂|sta|GQJCXRFH/transparent-Photoroom.webp
+-|bl|BX-52|光輝龍騎士|atk|KcRPhZxG/blade-BX-52-BX-52-BL-PRD-085553-00.webp
 -|bl|BXC-02|地獄鐮刀 特別跨界陀螺|bal|MxJPt76w/blade-BXC-02-BXC-02-BL-PRD-932970-00.webp
 -|bl|BXC-13|蒼龍至尊S 金屬塗層:水藍|sta|kVVX181T/blade-BXC-13-BXC-13-BL-PRD-993872-00.webp
 -|bl|BXG-01|烈焰飛鳳S|bal|tMWjhbWN/transparent-Photoroom.webp
@@ -358,8 +364,6 @@ E|as||輔助R|x|hFrN9b1W/AB-PRD-930907-00.webp
 -|bl|BXG-37-01|金剛王|atk|DPQc3yYK/blade-BXG-37-01-BXG-37-01-BL-PRD-982487-01.webp
 -|bl|BXG-37-02|天王星|def|JRk2Lwwy/blade-BXG-37-02-BXG-37-02-BL-PRD-982487-02.webp
 -|bl|BXG-38|雄獅獠牙|atk|cSYHTC43/T4-60A.png
--|bl|BXG-39|飛龍懸浮 金屬塗層:紫|def|63G90V5/blade-BXG-39-BXG-39-BL-PRD-993643-00.webp
--|bl|BXG-39|飛龍懸浮 DMM 抽獎A獎|def|Y4WzLMQz/blade-BXG-39-BXG-39-BL-PRD-993636-00.webp
 -|bl|BXG-40-01|暴龍|def|fV3mTgMm/image.webp
 -|bl|BXG-40-02|滄龍|atk|gbZbP370/image.webp
 -|bl|BXG-41-01|翼龍|def|0R1KP33y/transparent-Photoroom.webp
@@ -380,7 +384,6 @@ E|as||輔助R|x|hFrN9b1W/AB-PRD-930907-00.webp
 -|bl|UX-15-03|惡魔勇氣|atk|5X46XXPs/transparent-Photoroom.webp
 -|bl|UX-18-03|天馬九尾|atk|svbrfZzS/transparent-Photoroom.webp
 -|bl|UX-18-04|焰神勇氣|atk|SGDZkg5/transparent-Photoroom.webp
--|bl|UX-21-03|飛龍懸浮|def|d0F6m35G/blade-UX-21-03-UX-21-03-BL-PRD-085546-03.webp
 -|as||輔助Q|x|zHJM6NWy/assist-CX-19-01-Q-AB-PRD-080626-01.webp
 -|ra||8-80|x|BHsjN51n/ratchet-UX-21-03-8-80-RC-PRD-085546-03.webp
 -|bi||DS|x|TBBBdBhB/BT-PRD-100001-01.webp

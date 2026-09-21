@@ -1,7 +1,7 @@
 /* X 天梯 Warm service worker
    改咗 app 之後記得升 VERSION，唔係啲 client 會食舊 cache。 */
 var PREFIX  = "beyx-warm-";
-var VERSION = "beyx-warm-v1";
+var VERSION = "beyx-warm-v2";
 var SHELL = [
   "./",
   "./index.html",

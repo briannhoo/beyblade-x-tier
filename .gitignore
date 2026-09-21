@@ -2,3 +2,4 @@
 *.local
 Thumbs.db
 .DS_Store
+*.bak

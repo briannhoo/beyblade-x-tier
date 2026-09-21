@@ -240,7 +240,7 @@ textarea:focus,.txt:focus{outline:none;border-color:var(--accent)}
 <script>
 /* ============================================================
    零件資料：等級、名稱、型號、屬性、相片，全部抄自台灣天梯情報站
-   https://stan-yao.github.io/beyblade_x_tier/ （2026-09-08 擷取）
+   https://stan-yao.github.io/beyblade_x_tier/ （2026-09-22 擷取）
    格式：等級|類別|型號|名稱|屬性|圖片路徑（前綴 https://i.ibb.co/）
    ============================================================ */
 var RAW = `
@@ -267,10 +267,10 @@ S+|bl|UX-17|隕星龍騎士(左)|atk|RG46Mfwt/image.png
 S+|bl|UX-19|子彈獅鷲|bal|k6kDdB7s/lel-TDs-N0-Pl-JZRlo-SCNb-TXem0-PZg-ZEQj-OWlp8hb-Gm.png
 S|bl|BX-23|鳳凰飛翼|atk|7JDWgWBH/transparent-Photoroom.png
 S|bl|BX-34|蒼穹龍騎士(左)|atk|6ct6nZpS/transparent-Photoroom.png
-S|bl|BX-35-01|玄冥戰甲(綠)|def|Qj1cyBMX/transparent-Photoroom.webp
 S|bl|BX-35-04|魔導神杖(綠)|sta|cXrDPTwk/transparent-Photoroom.webp
 S|bl|BX-48-01|蒼穹龍騎士(黑)|atk|YBjQS6rG/image.webp
 S|bl|BX-48-05|蒼龍爆刃(紅)|atk|xKLpFzqg/image.webp
+S|bl|BX-53-03|空力天馬 金屬塗層:藍/青|atk|kVjNX0WB/blade-BX-53-03-BX-53-03-BL-PRD-073734-03.webp
 S|bl|BXC-03|蒼龍爆刃 金屬塗層:火紅|atk|Nd4L9v8m/blade-BXC-03-BXC-03-BL-PRD-941460-00.webp
 S|bl|BXC-20|時鐘幻象 金屬塗層:黑色 命運的倒帶士版本|sta|h1ZX948p/blade-BXC-20-BXC-20-BL-PRD-067900-00.webp
 S|bl|BXG-09|蒼穹龍騎士 金屬塗層:闇黑|atk|d4FthgqL/blade-BXG-09-BXG-09-BL-PRD-941576-00.webp
@@ -307,7 +307,6 @@ S|bi||T|x|VYyhmJQ5/BT-PRD-910398-00.webp
 S|bi||UF|x|CKSBthC9/BT-PRD-982432-01.webp
 S|bi||UN|x|0SHZ0Sn/BT-PRD-097266-00.webp
 S|bi||W|x|21VVVP2D/BT-EVE-958772-03.webp
-A+|bl||飛龍懸浮 A賞|def|ZRm5NZVn/A.png
 A+|bl|BX-31-01|暴龍霸擊(紅)|atk|VWbjCT9g/transparent-Photoroom.webp
 A+|bl|BX-31-02|暴龍霸擊|atk|ZRd4KqZx/transparent-Photoroom.webp
 A+|bl|BX-35-05|鳳凰飛翼(藍)|atk|wFg5f430/transparent-Photoroom.webp
@@ -315,7 +314,8 @@ A+|bl|BX-49|蒼龍突擊|atk|qMShhHNf/image.png
 A+|bl|BX-50-01|天堂之環|def|Q7kVGQVT/transparent-Photoroom.webp
 A+|bl|BX-50-02|天堂之環|def|9mrFcyRK/transparent-Photoroom.webp
 A+|bl|BXC-05|鳳凰飛翼|atk|HTkQZnkr/blade-BXC-05-BXC-05-BL-PRD-953654-00.webp
-A+|bl|BXG-35|鳳凰飛翼 金屬塗層:闇黑 キタニタツヤ 版|atk|ymHCLXMH/blade-BXG-35-BXG-35-BL-PRD-982128-00.webp
+A+|bl|BXG-39|飛龍懸浮 金屬塗層:紫|def|63G90V5/blade-BXG-39-BXG-39-BL-PRD-993643-00.webp
+A+|bl|BXG-39|飛龍懸浮 DMM 抽獎A獎|def|Y4WzLMQz/blade-BXG-39-BXG-39-BL-PRD-993636-00.webp
 A+|bl|BXG-61|天蠍長矛 金屬塗層:品紅|bal|nNy4w0Bs/blade-BXG-61-BXG-61-BL-PRD-080558-00.webp
 A+|bl|BXH-25-01|蒼龍突擊 金屬塗層:燦金|atk|hRy7Hj1L/blade-BXH-25-01-BXH-25-01-BL-EVE-077428-01.webp
 A+|bl|BXH-25-02|蒼龍突擊 金屬塗層:白銀|atk|wNs41BxM/blade-BXH-25-02-BXH-25-02-BL-EVE-077428-02.webp
@@ -326,12 +326,14 @@ A+|bl|UX-10-02|暴龍霸擊(紅)|atk|vvdRtQjt/image.png
 A+|bl|UX-13|魔像奇岩|def|qYBTzRfC/transparent-Photoroom.webp
 A+|bl|UX-18-01|古屍詛咒|def|Kpn6t4YC/transparent-Photoroom.png
 A+|bl|UX-18-02|古屍詛咒 綠|def|fzM0FBdr/transparent-Photoroom.webp
+A+|bl|UX-21-03|飛龍懸浮|def|d0F6m35G/blade-UX-21-03-UX-21-03-BL-PRD-085546-03.webp
 A|bl|BX-36-01|巨鯨怒濤(綠)|bal|KjXvtrfB/transparent-Photoroom.webp
 A|bl|BX-36-02|巨鯨怒濤|bal|Vc6Cvknx/transparent-Photoroom.webp
 A|bl|BX-36-03|巨鯨怒濤|bal|s9vwbqfV/transparent-Photoroom.webp
 A|bl|BX-45|武士魂斬|bal|R4MGyGcR/transparent-Photoroom.webp
 A|bl|BXC-12|武士星劍 金屬塗層:橘|atk|dwp61Qft/blade-BXC-12-BXC-12-BL-PRD-993773-00.webp
 A|bl|BXC-19|龍王閃擊BK 金屬塗層:黃|atk|0jcHqvdL/blade-BXC-19-BXC-19-BL-PRD-072447-00.webp
+A|bl|BXG-35|鳳凰飛翼 金屬塗層:闇黑 キタニタツヤ 版|atk|ymHCLXMH/blade-BXG-35-BXG-35-BL-PRD-982128-00.webp
 A|bl|BXG-42|騎士圓甲 金屬塗層:夜藍|def|8LkFZhss/blade-BXG-42-BXG-42-BL-PRD-919124-00.webp
 A|bl|BXG-54|武士星劍(世足)|atk|VWL6Mgb4/image.webp
 A|bl|BXG-56|巨鯨怒濤 金屬塗層:藍|bal|m5Rqzdmf/blade-BXG-56-BXG-56-BL-PRD-085690-00.webp
@@ -458,6 +460,7 @@ D+|bl|BX-22|蒼龍神劍|atk|tpLKk5Kn/transparent-Photoroom.webp
 D+|bl|BX-31-03|惡魔鎖鏈|bal|VY5yhPN3/transparent-Photoroom.webp
 D+|bl|BX-31-04|蒼龍利刃|atk|MmRTwp0/transparent-Photoroom.webp
 D+|bl|BX-44|三角強襲|def|MyNv1sm2/transparent-Photoroom.webp
+D+|bl|BX-53-01|騎士重盾 版本2.0|def|hJZCt7qd/blade-BX-53-01-BX-53-01-BL-PRD-073734-01.webp
 D+|bl|BXA-01|蒼龍神劍|atk|X9Xv43C/blade-BXA-01-BXA-01-BL-PRD-939672-00.webp
 D+|bl|BXC-00-01|蒼龍神劍 金屬塗層:燦金|atk|5hr029dW/blade-BXC-00-01-BXC-00-01-BL-EVE-910909-01.webp
 D+|bl|BXC-00-02|蒼龍神劍 金屬塗層:白銀|atk|qLVfjP8Y/blade-BXC-00-02-BXC-00-02-BL-EVE-910909-02.webp
@@ -487,11 +490,13 @@ D|bl|BX-24-04|王蛇鞭尾|sta|HTnyFsGR/transparent-Photoroom.webp
 D|bl|BX-24-06|魔導幻箭|sta|GfJvyhrj/transparent-Photoroom.webp
 D|bl|BX-26|幻獸刺心|bal|dst33fBQ/transparent-Photoroom.webp
 D|bl|BX-33|皓戰猛虎|bal|Lhq4jzx4/transparent-Photoroom.webp
+D|bl|BX-35-01|玄冥戰甲(綠)|def|Qj1cyBMX/transparent-Photoroom.webp
 D|bl|BX-35-02|玄冥戰甲(黃)|def|Q3Q3kTpK/transparent-Photoroom.webp
 D|bl|BX-35-03|幻獸刺心|bal|TqF975tZ/transparent-Photoroom.webp
 D|bl|BX-35-06|王蛇鞭尾|sta|3yFTX5Nv/transparent-Photoroom.webp
 D|bl|BX-48-03|猛獁獠牙(黑)|bal|sdq4PV91/image.png
 D|bl|BX-50-04|幽靈元魂|def|rG7vsKS1/transparent-Photoroom.webp
+D|bl|BX-53-02|魔導幻箭 版本2.0|sta|60yhN5Kt/blade-BX-53-02-BX-53-02-BL-PRD-073734-02.webp
 D|bl|BXG-19|惡魔重錘 金屬塗層:紅 FC巴塞隆納版|bal|twS7pSX5/blade-BXG-19-BXG-19-BL-PRD-952329-00.webp
 D|bl|BXG-32|猛瑪長牙(闇黑)|bal|S4XNK9mz/image.webp
 D|bl|CX-05-04|雄獅巔峰|def|gZ3PkZ3f/transparent-Photoroom.webp
@@ -575,6 +580,7 @@ E|as||輔助R|x|hFrN9b1W/AB-PRD-930907-00.webp
 -|bl|BX-00-04|綠惡魔|sta|ZpphTq9C/blade-BX-00-04-BX-00-04-BL-PRD-305725-02.webp
 -|bl|BX-50-05|銀狼烈焰|atk|Z67nxJhy/transparent-Photoroom.webp
 -|bl|BX-50-06|魔犬獵魂|sta|GQJCXRFH/transparent-Photoroom.webp
+-|bl|BX-52|光輝龍騎士|atk|KcRPhZxG/blade-BX-52-BX-52-BL-PRD-085553-00.webp
 -|bl|BXC-02|地獄鐮刀 特別跨界陀螺|bal|MxJPt76w/blade-BXC-02-BXC-02-BL-PRD-932970-00.webp
 -|bl|BXC-13|蒼龍至尊S 金屬塗層:水藍|sta|kVVX181T/blade-BXC-13-BXC-13-BL-PRD-993872-00.webp
 -|bl|BXG-01|烈焰飛鳳S|bal|tMWjhbWN/transparent-Photoroom.webp
@@ -604,8 +610,6 @@ E|as||輔助R|x|hFrN9b1W/AB-PRD-930907-00.webp
 -|bl|BXG-37-01|金剛王|atk|DPQc3yYK/blade-BXG-37-01-BXG-37-01-BL-PRD-982487-01.webp
 -|bl|BXG-37-02|天王星|def|JRk2Lwwy/blade-BXG-37-02-BXG-37-02-BL-PRD-982487-02.webp
 -|bl|BXG-38|雄獅獠牙|atk|cSYHTC43/T4-60A.png
--|bl|BXG-39|飛龍懸浮 金屬塗層:紫|def|63G90V5/blade-BXG-39-BXG-39-BL-PRD-993643-00.webp
--|bl|BXG-39|飛龍懸浮 DMM 抽獎A獎|def|Y4WzLMQz/blade-BXG-39-BXG-39-BL-PRD-993636-00.webp
 -|bl|BXG-40-01|暴龍|def|fV3mTgMm/image.webp
 -|bl|BXG-40-02|滄龍|atk|gbZbP370/image.webp
 -|bl|BXG-41-01|翼龍|def|0R1KP33y/transparent-Photoroom.webp
@@ -626,14 +630,13 @@ E|as||輔助R|x|hFrN9b1W/AB-PRD-930907-00.webp
 -|bl|UX-15-03|惡魔勇氣|atk|5X46XXPs/transparent-Photoroom.webp
 -|bl|UX-18-03|天馬九尾|atk|svbrfZzS/transparent-Photoroom.webp
 -|bl|UX-18-04|焰神勇氣|atk|SGDZkg5/transparent-Photoroom.webp
--|bl|UX-21-03|飛龍懸浮|def|d0F6m35G/blade-UX-21-03-UX-21-03-BL-PRD-085546-03.webp
 -|as||輔助Q|x|zHJM6NWy/assist-CX-19-01-Q-AB-PRD-080626-01.webp
 -|ra||8-80|x|BHsjN51n/ratchet-UX-21-03-8-80-RC-PRD-085546-03.webp
 -|bi||DS|x|TBBBdBhB/BT-PRD-100001-01.webp
 `;
 
 /* 產品 → 開盒附咩零件（型號、名稱、固鎖、軸心、輔助戰刃）
-   抄自台灣天梯情報站（2026-09-08 擷取），佢個倉庫功能用嘅就係呢份資料。 */
+   抄自台灣天梯情報站（2026-09-22 擷取），佢個倉庫功能用嘅就係呢份資料。 */
 var PARTS_RAW = `
 BX-44|三角強襲|M-85|BS|
 BXC-15|大蛇簇擁|6-60|LF|
@@ -704,7 +707,6 @@ BX-24-01|飛龍旋翼(綠)|5-80|GB|
 UX-21-03|飛龍懸浮|8-80|B|
 BXG-39|飛龍懸浮 金屬塗層:紫|2-80|GN|
 BXG-39|飛龍懸浮 DMM 抽獎A獎|2-80|GN|
-|飛龍懸浮 A賞|2-80|GN|
 BX-37|悍熊猛爪|5-60|F|
 UX-16-01|時鐘幻象|9-65|B|
 UX-16-02|時鐘幻象|9-65|B|
@@ -914,6 +916,10 @@ BXC-07|鱷魚粉碎|2-60|Q|
 CX-19-01|鱷魚碾壓|5-50|GN|Q
 CX-19-02|鱷魚碾壓|5-50|GN|Q
 CX-19-03|鱷魚碾壓|5-50|GN|Q
+BX-52|光輝龍騎士|6-60|LC|
+BX-53-03|空力天馬 金屬塗層:藍/青|3-70|A|
+BX-53-01|騎士重盾 版本2.0|3-80|N|
+BX-53-02|魔導幻箭 版本2.0|4-80|B|
 `;
 
 var IMG_BASE = "https://i.ibb.co/";
@@ -936,14 +942,16 @@ var EN = {
   "GP":"Gear Point","HN":"High Needle","HT":"High Taper","MN":"Metal Needle"
 };
 
-/* 大賽數據站嘅獨立評級（BBXHub 04/09/2026、BEYWATCH.GG 07/09/2026、
+/* 大賽數據站嘅獨立評級（BEYWATCH.GG 21/09/2026、
    BeyX Hub 17/06/2026、日本社群共識）。同呢個天梯表用唔同方法，會唔一致，
    所以另外標示，唔覆蓋。上蓋用型號查，固鎖／軸心用名查。 */
 var WBO = {
-  "UX-15-01":"S","UX-03":"S","BXH-10":"S","BXG-24":"S","BX-34":"S","CX-07":"S","UX-20":"S",
-  "UX-17":"A","UX-21-03":"A","BX-04":"A","BX-23":"A","UX-08":"A",
-  "BX-01":"B","BX-49":"B","UX-19":"B","UX-10-02":"B","UX-11":"B","UX-16-01":"B",
-  "UX-18-01":"C","BX-02":"C","BX-44":"C",
+  "UX-15-01":"X","UX-03":"X","BXH-10":"X","BXG-24":"X","BX-34":"X","CX-07":"X",
+  "UX-20":"S","UX-17":"S","UX-21-03":"S","BX-04":"S","BX-23":"S","UX-08":"S",
+  "BX-49":"A","UX-19":"A","UX-10-02":"A","UX-11":"A","UX-16-01":"A","UX-14":"A",
+  "UX-18-01":"A","UX-13":"A","BX-03":"A",
+  "BX-44":"B","BX-02":"B","UX-02":"B","BX-46-01":"B","BX-01":"B","BX-20-01":"B","UX-01":"B",
+  "BX-20-02":"C","UX-09":"C","CX-01":"C","BX-36-02":"C","BX-21-01":"C",
   "1-60":"S","9-60":"S","5-60":"S","1-70":"S","3-60":"S","4-50":"S",
   "LR":"S","FB":"S","H":"S","UF":"S","E":"S","R":"A","K":"A","B":"A","UN":"A","O":"A"
 };
@@ -953,7 +961,7 @@ var WBO = {
    勝率 = 該配置喺大賽入賞紀錄入面嘅勝出比例，唔係全部對局。
    ============================================================ */
 var COMBO_SRC = {
-  bw: "BEYWATCH.GG 勝率統計 · 3,282 場 / 33,000 組 · 07/09/2026",
+  bw: "BEYWATCH.GG 勝率統計 · 3,328 場 / 33,500 組 · 21/09/2026",
   bx: "BeyX Hub 頂級配置清單 · 17/06/2026",
   jp: "日本社群推薦配置 · 23/07/2026",
   wc: "BEYBLADE X World Championship 2025 優勝者",
@@ -966,68 +974,136 @@ var COMBO_SRC = {
 /* 用上蓋名做 key，所以配色版／金屬塗層版都吃到同一份配置 */
 var COMBOS = {
   "鮫鯊狂鱗": [
-    {c:"1-70 LR", wr:46.7, s:["bw","bx"]},
+    {c:"1-70 LR", wr:47.1, s:["bw","bx"]},
     {c:"3-60 LR", s:["wc","zr"]},
     {c:"4-50 UF", s:["jp"]},
     {c:"7-60 R",  s:["ev"]}
   ],
   "魔導神杖": [
-    {c:"1-60 H",  wr:64.3, s:["bw","bx","wc","zr"]},
+    {c:"1-60 H",  wr:64.4, s:["bw","bx","wc","zr"]},
     {c:"9-60 B",  s:["jp","bx"]},
     {c:"1-60 FB", s:["ev","bx"]},
     {c:"5-70 DB", s:["mk","kn"]}
   ],
   "空力天馬": [
-    {c:"1-60 R", wr:22.1, s:["bw"]},
+    {c:"1-60 R", wr:21.9, s:["bw"]},
     {c:"7-60 L", s:["wc","zr"]}
   ],
   "天馬爆擊": [
     {c:"帝王 · Heavy · 9-60 K", wr:13.0, s:["bw"]}
   ],
   "蒼穹龍騎士": [
-    {c:"5-60 E", wr:23.7, s:["bw","bx"]},
+    {c:"5-60 E", wr:23.6, s:["bw","bx"]},
     {c:"7-60 T", s:["jp"]},
     {c:"9-60 E", s:["ev"]}
   ],
-  "榮耀武神": [
-    {c:"一體固鎖 · K",  wr:1.3, s:["bw"]},
-    {c:"一體固鎖 · LF", s:["jp"]}
-  ],
-  "隕星龍騎士": [
-    {c:"7-60 L", wr:6.5, s:["bw"]},
-    {c:"5-70 J", s:["jp"]}
+  "鳳凰飛翼": [
+    {c:"1-60 R",  wr:28.3, s:["bw"]},
+    {c:"9-60 GF", s:["mk"]}
   ],
   "飛龍懸浮": [
     {c:"9-60 K", wr:19.2, s:["bw"]},
     {c:"1-60 R", s:["bx"]}
   ],
-  "鳳凰飛翼": [
-    {c:"1-60 R",  wr:28.6, s:["bw"]},
-    {c:"9-60 GF", s:["mk"]}
-  ],
   "霜輝銀狼": [
     {c:"9-60 FB", wr:15.4, s:["bw","bx"]},
     {c:"3-80 FB", s:["jp","mk"]}
   ],
+  "暴龍霸擊": [
+    {c:"1-60 R", wr:10.0, s:["bw"]}
+  ],
+  "隕星龍騎士": [
+    {c:"7-60 L", wr:6.6, s:["bw"]},
+    {c:"5-70 J", s:["jp"]}
+  ],
+  "魔像奇岩": [
+    {c:"9-60 FB", wr:5.0, s:["bw"]},
+    {c:"1-60 UN", s:["kn","mk"]}
+  ],
+  "蒼龍爆刃": [
+    {c:"1-60 LF", wr:4.4, s:["bw"]},
+    {c:"1-60 A",  s:["mk"]}
+  ],
+  "天蠍長矛": [
+    {c:"9-60 FB", wr:3.9, s:["bw"]}
+  ],
+  "鮫鯊鋒鰭": [
+    {c:"3-60 LF", wr:3.2, s:["bw"]}
+  ],
+  "衝擊龍神": [
+    {c:"9-60 LR", wr:2.9, s:["bw","mk"]},
+    {c:"9-60 LF", s:["jp"]}
+  ],
+  "惡魔紅鐮": [
+    {c:"9-60 B", wr:2.8, s:["bw"]}
+  ],
+  "蒼龍突擊": [
+    {c:"9-60 K", wr:2.6, s:["bw"]},
+    {c:"3-60 R", s:["jp"]}
+  ],
+  "時鐘幻象": [
+    {c:"4-55 LO", wr:2.5, s:["bw"]}
+  ],
+  "巨鯨怒濤": [
+    {c:"1-60 LR", wr:2.2, s:["bw"]},
+    {c:"4-70 B",  s:["jp"]},
+    {c:"5-80 E",  s:["mk"]}
+  ],
+  "古屍詛咒": [
+    {c:"9-60 W", wr:2.0, s:["bw"]}
+  ],
+  "子彈獅鷲": [
+    {c:"一體固鎖 · H", wr:1.9, s:["bw"]}
+  ],
+  "武士星劍": [
+    {c:"9-60 L", wr:1.8, s:["bw"]}
+  ],
+  "蒼龍神劍": [
+    {c:"3-60 F", wr:1.5, s:["bw"]}
+  ],
+  "榮耀武神": [
+    {c:"一體固鎖 · K",  wr:1.4, s:["bw"]},
+    {c:"一體固鎖 · LF", s:["jp"]}
+  ],
+  "騎士重盾": [
+    {c:"5-60 O", wr:1.1, s:["bw"]},
+    {c:"3-80 N", s:["kn"]}
+  ],
+  "蒼穹龍神": [
+    {c:"9-60 R", wr:1.0, s:["bw"]}
+  ],
+  "惡魔鎖鏈": [
+    {c:"9-60 B", wr:1.0, s:["bw"]}
+  ],
   "惡魔重錘": [
+    {c:"3-60 K", wr:0.9, s:["bw"]},
     {c:"4-60 T", s:["jp"]},
     {c:"3-70 H", s:["mk"]}
   ],
-  "衝擊龍神": [
-    {c:"9-60 LF", s:["jp"]},
-    {c:"9-60 LR", s:["mk"]}
+  "蒼龍利刃": [
+    {c:"4-60 R", wr:0.8, s:["bw"]},
+    {c:"4-70 P", s:["kn"]}
   ],
-  "巨鯨怒濤": [
-    {c:"4-70 B", s:["jp"]},
-    {c:"5-80 E", s:["mk"]}
+  "魔導幻箭": [
+    {c:"1-60 H", wr:0.7, s:["bw"]}
   ],
-  "蒼龍突擊": [{c:"3-60 R",  s:["jp"]}],
-  "騎士長槍": [{c:"3-70 N",  s:["jp"]}],
-  "雄獅巔峰": [{c:"7-60 GN", s:["jp"]}],
-  "蒼龍爆刃": [{c:"1-60 A",  s:["mk"]}],
-  "蒼龍利刃": [{c:"4-70 P",  s:["kn"]}],
-  "魔像奇岩": [{c:"1-60 UN", s:["kn","mk"]}],
-  "騎士重盾": [{c:"3-80 N",  s:["kn"]}]
+  "雄獅巔峰": [
+    {c:"7-60 O",  wr:0.4, s:["bw"]},
+    {c:"7-60 GN", s:["jp"]}
+  ],
+  "騎士長槍": [
+    {c:"3-60 T", wr:0.3, s:["bw"]},
+    {c:"3-70 N", s:["jp"]}
+  ],
+  "雄獅獵爪": [
+    {c:"5-60 P", wr:0.2, s:["bw"]}
+  ],
+  "王蛇鞭尾": [
+    {c:"4-60 T", wr:0.2, s:["bw"]}
+  ],
+  "飛龍旋翼": [
+    {c:"9-60 FB", wr:0.2, s:["bw"]}
+  ]
 };
 
 /* 反向索引：固鎖／軸心用喺邊啲配置度 */
@@ -1536,7 +1612,7 @@ function openEditor(id){
         if(!txt) return;
         var row = el("div", "rawcombo");
         row.appendChild(el("div", "rawtx", txt));
-        row.appendChild(el("div", "rawsrc", pair[1] + " · 2026-09-08 擷取"));
+        row.appendChild(el("div", "rawsrc", pair[1] + " · 2026-09-22 擷取"));
         tbox.appendChild(row);
       });
       ftw.appendChild(tbox);
@@ -1692,39 +1768,38 @@ function openSources(){
     s.appendChild(el("div", "sub", "等級、名稱、型號、相片嘅出處"));
     var d = el("div", "src");
     d.innerHTML =
-      "<h3>天梯等級（S 到 E，共 386 件）</h3>" +
-      "<p>整份抄自 <a href=\"https://stan-yao.github.io/beyblade_x_tier/\" target=\"_blank\" rel=\"noopener\">台灣天梯情報站</a>，2026-09-08 擷取。等級、名稱、型號、屬性同相片都係佢哋嘅資料，唔係我自己評。</p>" +
+      "<h3>天梯等級（S 到 E，共 389 件）</h3>" +
+      "<p>整份抄自 <a href=\"https://stan-yao.github.io/beyblade_x_tier/\" target=\"_blank\" rel=\"noopener\">台灣天梯情報站</a>，2026-09-22 擷取。等級、名稱、型號、屬性同相片都係佢哋嘅資料，唔係我自己評。</p>" +
       "<p><b>最高一級改咗做 S。</b>原站頂層有 X / S+ / S 三格，大部分網上天梯以 S 為最高，所以呢三格收埋做 S —— 只係向上合併，冇任何零件被降級。其餘 A+ 到 E 同原站一樣。</p>" +
-      "<p>另外，A賞飛龍已按 Brian 指正歸入 <b>飛龍懸浮</b>，屬性由「特殊」改為防禦。</p>" +
+      "<p>原站 2026-09-22 嗰版已經自己刪走「A賞飛龍」，改為將三個<b>飛龍懸浮</b>版本（UX-21-03、BXG-39 兩款）由未分級升做 A+ —— 同 Brian 早前嘅指正一致。</p>" +
       "<h3>手勢</h3>" +
       "<p>喺天梯上面<b>左右滑</b>切換上蓋／固鎖／軸心／輔助。面板打開時<b>向下拉</b>就關閉（要先捲返到頂）。電腦用左右方向鍵一樣得。</p>" +
       "<h3>邊度買得到</h3>" +
       "<p>撳固鎖／軸心／輔助戰刃，會列晒邊啲上蓋開盒附呢件零件，按等級排。撳上蓋就喺版本清單見到每盒附咩零件。呢份「產品→零件」對照同樣抄自原站（佢個倉庫功能用嘅就係呢份資料），36 個固鎖、52 個軸心、19 個輔助全部有出處。</p>" +
       "<h3>同款版本已合併</h3>" +
-      "<p>同一款上蓋嘅配色、金屬塗層、特別版併成一張卡，279 個上蓋版本收埋成 138 款。<b>卡片排喺該款最高嗰個版本嘅等級，但相用原版嗰個</b>（例：魔導神杖出 UX-03，唔係金屬塗層版）。撳入去見到每個版本嘅相、型號同各自等級，原版嗰行有「原版」標記，可以逐個標已擁有。</p>" +
+      "<p>同一款上蓋嘅配色、金屬塗層、特別版併成一張卡，282 個上蓋版本收埋成 139 款。<b>卡片排喺該款最高嗰個版本嘅等級，但相用原版嗰個</b>（例：魔導神杖出 UX-03，唔係金屬塗層版）。撳入去見到每個版本嘅相、型號同各自等級，原版嗰行有「原版」標記，可以逐個標已擁有。</p>" +
       "<p>原版點揀：名稱冇後綴嘅優先（「魔導神杖」而唔係「魔導神杖(綠)」或者「金屬塗層:燦金」），（左）（右）當轉向標示唔算後綴；同分就按型號系列 BX → UX → CX → BXA → BXC → BXG → BXH 再比數字。</p>" +
       "<p>帶英文字尾嘅當作唔同型號，唔會合併（蒼龍勇氣 vs 蒼龍勇氣S、魔導至尊 vs 魔導至尊R、邪神狂怒 vs 邪神狂怒FE）。</p>" +
       "<h3>相片</h3>" +
       "<p>圖片外連自 i.ibb.co（原站用嘅圖床），冇下載重發。載唔到就會顯示零件名。</p>" +
       "<div class=\"caveat\"><b>Artifact 版睇唔到相：</b>claude.ai 個 Artifact 封鎖所有外部圖片，所以相只會喺 GitHub Pages 版出到。</div>" +
       "<h3>卡片上兩個角標</h3>" +
-      "<p><b>右上角（實心橙）＝大賽數據站評級</b> S / A / B / C。<b>左下角（空心橙）＝該配置嘅勝率</b>，寫「配置」即係有推薦配置但冇勝率數字。</p>" +
+      "<p><b>右上角（實心橙）＝大賽數據站評級</b> X / S / A / B / C。<b>左下角（空心橙）＝該配置嘅勝率</b>，寫「配置」即係有推薦配置但冇勝率數字。</p>" +
       "<p>勝率係指喺大賽入賞紀錄入面嘅勝出比例，唔係全部對局，所以低數字唔一定代表弱 —— 可能只係用嘅人少。</p>" +
       "<ul>" +
-      "<li>BEYWATCH.GG — 3,282 場賽事 / 33,000 組配置，勝率數字全部由此（07/09/2026）</li>" +
+      "<li>BEYWATCH.GG — 3,328 場賽事 / 33,500 組配置，勝率數字同大賽評級全部由此（21/09/2026）</li>" +
       "<li>BeyX Hub — 頂級配置清單（17/06/2026）</li>" +
       "<li>日本社群推薦配置 12 選（23/07/2026）</li>" +
       "<li>BEYBLADE X World Championship 2025 優勝者用嘅配置</li>" +
       "<li>WBO 大賽入賞紀錄 · Imperial Sins 加拿大（01/2026）</li>" +
       "<li>日本最強組合排行 ミツケヨ（07/09/2026）、カウナラ（31/08/2026）</li>" +
       "<li>世界大會配置解讀 まっさらログ（04/12/2025）</li>" +
-      "<li>BBXHub — 3,918 場賽事 / 39,726 組配置，用嚟做另一套評級（04/09/2026）</li>" +
       "</ul>" +
       "<h3>原站推薦配置（原文照登）</h3>" +
       "<p>另外 41 款上蓋有原站自己嘅推薦配置，一律<b>原文照登</b>，冇拆散、冇改寫 —— 一格入面可能有幾組配置、註解（#）同配件提示，拆散有機會拆錯意思。呢部分冇勝率數字。</p>" +
-      "<div class=\"caveat\"><b>覆蓋率：138 款上蓋入面，47 款有配置資料</b>（20 款有勝率統計、41 款有原站推薦，14 款兩樣都有）；固鎖 13 件、軸心 19 件有勝率配置。其餘冇公開紀錄，我唔會靠估填。</div>" +
+      "<div class=\"caveat\"><b>覆蓋率：139 款上蓋入面，56 款有配置資料</b>（35 款有勝率統計、41 款有原站推薦，20 款兩樣都有）；固鎖 14 件、軸心 23 件有勝率配置。其餘冇公開紀錄，我唔會靠估填。</div>" +
       "<h3>兩套評級唔夾</h3>" +
-      "<p>大賽入賞統計嘅評級同呢個天梯表方法唔同，結論會唔一致（例：騎士重盾喺呢度係 D+，大賽數據係 A）。撳入去兩個都見到，唔會覆蓋。</p>" +
+      "<p>大賽入賞統計嘅評級同呢個天梯表方法唔同，結論會唔一致（例：騎士重盾喺呢度係 D+，大賽數據係 S）。撳入去兩個都見到，唔會覆蓋。</p>" +
       "<h3>攞唔到嘅嘢</h3>" +
       "<div class=\"caveat\">日本頂尖選手嘅 X（Twitter）帖文<b>抽唔到</b> —— x.com 拒絕存取（HTTP 402）。所以冇任何個人選手嘅天梯或配置入到嚟。同樣，Namaste 阿土同白 Shiro 嘅天梯係 YouTube 影片內容，抽唔到文字。</div>" +
       "<h3>幾時要更新</h3>" +
